@@ -202,6 +202,11 @@
     </AppxManifest>
     <None Include="Assets\AppLogo.kra" />
     <None Include="PixivFSUWP_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\zh-CN\Resources.resw" />
+    <PRIResource Include="Strings\zh-SG\Resources.resw" />
+    <PRIResource Include="Strings\zh-HK\Resources.resw" />
+    <PRIResource Include="Strings\zh-TW\Resources.resw" />
+    <PRIResource Include="Strings\zh-MO\Resources.resw" />
     <PRIResource Include="Strings\zh-Hans\Resources.resw" />
     <PRIResource Include="Strings\zh-Hant\Resources.resw" />
     <PRIResource Include="Strings\ja\Resources.resw" />
@@ -291,8 +296,13 @@
   </ItemGroup>
   <ItemGroup>
     <XliffResource Include="MultilingualResources\PixivFSUWP.ja.xlf" />
+    <XliffResource Include="MultilingualResources\PixivFSUWP.zh-CN.xlf" />
     <XliffResource Include="MultilingualResources\PixivFSUWP.zh-Hans.xlf" />
     <XliffResource Include="MultilingualResources\PixivFSUWP.zh-Hant.xlf" />
+    <XliffResource Include="MultilingualResources\PixivFSUWP.zh-HK.xlf" />
+    <XliffResource Include="MultilingualResources\PixivFSUWP.zh-MO.xlf" />
+    <XliffResource Include="MultilingualResources\PixivFSUWP.zh-SG.xlf" />
+    <XliffResource Include="MultilingualResources\PixivFSUWP.zh-TW.xlf" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

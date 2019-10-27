@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-Hant" original="PIXIVFSUWP/STRINGS/EN/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+  <file datatype="xml" source-language="en" target-language="zh-TW" original="PIXIVFSUWP/STRINGS/EN/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
     <header>
       <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6914.0" tool-company="Microsoft" />
     </header>
@@ -38,13 +38,18 @@
         </trans-unit>
         <trans-unit id="btnAppLink.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Copy app URL</source>
-          <target state="translated">複製應用鏈接</target>
+          <target state="translated">複製應用連結</target>
           <note from="MultilingualBuild" annotates="source" priority="2">ToolTip</note>
         </trans-unit>
         <trans-unit id="btnLink.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Copy web URL</source>
-          <target state="translated">複製網頁鏈接</target>
+          <target state="translated">複製網頁連結</target>
           <note from="MultilingualBuild" annotates="source" priority="2">ToolTip</note>
+        </trans-unit>
+        <trans-unit id="BtnSauceNAO.Content" translate="yes" xml:space="preserve">
+          <source>SauceNAO</source>
+          <target state="translated">以圖搜圖</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Button +</note>
         </trans-unit>
         <trans-unit id="btnShare.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Windows Share</source>
@@ -123,8 +128,13 @@
         </trans-unit>
         <trans-unit id="Email.Text" translate="yes" xml:space="preserve">
           <source>Email：</source>
-          <target state="translated">郵箱：</target>
+          <target state="translated">信箱：</target>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
+        </trans-unit>
+        <trans-unit id="ExperimentalConnection.Content" translate="yes" xml:space="preserve">
+          <source>Direct Connection (!Experimental!)</source>
+          <target state="translated">直連（實驗性，可以繞過中國大陸的封鎖）</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">CheckBox</note>
         </trans-unit>
         <trans-unit id="FemalePlain" translate="yes" xml:space="preserve">
           <source>Female</source>
@@ -156,10 +166,25 @@
           <target state="translated">Gif文件</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
+        <trans-unit id="GoPixivID.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Pixiv ID</source>
+          <target state="translated">作品直達</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">AutoSuggestBox +</note>
+        </trans-unit>
+        <trans-unit id="GoToPixivID.Text" translate="yes" xml:space="preserve">
+          <source>Pixiv ID</source>
+          <target state="translated">作品直達</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock +</note>
+        </trans-unit>
         <trans-unit id="ImageFilePlain" translate="yes" xml:space="preserve">
           <source>Image</source>
           <target state="translated">圖片文件</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        </trans-unit>
+        <trans-unit id="ImgurAPI.Text" translate="yes" xml:space="preserve">
+          <source>Imgur API key</source>
+          <target state="translated">Imgur API密鑰</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock +</note>
         </trans-unit>
         <trans-unit id="Job.Text" translate="yes" xml:space="preserve">
           <source>Job</source>
@@ -188,7 +213,7 @@
         </trans-unit>
         <trans-unit id="LinkPlain" translate="yes" xml:space="preserve">
           <source>Link</source>
-          <target state="translated">網頁鏈接</target>
+          <target state="translated">網頁連結</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="LivingPlace.Text" translate="yes" xml:space="preserve">
@@ -198,17 +223,17 @@
         </trans-unit>
         <trans-unit id="LoadingPlain" translate="yes" xml:space="preserve">
           <source>Loading</source>
-          <target state="translated">加載中</target>
+          <target state="translated">載入中</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="LoadingPreviewPlain" translate="yes" xml:space="preserve">
           <source>Loading preview</source>
-          <target state="translated">正在加載預覽</target>
+          <target state="translated">正在載入預覽</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="LoadingStatusPlain" translate="yes" xml:space="preserve">
           <source>Loading {0}/{1}</source>
-          <target state="translated">正在加載第 {0} 張，共 {1} 張</target>
+          <target state="translated">正在載入第 {0} 張，共 {1} 張</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="LoggingIn.Text" translate="yes" xml:space="preserve">
@@ -253,7 +278,7 @@
         </trans-unit>
         <trans-unit id="Mouse.Text" translate="yes" xml:space="preserve">
           <source>Mouse</source>
-          <target state="translated">鼠標</target>
+          <target state="translated">滑鼠</target>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="Music.Text" translate="yes" xml:space="preserve">
@@ -265,6 +290,11 @@
           <source>Draft</source>
           <target state="translated">我的臨摹</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        </trans-unit>
+        <trans-unit id="NewComment.Content" translate="yes" xml:space="preserve">
+          <source>New comment</source>
+          <target state="translated">撰寫評論</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">ToggleButton</note>
         </trans-unit>
         <trans-unit id="NoCaptionPlain" translate="yes" xml:space="preserve">
           <source>No caption</source>
@@ -328,7 +358,7 @@
         </trans-unit>
         <trans-unit id="PersonalWebsite.Text" translate="yes" xml:space="preserve">
           <source>Website</source>
-          <target state="translated">個人主頁</target>
+          <target state="translated">個人首頁</target>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="PinnedPlain" translate="yes" xml:space="preserve">
@@ -353,7 +383,7 @@
         </trans-unit>
         <trans-unit id="Printer.Text" translate="yes" xml:space="preserve">
           <source>Printer</source>
-          <target state="translated">打印機</target>
+          <target state="translated">印表機</target>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="PrivateOrNonePlain" translate="yes" xml:space="preserve">
@@ -388,7 +418,7 @@
         </trans-unit>
         <trans-unit id="RawInkPlain" translate="yes" xml:space="preserve">
           <source>Raw ink</source>
-          <target state="translated">墨跡原始信息</target>
+          <target state="translated">墨跡原始訊息</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="Recommended.Content" translate="yes" xml:space="preserve">
@@ -410,6 +440,11 @@
           <source>Retry</source>
           <target state="translated">重試</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        </trans-unit>
+        <trans-unit id="SauceNaoAPI.Text" translate="yes" xml:space="preserve">
+          <source>SauceNAO API key</source>
+          <target state="translated">SauceNAO API密鑰</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock +</note>
         </trans-unit>
         <trans-unit id="Save.Text" translate="yes" xml:space="preserve">
           <source>Save</source>
@@ -463,13 +498,18 @@
         </trans-unit>
         <trans-unit id="Scanner.Text" translate="yes" xml:space="preserve">
           <source>Scanner</source>
-          <target state="translated">掃描儀</target>
+          <target state="translated">掃描器</target>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="Search.PlaceholderText" translate="yes" xml:space="preserve">
           <source>Search…</source>
           <target state="translated">搜索作品…</target>
           <note from="MultilingualBuild" annotates="source" priority="2">AutoSuggestBox</note>
+        </trans-unit>
+        <trans-unit id="SearchMore.Text" translate="yes" xml:space="preserve">
+          <source>More functions</source>
+          <target state="translated">更多功能</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock +</note>
         </trans-unit>
         <trans-unit id="SearchOptions.Text" translate="yes" xml:space="preserve">
           <source>Search options</source>
@@ -503,7 +543,7 @@
         </trans-unit>
         <trans-unit id="SharingPlain" translate="yes" xml:space="preserve">
           <source>Sharing illust</source>
-          <target state="translated">該圖片頁面的鏈接將被分享</target>
+          <target state="translated">該圖片頁面的連結將被分享</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="Stop.Text" translate="yes" xml:space="preserve">
@@ -558,17 +598,17 @@
         </trans-unit>
         <trans-unit id="Username.Text" translate="yes" xml:space="preserve">
           <source>Username</source>
-          <target state="translated">用戶名</target>
+          <target state="translated">使用者名稱</target>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="UserShareTipPlain" translate="yes" xml:space="preserve">
           <source>Sharing artist</source>
-          <target state="translated">該用戶頁面的鏈接將被分享</target>
+          <target state="translated">該用戶頁面的連結將被分享</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="VersionInfo.Text" translate="yes" xml:space="preserve">
           <source>Version information</source>
-          <target state="translated">軟件包版本信息</target>
+          <target state="translated">套裝軟體版本訊息</target>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="Work.Text" translate="yes" xml:space="preserve">
@@ -600,46 +640,6 @@
           <source>Failed to save「{0}」</source>
           <target state="translated">作品「{0}」保存失敗</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
-        </trans-unit>
-        <trans-unit id="ExperimentalConnection.Content" translate="yes" xml:space="preserve">
-          <source>Direct Connection (!Experimental!)</source>
-          <target state="translated">直連（實驗性，可以繞過中國大陸的封鎖）</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">CheckBox</note>
-        </trans-unit>
-        <trans-unit id="NewComment.Content" translate="yes" xml:space="preserve">
-          <source>New comment</source>
-          <target state="translated">撰寫評論</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">ToggleButton</note>
-        </trans-unit>
-        <trans-unit id="BtnSauceNAO.Content" translate="yes" xml:space="preserve">
-          <source>SauceNAO</source>
-          <target state="translated">以圖搜圖</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">Button +</note>
-        </trans-unit>
-        <trans-unit id="GoPixivID.PlaceholderText" translate="yes" xml:space="preserve">
-          <source>Pixiv ID</source>
-          <target state="new">Pixiv ID</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">AutoSuggestBox +</note>
-        </trans-unit>
-        <trans-unit id="ImgurAPI.Text" translate="yes" xml:space="preserve">
-          <source>Imgur API key</source>
-          <target state="translated">Imgur API密鑰</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock +</note>
-        </trans-unit>
-        <trans-unit id="SauceNaoAPI.Text" translate="yes" xml:space="preserve">
-          <source>SauceNAO API key</source>
-          <target state="translated">SauceNAO API密鑰</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock +</note>
-        </trans-unit>
-        <trans-unit id="SearchMore.Text" translate="yes" xml:space="preserve">
-          <source>More functions</source>
-          <target state="translated">更多功能</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock +</note>
-        </trans-unit>
-        <trans-unit id="GoToPixivID.Text" translate="yes" xml:space="preserve">
-          <source>Pixiv ID</source>
-          <target state="translated">作品直達</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock +</note>
         </trans-unit>
       </group>
     </body>

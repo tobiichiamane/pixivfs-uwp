@@ -118,43 +118,47 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AllTime.Content" xml:space="preserve">
-    <value>すべで</value>
+    <value>所有時間</value>
     <comment>ComboBoxItem</comment>
   </data>
   <data name="ArtistPlain" xml:space="preserve">
-    <value>イラストレーター</value>
+    <value>畫師</value>
     <comment>PlainText</comment>
   </data>
   <data name="Birthday.Text" xml:space="preserve">
-    <value>誕生日</value>
+    <value>生日</value>
     <comment>TextBlock</comment>
   </data>
   <data name="BookmarkDeleteFailedPlain" xml:space="preserve">
-    <value>「{0}」をブックマークから解除できません</value>
+    <value>作品「{0}」刪除收藏失敗</value>
     <comment>PlainText</comment>
   </data>
   <data name="Bookmarked.Content" xml:space="preserve">
-    <value>ブックマーク</value>
+    <value>收藏</value>
     <comment>NavigationViewItem</comment>
   </data>
   <data name="BookmarkedPlain" xml:space="preserve">
-    <value>ブックマークに追加しました</value>
+    <value>已收藏</value>
     <comment>PlainText</comment>
   </data>
   <data name="btnAppLink.ToolTipService.ToolTip" xml:space="preserve">
-    <value>アプリ内リンクをコピー</value>
+    <value>複製應用連結</value>
     <comment>ToolTip</comment>
   </data>
   <data name="btnLink.ToolTipService.ToolTip" xml:space="preserve">
-    <value>ウェブリンクをコピー</value>
+    <value>複製網頁連結</value>
     <comment>ToolTip</comment>
   </data>
+  <data name="BtnSauceNAO.Content" xml:space="preserve">
+    <value>以圖搜圖</value>
+    <comment>Button +</comment>
+  </data>
   <data name="btnShare.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Windows共有</value>
+    <value>Windows分享</value>
     <comment>ToolTip</comment>
   </data>
   <data name="CancelPlain" xml:space="preserve">
-    <value>キャンセル</value>
+    <value>放棄</value>
     <comment>PlainText</comment>
   </data>
   <data name="Chair.Text" xml:space="preserve">
@@ -162,147 +166,163 @@
     <comment>TextBlock</comment>
   </data>
   <data name="CommentsPlain" xml:space="preserve">
-    <value>コメント</value>
+    <value>評論</value>
     <comment>PlainText</comment>
   </data>
   <data name="CreatingTimelinePlain" xml:space="preserve">
-    <value>Windows® Timeline™を作成しています</value>
+    <value>正在創建時間線</value>
     <comment>PlainText</comment>
   </data>
   <data name="CurrentUser.Text" xml:space="preserve">
-    <value>ユーザー</value>
+    <value>當前登錄的用戶</value>
     <comment>TextBlock</comment>
   </data>
   <data name="DateAsc.Content" xml:space="preserve">
-    <value>日付の昇順</value>
+    <value>按日期升序</value>
     <comment>ComboBoxItem</comment>
   </data>
   <data name="DateDesc.Content" xml:space="preserve">
-    <value>日付の降順</value>
+    <value>按日期降序</value>
     <comment>ComboBoxItem</comment>
   </data>
   <data name="DeleteBookmarkPlain" xml:space="preserve">
-    <value>ブックマーク解除</value>
+    <value>刪除收藏</value>
     <comment>PlainText</comment>
   </data>
   <data name="DeletedBookmarkPlain" xml:space="preserve">
-    <value>「{0}」をブックマークから解除しました</value>
+    <value>作品「{0}」已刪除收藏</value>
     <comment>PlainText</comment>
   </data>
   <data name="Desk.Text" xml:space="preserve">
-    <value>つくえ</value>
+    <value>桌子</value>
     <comment>TextBlock</comment>
   </data>
   <data name="Desktop.Text" xml:space="preserve">
-    <value>デスクトップ</value>
+    <value>桌面</value>
     <comment>TextBlock</comment>
   </data>
   <data name="DetailPlain" xml:space="preserve">
-    <value>詳細</value>
+    <value>詳情</value>
     <comment>PlainText</comment>
   </data>
   <data name="DownloadingUgoiraPlain" xml:space="preserve">
-    <value>うごイラをダウンロードしています</value>
+    <value>正在下載動態剪影</value>
     <comment>PlainText</comment>
   </data>
   <data name="Draw.Label" xml:space="preserve">
-    <value>臨模</value>
+    <value>臨摹</value>
     <comment>AppBarButton</comment>
   </data>
   <data name="Email.Text" xml:space="preserve">
-    <value>メール：</value>
+    <value>信箱：</value>
     <comment>TextBlock</comment>
+  </data>
+  <data name="ExperimentalConnection.Content" xml:space="preserve">
+    <value>直連（實驗性，可以繞過中國大陸的封鎖）</value>
+    <comment>CheckBox</comment>
   </data>
   <data name="FemalePlain" xml:space="preserve">
     <value>女</value>
     <comment>PlainText</comment>
   </data>
   <data name="Following.Content" xml:space="preserve">
-    <value>フォロワー</value>
+    <value>關注</value>
     <comment>NavigationViewItem</comment>
   </data>
   <data name="FollowingPlain" xml:space="preserve">
-    <value>フォロー</value>
+    <value>已關注</value>
     <comment>PlainText</comment>
   </data>
   <data name="FullyMatchTag.Content" xml:space="preserve">
-    <value>完全一致タグ</value>
+    <value>完全匹配標籤</value>
     <comment>ComboBoxItem</comment>
   </data>
   <data name="GeneratingGifPlain" xml:space="preserve">
-    <value>Gifを作成しています</value>
+    <value>正在生成 Gif</value>
     <comment>PlainText</comment>
   </data>
   <data name="GifFilePlain" xml:space="preserve">
-    <value>Gifファイル</value>
+    <value>Gif文件</value>
     <comment>PlainText</comment>
+  </data>
+  <data name="GoPixivID.PlaceholderText" xml:space="preserve">
+    <value>作品ID</value>
+    <comment>AutoSuggestBox +</comment>
+  </data>
+  <data name="GoToPixivID.Text" xml:space="preserve">
+    <value>作品直達</value>
+    <comment>TextBlock +</comment>
   </data>
   <data name="ImageFilePlain" xml:space="preserve">
-    <value>画像ファイル</value>
+    <value>圖片文件</value>
     <comment>PlainText</comment>
   </data>
+  <data name="ImgurAPI.Text" xml:space="preserve">
+    <value>Imgur API密鑰</value>
+    <comment>TextBlock +</comment>
+  </data>
   <data name="Job.Text" xml:space="preserve">
-    <value>仕事</value>
+    <value>當前工作</value>
     <comment>TextBlock</comment>
   </data>
   <data name="Keyword.Text" xml:space="preserve">
-    <value>キーワード</value>
+    <value>關鍵字/標籤</value>
     <comment>TextBlock</comment>
   </data>
   <data name="LastDay.Content" xml:space="preserve">
-    <value>前日</value>
+    <value>過去一天內</value>
     <comment>ComboBoxItem</comment>
   </data>
   <data name="LastMonth.Content" xml:space="preserve">
-    <value>前月</value>
+    <value>過去一月內</value>
     <comment>ComboBoxItem</comment>
   </data>
   <data name="LastWeek.Content" xml:space="preserve">
-    <value>前週</value>
+    <value>過去一週內</value>
     <comment>ComboBoxItem</comment>
   </data>
   <data name="LinkPlain" xml:space="preserve">
-    <value>リンク</value>
+    <value>網頁連結</value>
     <comment>PlainText</comment>
   </data>
   <data name="LivingPlace.Text" xml:space="preserve">
-    <value>居場所</value>
+    <value>居住地</value>
     <comment>TextBlock</comment>
   </data>
   <data name="LoadingPlain" xml:space="preserve">
-    <value>読み込む中</value>
+    <value>載入中</value>
     <comment>PlainText</comment>
   </data>
   <data name="LoadingPreviewPlain" xml:space="preserve">
-    <value>プレビューを読み込む中</value>
+    <value>正在載入預覽</value>
     <comment>PlainText</comment>
   </data>
   <data name="LoadingStatusPlain" xml:space="preserve">
-    <value>{0}/{1}を読み込む中</value>
+    <value>正在載入第 {0} 張，共 {1} 張</value>
     <comment>PlainText</comment>
   </data>
   <data name="LoggingIn.Text" xml:space="preserve">
-    <value>ログイン中</value>
+    <value>正在登錄</value>
     <comment>TextBlock</comment>
   </data>
   <data name="Login.Content" xml:space="preserve">
-    <value>ログイン</value>
+    <value>登錄</value>
     <comment>Button</comment>
   </data>
   <data name="LoginBanner.Text" xml:space="preserve">
-    <value>創作活動をもっとたのしく</value>
+    <value>讓創作變得更有樂趣</value>
     <comment>TextBlock</comment>
   </data>
   <data name="LoginFailed.Content" xml:space="preserve">
-    <value>ログインできません。トラブルシューティングを行い、もう一度やり直してください。</value>
+    <value>登錄失敗，點此查看錯誤排查步驟並重試</value>
     <comment>Button</comment>
   </data>
   <data name="Logout.Content" xml:space="preserve">
-    <value>ログアウト</value>
+    <value>註銷</value>
     <comment>Button</comment>
   </data>
   <data name="LogoutWarning.Text" xml:space="preserve">
-    <value>*すべでのWindowsデバイスからログイン解除します</value>
+    <value>*這將在您的所有Windows設備上退出登錄</value>
     <comment>TextBlock</comment>
   </data>
   <data name="MalePlain" xml:space="preserve">
@@ -310,119 +330,123 @@
     <comment>PlainText</comment>
   </data>
   <data name="Monitor.Text" xml:space="preserve">
-    <value>モニター</value>
+    <value>顯示器</value>
     <comment>TextBlock</comment>
   </data>
   <data name="Mouse.Text" xml:space="preserve">
-    <value>マウス</value>
+    <value>滑鼠</value>
     <comment>TextBlock</comment>
   </data>
   <data name="Music.Text" xml:space="preserve">
-    <value>音楽</value>
+    <value>音樂</value>
     <comment>TextBlock</comment>
   </data>
   <data name="MyInkPlain" xml:space="preserve">
-    <value>下書き</value>
+    <value>我的臨摹</value>
     <comment>PlainText</comment>
   </data>
+  <data name="NewComment.Content" xml:space="preserve">
+    <value>撰寫評論</value>
+    <comment>ToggleButton</comment>
+  </data>
   <data name="NoCaptionPlain" xml:space="preserve">
-    <value>紹介がありません</value>
+    <value>暫無簡介</value>
     <comment>PlainText</comment>
   </data>
   <data name="NoInkPlain" xml:space="preserve">
-    <value>保存できるインクがありません</value>
+    <value>沒有墨跡可以保存</value>
     <comment>PlainText</comment>
   </data>
   <data name="NotBookmarked.Text" xml:space="preserve">
-    <value>ブックマーク</value>
+    <value>未收藏</value>
     <comment>TextBlock</comment>
   </data>
   <data name="NotBookmarkedPlain" xml:space="preserve">
-    <value>ブックマーク</value>
+    <value>未收藏</value>
     <comment>PlainText</comment>
   </data>
   <data name="NotFollowing.Text" xml:space="preserve">
-    <value>フォロー</value>
+    <value>未關注</value>
     <comment>TextBlock</comment>
   </data>
   <data name="NotFollowingPlain" xml:space="preserve">
-    <value>フォロー</value>
+    <value>未關注</value>
     <comment>PlainText</comment>
   </data>
   <data name="OKPlain" xml:space="preserve">
-    <value>はい</value>
+    <value>好的</value>
     <comment>PlainText</comment>
   </data>
   <data name="PageInfoPlain" xml:space="preserve">
-    <value>画像数: {0}。 クリックまたはタップして全画像モードに。</value>
+    <value>共 {0} 張作品，點擊或觸摸查看大圖</value>
     <comment>PlainText</comment>
   </data>
   <data name="PartiallyMatchTag.Content" xml:space="preserve">
-    <value>部分一致タグ</value>
+    <value>部分匹配標籤</value>
     <comment>ComboBoxItem</comment>
   </data>
   <data name="PartiallyMatchTitleAndCap.Content" xml:space="preserve">
-    <value>部分一致タイトルと紹介</value>
+    <value>部分匹配標題和簡介</value>
     <comment>ComboBoxItem</comment>
   </data>
   <data name="Password.Text" xml:space="preserve">
-    <value>パスワード</value>
+    <value>密碼</value>
     <comment>TextBlock</comment>
   </data>
   <data name="PC.Text" xml:space="preserve">
-    <value>パソコン</value>
+    <value>計算機</value>
     <comment>TextBlock</comment>
   </data>
   <data name="PersonalWebsite.Text" xml:space="preserve">
-    <value>ウェブサイト</value>
+    <value>個人首頁</value>
     <comment>TextBlock</comment>
   </data>
   <data name="PinnedPlain" xml:space="preserve">
-    <value>固定された</value>
+    <value>已固定</value>
     <comment>PlainText</comment>
   </data>
   <data name="PixivUserPlain" xml:space="preserve">
-    <value>Pixivユーザー</value>
+    <value>Pixiv用戶</value>
     <comment>PlainText</comment>
   </data>
   <data name="PlayingUgoiraPlain" xml:space="preserve">
-    <value>うごイラを再生しています</value>
+    <value>正在播放動態剪影</value>
     <comment>PlainText</comment>
   </data>
   <data name="PlayPlain" xml:space="preserve">
-    <value>再生</value>
+    <value>播放</value>
     <comment>PlainText</comment>
   </data>
   <data name="Printer.Text" xml:space="preserve">
-    <value>プリンター</value>
+    <value>印表機</value>
     <comment>TextBlock</comment>
   </data>
   <data name="PrivateOrNonePlain" xml:space="preserve">
-    <value>なし/プライベート</value>
+    <value>無/保密</value>
     <comment>PlainText</comment>
   </data>
   <data name="PrivatePlain" xml:space="preserve">
-    <value>プライベート</value>
+    <value>保密</value>
     <comment>PlainText</comment>
   </data>
   <data name="QuickBookmark.Text" xml:space="preserve">
-    <value>ブックマーク</value>
+    <value>快速收藏</value>
     <comment>MenuFlyoutItem</comment>
   </data>
   <data name="QuickBookmarkPlain" xml:space="preserve">
-    <value>ブックマーク</value>
+    <value>快速收藏</value>
     <comment>PlainText</comment>
   </data>
   <data name="QuickDownload.Text" xml:space="preserve">
-    <value>保存</value>
+    <value>快速保存</value>
     <comment>MenuFlyoutItem</comment>
   </data>
   <data name="Ranking.Content" xml:space="preserve">
-    <value>ランキング</value>
+    <value>排行</value>
     <comment>NavigationViewItem</comment>
   </data>
   <data name="RawInkPlain" xml:space="preserve">
-    <value>元インク</value>
+    <value>墨跡原始訊息</value>
     <comment>PlainText</comment>
   </data>
   <data name="Recommended.Content" xml:space="preserve">
@@ -430,75 +454,83 @@
     <comment>NavigationViewItem</comment>
   </data>
   <data name="Register.Content" xml:space="preserve">
-    <value>登録</value>
+    <value>註冊</value>
     <comment>Button</comment>
   </data>
   <data name="RequestingPlain" xml:space="preserve">
-    <value>処理中</value>
+    <value>請求中</value>
     <comment>PlainText</comment>
   </data>
   <data name="RetryPlain" xml:space="preserve">
-    <value>やり直す</value>
+    <value>重試</value>
     <comment>PlainText</comment>
   </data>
+  <data name="SauceNaoAPI.Text" xml:space="preserve">
+    <value>SauceNAO API密鑰</value>
+    <comment>TextBlock +</comment>
+  </data>
   <data name="Save.Text" xml:space="preserve">
-    <value>保存</value>
+    <value>快速保存</value>
     <comment>TextBlock</comment>
   </data>
   <data name="SaveImage.Label" xml:space="preserve">
-    <value>画像保存</value>
+    <value>保存圖片</value>
     <comment>AppBarButton</comment>
   </data>
   <data name="SaveImageFailedPlain" xml:space="preserve">
-    <value>画像を保存できません</value>
+    <value>圖片保存失敗</value>
     <comment>PlainText</comment>
   </data>
   <data name="SaveImagePlain" xml:space="preserve">
-    <value>画像保存</value>
+    <value>保存圖片</value>
     <comment>PlainText</comment>
   </data>
   <data name="SaveImageSucceededPlain" xml:space="preserve">
-    <value>画像を保存しました</value>
+    <value>圖片已保存</value>
     <comment>PlainText</comment>
   </data>
   <data name="SaveInkFailedPlain" xml:space="preserve">
-    <value>インクを保存できません</value>
+    <value>墨跡保存失敗</value>
     <comment>PlainText</comment>
   </data>
   <data name="SaveInkPlain" xml:space="preserve">
-    <value>インク保存</value>
+    <value>保存墨跡</value>
     <comment>PlainText</comment>
   </data>
   <data name="SaveInkSucceededPlain" xml:space="preserve">
-    <value>インクを保存しました</value>
+    <value>墨跡已保存</value>
     <comment>PlainText</comment>
   </data>
   <data name="SaveUgoiraFailedPlain" xml:space="preserve">
-    <value>うごイラを保存できません</value>
+    <value>剪影保存失敗</value>
     <comment>PlainText</comment>
   </data>
   <data name="SaveUgoiraSucceededPlain" xml:space="preserve">
-    <value>うごイラを保存しました</value>
+    <value>剪影已保存</value>
     <comment>PlainText</comment>
   </data>
   <data name="Scanner.Text" xml:space="preserve">
-    <value>スキャナー</value>
+    <value>掃描器</value>
     <comment>TextBlock</comment>
   </data>
   <data name="Search.PlaceholderText" xml:space="preserve">
-    <value>検索…</value>
+    <value>搜索作品…</value>
     <comment>AutoSuggestBox</comment>
   </data>
+  <data name="SearchMore.Text" xml:space="preserve">
+    <value>更多功能</value>
+    <comment>TextBlock +</comment>
+  </data>
   <data name="SearchOptions.Text" xml:space="preserve">
-    <value>検索オプション</value>
+    <value>搜索選項</value>
     <comment>TextBlock</comment>
   </data>
   <data name="SearchPagePlain" xml:space="preserve">
-    <value>検索</value>
+    <value>搜索</value>
     <comment>PlainText</comment>
   </data>
   <data name="SettingsPagePlain" xml:space="preserve">
-    <value>設定</value>
+    <value>設置</value>
     <comment>PlainText</comment>
   </data>
   <data name="Sex.Text" xml:space="preserve">
@@ -506,39 +538,39 @@
     <comment>TextBlock</comment>
   </data>
   <data name="Share.Text" xml:space="preserve">
-    <value>共有</value>
+    <value>分享</value>
     <comment>TextBlock</comment>
   </data>
   <data name="SharePlain" xml:space="preserve">
-    <value>共有</value>
+    <value>分享</value>
     <comment>PlainText</comment>
   </data>
   <data name="SharingPlain" xml:space="preserve">
-    <value>イラスト共有</value>
+    <value>該圖片頁面的連結將被分享</value>
     <comment>PlainText</comment>
   </data>
   <data name="Stop.Text" xml:space="preserve">
-    <value>中止</value>
+    <value>停止</value>
     <comment>TextBlock</comment>
   </data>
   <data name="StopPlain" xml:space="preserve">
-    <value>中止</value>
+    <value>停止</value>
     <comment>PlainText</comment>
   </data>
   <data name="Tablet.Text" xml:space="preserve">
-    <value>ペンタブレット</value>
+    <value>數位板</value>
     <comment>TextBlock</comment>
   </data>
   <data name="TagWarning.Text" xml:space="preserve">
-    <value>*タグを選択したら検索オプションが変えられます</value>
+    <value>*點擊趨勢標籤將改變您的搜索選項</value>
     <comment>TextBlock</comment>
   </data>
   <data name="Tool.Text" xml:space="preserve">
-    <value>ツール</value>
+    <value>繪圖工具</value>
     <comment>TextBlock</comment>
   </data>
   <data name="TrendingTags.Text" xml:space="preserve">
-    <value>トレンドタグ</value>
+    <value>趨勢標籤</value>
     <comment>TextBlock</comment>
   </data>
   <data name="UnknownPlain" xml:space="preserve">
@@ -546,27 +578,27 @@
     <comment>PlainText</comment>
   </data>
   <data name="Unpinned.Text" xml:space="preserve">
-    <value>固定されていない</value>
+    <value>未固定</value>
     <comment>TextBlock</comment>
   </data>
   <data name="UserDetailPagePlain" xml:space="preserve">
-    <value>ユーザー</value>
+    <value>用戶</value>
     <comment>PlainText</comment>
   </data>
   <data name="UserID.Text" xml:space="preserve">
-    <value>ユーザーID：</value>
+    <value>用戶標識：</value>
     <comment>TextBlock</comment>
   </data>
   <data name="Username.Text" xml:space="preserve">
-    <value>ユーザー名</value>
+    <value>使用者名稱</value>
     <comment>TextBlock</comment>
   </data>
   <data name="UserShareTipPlain" xml:space="preserve">
-    <value>イラストレーターを共有</value>
+    <value>該用戶頁面的連結將被分享</value>
     <comment>PlainText</comment>
   </data>
   <data name="VersionInfo.Text" xml:space="preserve">
-    <value>バージョン情報</value>
+    <value>套裝軟體版本訊息</value>
     <comment>TextBlock</comment>
   </data>
   <data name="Work.Text" xml:space="preserve">
@@ -574,11 +606,11 @@
     <comment>TextBlock</comment>
   </data>
   <data name="WorkBookmarkedPlain" xml:space="preserve">
-    <value>「{0}」をブックマークに追加しました</value>
+    <value>作品「{0}」已收藏</value>
     <comment>PlainText</comment>
   </data>
   <data name="WorkBookmarkFailedPlain" xml:space="preserve">
-    <value>「{0}」をブックマークに追加できません</value>
+    <value>作品「{0}」收藏失敗</value>
     <comment>PlainText</comment>
   </data>
   <data name="WorkPlain" xml:space="preserve">
@@ -586,23 +618,11 @@
     <comment>PlainText</comment>
   </data>
   <data name="WorkSavedPlain" xml:space="preserve">
-    <value>「{0}」を保存しました</value>
+    <value>作品「{0}」已保存</value>
     <comment>PlainText</comment>
   </data>
   <data name="WorkSaveFailedPlain" xml:space="preserve">
-    <value>「{0}」を保存できません</value>
+    <value>作品「{0}」保存失敗</value>
     <comment>PlainText</comment>
-  </data>
-  <data name="ExperimentalConnection.Content" xml:space="preserve">
-    <value>直接接続（!テスト機能!）</value>
-    <comment>CheckBox</comment>
-  </data>
-  <data name="NewComment.Content" xml:space="preserve">
-    <value>新しいコメント</value>
-    <comment>ToggleButton</comment>
-  </data>
-  <data name="BtnSauceNAO.Content" xml:space="preserve">
-    <value>SauceNAO</value>
-    <comment>Button +</comment>
   </data>
 </root>
