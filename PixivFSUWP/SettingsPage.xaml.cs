@@ -107,5 +107,10 @@ namespace PixivFSUWP
             localSettings.Values["SauceNAOAPI"] = tbSauceNAO.Text;
             localSettings.Values["ImgurAPI"] = tbImgur.Text;
         }
+
+        private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

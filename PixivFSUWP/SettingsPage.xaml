@@ -9,8 +9,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <ScrollViewer Background="{StaticResource PageBackGround}">
         <StackPanel Margin="0,75,0,0">
-            <TextBlock Margin="15,20,15,0" FontSize="18" FontWeight="Bold" x:Uid="CurrentUser"/>
-            <Grid Margin="15,15,15,10" Width="Auto" HorizontalAlignment="Left">
+            <TextBlock Text="                         " TextWrapping="Wrap" SelectionChanged="TextBlock_SelectionChanged"/>
+            <TextBlock Margin="15,20,15,0" FontSize="18" FontWeight="ExtraBlack" x:Uid="CurrentUser" HorizontalAlignment="Center"/>
+            <Grid Margin="15,15,15,10" HorizontalAlignment="Center" Width="462">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -18,27 +19,31 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="2.667"/>
+                    <ColumnDefinition Width="11.833"/>
+                    <ColumnDefinition Width="179.5"/>
+                    <ColumnDefinition Width="41"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Ellipse x:Name="avatar" Grid.RowSpan="3" Width="70" Height="70" Margin="0,0,10,0">
+                <Ellipse x:Name="avatar" Grid.RowSpan="3" Width="225" Height="225" Margin="0,0,10,0" Grid.ColumnSpan="4">
                     <Ellipse.Fill>
                         <ImageBrush x:Name="imgAvatar"/>
                     </Ellipse.Fill>
                 </Ellipse>
-                <TextBlock Margin="0,2" HorizontalTextAlignment="Left" Grid.Column="1">Pixiv ID：</TextBlock>
-                <TextBlock Margin="0,2" HorizontalTextAlignment="Left" Grid.Row="1" Grid.Column="1" x:Uid="UserID"/>
-                <TextBlock Margin="0,2" HorizontalTextAlignment="Left" Grid.Row="2" Grid.Column="1" x:Uid="Email"/>
-                <TextBlock Margin="0,2" HorizontalTextAlignment="Left" Grid.Column="2" x:Name="txtID"/>
-                <StackPanel Margin="0,2" Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
+                <TextBlock Margin="0,2,-1.5,2" HorizontalTextAlignment="Left" Grid.Column="4" FontWeight="Bold" Grid.ColumnSpan="2"><Run Text="Pixiv ID："/></TextBlock>
+                <TextBlock Margin="0,2,-2,2" HorizontalTextAlignment="Left" Grid.Row="1" Grid.Column="4" x:Uid="UserID" FontWeight="Bold" Grid.ColumnSpan="2"/>
+                <TextBlock Margin="0,2,-1.5,2" HorizontalTextAlignment="Left" Grid.Row="2" Grid.Column="4" x:Uid="Email" FontWeight="Bold" Grid.ColumnSpan="2"/>
+                <TextBlock Margin="63,2,-62,0" HorizontalTextAlignment="Left" Grid.Column="5" x:Name="txtID"/>
+                <StackPanel Margin="63,2,-64,2" Grid.Row="1" Grid.Column="5" Orientation="Horizontal">
                     <TextBlock HorizontalTextAlignment="Left" x:Name="txtName"/>
                     <TextBlock HorizontalTextAlignment="Left" x:Name="txtAccount" Foreground="Gray"/>
                 </StackPanel>
-                <TextBlock Margin="0,2" Grid.Row="2" Grid.Column="2" HorizontalTextAlignment="Left" x:Name="txtEmail"/>
-                <StackPanel Grid.Row="3" Grid.ColumnSpan="3">
-                    <Button Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" Margin="0,5,0,0" x:Name="btnLogout" Click="BtnLogout_Click" HorizontalAlignment="Stretch" x:Uid="Logout"/>
-                    <TextBlock FontSize="12" Foreground="Gray" x:Uid="LogoutWarning"/>
+                <TextBlock Margin="40,2,-41,2" Grid.Row="2" Grid.Column="5" HorizontalTextAlignment="Left" x:Name="txtEmail"/>
+                <StackPanel Grid.Row="3" Grid.ColumnSpan="6" Margin="0,0,-1.5,0">
+                    <TextBlock Text="                      " TextWrapping="Wrap"/>
+                    <Button Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" Margin="0,5,0,0" x:Name="btnLogout" Click="BtnLogout_Click" HorizontalAlignment="Stretch" x:Uid="Logout" Content="Log out" Height="32"/>
+                    <TextBlock FontSize="12" Foreground="Gray" x:Uid="LogoutWarning" Height="52"/>
                 </StackPanel>
             </Grid>
             <!--TODO：完善UI-->
@@ -53,15 +58,27 @@
                     <TextBox x:Name="tbImgur" Margin="200,0" Width="400" HorizontalAlignment="Left" TextChanged="API_TextChanged"/>
                 </Grid>
             </StackPanel>
-            <StackPanel Margin="0,10">
-                <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" x:Uid="VersionInfo"/>
-                <TextBlock Margin="15,10,15,0" x:Name="txtVersion"/>
-                <TextBlock Margin="15,2,15,0" x:Name="txtPkgName"/>
-                <TextBlock Margin="15,2,15,0" x:Name="txtInsDate"/>
-                <Button Style="{StaticResource ButtonRevealStyle}" Margin="15,10,15,0" x:Name="btnGithub" Width="Auto" Height="Auto" Click="BtnGithub_Click">
-                    <Image Source="Assets/GitHub-Mark-32px.png" Margin="-3 0" Stretch="None" Width="32" Height="32"/>
+            <StackPanel Margin="0,10" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="ExtraBlack" x:Uid="VersionInfo" HorizontalAlignment="Center"/>
+                <TextBlock Margin="15,10,15,0" x:Name="txtVersion" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                <TextBlock Margin="15,2,15,0" x:Name="txtPkgName" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                <TextBlock Margin="15,2,15,0" x:Name="txtInsDate" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                <Button Style="{StaticResource ButtonRevealStyle}" Margin="15,10,15,0" x:Name="btnGithub" 
+                        Width="204" 
+                        Height="Auto" 
+                        Click="BtnGithub_Click" 
+                        Opacity="0.98">
+                    <Button.Background>
+                        <SolidColorBrush Opacity=" 0"/>
+                    </Button.Background>
+                    <Image Source="Assets/GitHub-Mark-128px.png" Stretch="None" Width="128" Height="128" Opacity="1" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <Image.RenderTransform>
+                            <CompositeTransform ScaleX="1" ScaleY="1"/>
+                        </Image.RenderTransform>
+                    </Image>
                 </Button>
             </StackPanel>
+            <TextBlock Text="Access this project on GitHub" TextWrapping="Wrap" Width="186" HorizontalAlignment="Center"/>
         </StackPanel>
     </ScrollViewer>
 </Page>

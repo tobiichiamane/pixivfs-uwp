@@ -87,7 +87,11 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock HorizontalAlignment="Center" Margin="0,150,0,0" x:Uid="LoginBanner"/>
-            <Image Source="Assets/PixivText.png"/>
+            <Image Source="Assets/Pixiv_logo.png" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <CompositeTransform ScaleX="0.6" ScaleY="0.6"/>
+                </Image.RenderTransform>
+            </Image>
             <StackPanel x:Name="stkTxts" Grid.Row="1" Margin="20,20,20,10" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <TextBlock Margin="5" x:Uid="Username"/>
                 <TextBox x:Name="txtUserName" Margin="5"/>
