@@ -625,8 +625,4 @@
     <value>Failed to save「{0}」</value>
     <comment>PlainText</comment>
   </data>
-  <data name="AccessGitHub" xml:space="preserve">
-    <value>Access this project on GitHub</value>
-    <comment>TextBlock</comment>
-  </data>
 </root>
