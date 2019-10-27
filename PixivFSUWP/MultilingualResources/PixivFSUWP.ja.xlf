@@ -641,6 +641,11 @@
           <target state="new">Pixiv ID</target>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock +</note>
         </trans-unit>
+        <trans-unit id="AccessGitHub" translate="yes" xml:space="preserve">
+          <source>Access this project on GitHub</source>
+          <target state="new">Access this project on GitHub</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
+        </trans-unit>
       </group>
     </body>
   </file>
