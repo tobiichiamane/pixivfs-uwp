@@ -34,105 +34,143 @@
         </DataTemplate>
     </Page.Resources>
     <ScrollViewer Background="{StaticResource PageBackGround}" VerticalScrollBarVisibility="Hidden">
-        <StackPanel Margin="0,75,0,0">
-            <TextBlock Margin="15,20,15,0" FontSize="18" FontWeight="Bold" x:Uid="CurrentUser"/>
-            <Grid Margin="15,15,15,10" Width="Auto" HorizontalAlignment="Left">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Ellipse x:Name="avatar" Grid.RowSpan="3" Width="70" Height="70" Margin="0,0,10,0">
-                    <Ellipse.Fill>
-                        <ImageBrush x:Name="imgAvatar"/>
-                    </Ellipse.Fill>
-                </Ellipse>
-                <TextBlock Margin="0,2" HorizontalTextAlignment="Left" Grid.Column="1">Pixiv ID：</TextBlock>
-                <TextBlock Margin="0,2" HorizontalTextAlignment="Left" Grid.Row="1" Grid.Column="1" x:Uid="UserID"/>
-                <TextBlock Margin="0,2" HorizontalTextAlignment="Left" Grid.Row="2" Grid.Column="1" x:Uid="Email"/>
-                <TextBlock Margin="0,2" HorizontalTextAlignment="Left" Grid.Column="2" x:Name="txtID"/>
-                <StackPanel Margin="0,2" Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
-                    <TextBlock HorizontalTextAlignment="Left" x:Name="txtName"/>
-                    <TextBlock HorizontalTextAlignment="Left" x:Name="txtAccount" Foreground="Gray"/>
-                </StackPanel>
-                <TextBlock Margin="0,2" Grid.Row="2" Grid.Column="2" HorizontalTextAlignment="Left" x:Name="txtEmail"/>
-                <StackPanel Grid.Row="3" Grid.ColumnSpan="3">
-                    <Button Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" Margin="0,5,0,0" x:Name="btnLogout" Click="BtnLogout_Click" HorizontalAlignment="Stretch" x:Uid="Logout"/>
-                    <TextBlock FontSize="12" Foreground="Gray" x:Uid="LogoutWarning"/>
-                </StackPanel>
-            </Grid>
-            <!--TODO：完善UI-->
-            <StackPanel Margin="0,10" Visibility="Collapsed">
-                <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" Text="SauceNAO"/>
-                <Grid>
-                    <TextBlock x:Uid="SauceNaoAPI" Margin="20,0" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalTextAlignment="Right"/>
-                    <TextBox x:Name="tbSauceNAO" Margin="200,0" Width="400" HorizontalAlignment="Left" TextChanged="API_TextChanged"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Margin="0,75,0,0">
+                <TextBlock Margin="15,20,15,0" FontSize="18" FontWeight="Bold" x:Uid="CurrentUser"/>
+                <Grid Margin="15,15,15,10" Width="Auto" HorizontalAlignment="Left">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Ellipse x:Name="avatar" Grid.RowSpan="3" Width="70" Height="70" Margin="0,0,10,0">
+                        <Ellipse.Fill>
+                            <ImageBrush x:Name="imgAvatar" Stretch="UniformToFill"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Margin="0,2" HorizontalTextAlignment="Left" Grid.Column="1">Pixiv ID：</TextBlock>
+                    <TextBlock Margin="0,2" HorizontalTextAlignment="Left" Grid.Row="1" Grid.Column="1" x:Uid="UserID"/>
+                    <TextBlock Margin="0,2" HorizontalTextAlignment="Left" Grid.Row="2" Grid.Column="1" x:Uid="Email"/>
+                    <TextBlock Margin="0,2" HorizontalTextAlignment="Left" Grid.Column="2" x:Name="txtID"/>
+                    <StackPanel Margin="0,2" Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
+                        <TextBlock HorizontalTextAlignment="Left" x:Name="txtName"/>
+                        <TextBlock HorizontalTextAlignment="Left" x:Name="txtAccount" Foreground="Gray"/>
+                    </StackPanel>
+                    <TextBlock Margin="0,2" Grid.Row="2" Grid.Column="2" HorizontalTextAlignment="Left" x:Name="txtEmail"/>
+                    <StackPanel Grid.Row="3" Grid.ColumnSpan="3">
+                        <Button Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" Margin="0,5,0,0" x:Name="btnLogout" Click="BtnLogout_Click" HorizontalAlignment="Stretch" x:Uid="Logout"/>
+                        <TextBlock FontSize="12" Foreground="Gray" x:Uid="LogoutWarning"/>
+                    </StackPanel>
                 </Grid>
-                <Grid>
-                    <TextBlock x:Uid="ImgurAPI" Margin="20,0" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalTextAlignment="Right"/>
-                    <TextBox x:Name="tbImgur" Margin="200,0" Width="400" HorizontalAlignment="Left" TextChanged="API_TextChanged"/>
-                </Grid>
-            </StackPanel>
-            <!--缓存管理-->
-            <StackPanel Margin="0,10">
-                <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" x:Uid="Cache"/>
-                <StackPanel Margin="15,10,15,0" Orientation="Horizontal">
-                    <TextBlock x:Uid="CacheSize"/>
-                    <TextBlock x:Name="txtCacheSize" x:Uid="Calculating"/>
-                </StackPanel>
-                <Button Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5"
+                <!--缓存管理-->
+                <StackPanel Margin="0,10">
+                    <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" x:Uid="Cache"/>
+                    <StackPanel Margin="15,10,15,0" Orientation="Horizontal">
+                        <TextBlock x:Uid="CacheSize"/>
+                        <TextBlock x:Name="txtCacheSize" x:Uid="Calculating"/>
+                    </StackPanel>
+                    <Button Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5"
                         Margin="15,10,15,0" x:Uid="ClearCache"
                         Width="170" x:Name="btnClearCache" Click="btnClearCache_Click"/>
-                <Button Style="{StaticResource ButtonRevealStyle}"
+                    <Button Style="{StaticResource ButtonRevealStyle}"
                         BorderThickness="1.5" Margin="15,5,15,0" x:Uid="DeleteInvalid" 
                         Width="170" x:Name="btnDelInvalid" Click="btnDelInvalid_Click"/>
-            </StackPanel>
-            <StackPanel Margin="0,10">
-                <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" x:Uid="VersionInfo"/>
-                <TextBlock Margin="15,10,15,0" x:Name="txtVersion"/>
-                <TextBlock Margin="15,2,15,0" x:Name="txtPkgName"/>
-                <TextBlock Margin="15,2,15,0" x:Name="txtInsDate"/>
-                <StackPanel Orientation="Vertical" Margin="15,10,15,0">
-                    <Button Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" x:Name="btnGithub" Width="170" Height="Auto" Click="BtnGithub_Click">
-                        <Grid Width="130">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="Assets/GH_64.png" Stretch="Uniform" Width="20" Height="20"/>
-                            <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0">GitHub Repo</TextBlock>
-                        </Grid>
-                    </Button>
-                    <Button Margin="0 5 0 0" Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" x:Name="btnQQGroup" Width="170" Height="Auto" Click="btnQQGroup_Click">
-                        <Grid Width="130">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="Assets/QQ_64.png" Stretch="Uniform" Width="20" Height="20"/>
-                            <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0">QQ Community</TextBlock>
-                        </Grid>
-                    </Button>
+                </StackPanel>
+                <StackPanel Margin="0,10">
+                    <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" x:Uid="VersionInfo"/>
+                    <TextBlock Margin="15,10,15,0" x:Name="txtVersion"/>
+                    <TextBlock Margin="15,2,15,0" x:Name="txtPkgName"/>
+                    <TextBlock Margin="15,2,15,0" x:Name="txtInsDate"/>
+                    <StackPanel Orientation="Vertical" Margin="15,10,15,0">
+                        <Button Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" x:Name="btnGithub" Width="170" Height="Auto" Click="BtnGithub_Click">
+                            <Grid Width="130">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="Assets/GH_64.png" Stretch="Uniform" Width="20" Height="20"/>
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0">GitHub Repo</TextBlock>
+                            </Grid>
+                        </Button>
+                        <Button Margin="0 5 0 0" Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" x:Name="btnQQGroup" Width="170" Height="Auto" Click="btnQQGroup_Click">
+                            <Grid Width="130">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="Assets/QQ_64.png" Stretch="Uniform" Width="20" Height="20"/>
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0">QQ Community</TextBlock>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+                <!--作者和参与者-->
+                <StackPanel Margin="0,10">
+                    <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" x:Uid="Developers"/>
+                    <TextBlock Margin="15,10,15,0" x:Uid="MainDeveloper"/>
+                    <ListView Margin="15,10,0,0" x:Name="lstMainDev" SelectionMode="None" Width="365" HorizontalAlignment="Left"
+                          IsItemClickEnabled="True" ItemTemplate="{StaticResource contributorTemplate}" ItemClick="lstMainDev_ItemClick"/>
+                    <TextBlock x:Name="txtContributors" Margin="15,10,5,0" x:Uid="Contributors"/>
+                    <ProgressRing x:Name="progressLoadingContributors" Margin="15,10,5,0"
+                              IsActive="False" Visibility="Collapsed" HorizontalAlignment="Left"/>
+                    <ListView Margin="15,10,0,0" x:Name="lstContributors" SelectionMode="None" Width="365" Visibility="Collapsed" HorizontalAlignment="Left"
+                          IsItemClickEnabled="True" ItemTemplate="{StaticResource contributorTemplate}" ItemClick="lstMainDev_ItemClick"/>
                 </StackPanel>
             </StackPanel>
-            <!--作者和参与者-->
-            <StackPanel Margin="0,10">
-                <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" x:Uid="Developers"/>
-                <TextBlock Margin="15,10,15,0" x:Uid="MainDeveloper"/>
-                <ListView Margin="15,10,0,0" x:Name="lstMainDev" SelectionMode="None" Width="365" HorizontalAlignment="Left"
-                          IsItemClickEnabled="True" ItemTemplate="{StaticResource contributorTemplate}" ItemClick="lstMainDev_ItemClick"/>
-                <TextBlock x:Name="txtContributors" Margin="15,10,5,0" x:Uid="Contributors"/>
-                <ProgressRing x:Name="progressLoadingContributors" Margin="15,10,5,0"
-                              IsActive="False" Visibility="Collapsed" HorizontalAlignment="Left"/>
-                <ListView Margin="15,10,0,0" x:Name="lstContributors" SelectionMode="None" Width="365" Visibility="Collapsed" HorizontalAlignment="Left"
-                          IsItemClickEnabled="True" ItemTemplate="{StaticResource contributorTemplate}" ItemClick="lstMainDev_ItemClick"/>
+            <StackPanel Grid.Column="1" Margin="0,75,0,0">
+                <!--#region 新坑-->
+                <StackPanel Margin="0,10" Visibility="Visible">
+                    <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" Text="新坑"/>
+                    <Grid Margin="30 0">
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Right"/>
+                                <!--HorizontalTextAlignment="Right" 这东西我不认识-->
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="图片默认保存名:"/>
+                        <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" Margin="0 5">
+                            <ComboBoxItem Content="图片ID"/>
+                        </ComboBox>
+
+                        <TextBlock Text="图片默认保存路径:" Grid.Row="1"/>
+                        <AutoSuggestBox Grid.Row="1" Grid.Column="1" Margin="0 5"
+                                HorizontalAlignment="Stretch" QueryIcon="OpenLocal"/>
+
+                        <TextBlock Grid.Row="2" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left" Text="SauceNAO"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" x:Uid="SauceNaoAPI"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbSauceNAO" Margin="0 5" TextChanged="API_TextChanged"/>
+                        <TextBlock Grid.Row="4" Grid.Column="0" x:Uid="ImgurAPI"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" x:Name="tbImgur" Margin="0 5" TextChanged="API_TextChanged"/>
+
+                    </Grid>
+                </StackPanel>
+
+                <!--#endregion-->
+
             </StackPanel>
-        </StackPanel>
+        </Grid>
     </ScrollViewer>
 </Page>
