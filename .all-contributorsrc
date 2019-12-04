@@ -131,11 +131,21 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "lingxd",
+      "name": "hokori",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/27987136?v=4",
+      "profile": "https://www.hokori.cn",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
   "projectName": "pixivfs-uwp",
   "projectOwner": "tobiichiamane",
   "repoType": "github",
-  "repoHost": "https://github.com"
+  "repoHost": "https://github.com",
+  "skipCi": true
 }
