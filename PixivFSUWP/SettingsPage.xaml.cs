@@ -183,13 +183,5 @@ namespace PixivFSUWP
             await Launcher.LaunchUriAsync(new
                 Uri(@"https://shang.qq.com/wpa/qunwpa?idkey=d6ba54103ced0e2d7c5bbf6422e4f9f6fa4849c91d4521fe9a1beec72626bbb6"));
         }
-
-        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (Width < 700)
-            {
-                
-            }
-        }
     }
 }

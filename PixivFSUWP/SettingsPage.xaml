@@ -8,7 +8,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    SizeChanged="Page_SizeChanged"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
         <converters:ContributionsConverter x:Key="ContributionsConverter"/>
@@ -186,7 +185,6 @@
                     <ListView Margin="15,10,0,0" x:Name="lstContributors" SelectionMode="None" Visibility="Collapsed" HorizontalAlignment="Stretch"
                           IsItemClickEnabled="True" ItemTemplate="{StaticResource contributorTemplate}" ItemClick="lstMainDev_ItemClick"/>
                 </StackPanel>
-
                 <!--#endregion-->
 
             </StackPanel>
