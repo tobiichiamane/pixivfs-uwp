@@ -190,10 +190,15 @@ namespace PixivFSUWP
 
         private async void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if (ContentFrame.Content is SearchPage)
-                await (ContentFrame.Content as SearchPage).ShowSearch();
-            else
-                ContentFrame.Navigate(typeof(SearchPage));
+            try
+            {
+                if (ContentFrame.Content is SearchPage)
+                    await (ContentFrame.Content as SearchPage).ShowSearch();
+                else
+                    ContentFrame.Navigate(typeof(SearchPage));
+            }
+            //吞掉异常，这个异常没有意义
+            catch { }
         }
 
         public void UpdateNavButtonState()
