@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="pixiv-uwp-demo-shimakaze"
-    Publisher="CN=Shimakaze"
+    Name="31db69de-89d1-4fa9-9878-fcd942f090ca"
+    Publisher="CN=Tobii"
     Version="2.5.12.0" />
 
   <mp:PhoneIdentity PhoneProductId="31db69de-89d1-4fa9-9878-fcd942f090ca" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Pixiv UWP</DisplayName>
-    <PublisherDisplayName>frg2089</PublisherDisplayName>
+    <PublisherDisplayName>Tobii</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
