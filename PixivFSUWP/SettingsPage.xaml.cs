@@ -33,6 +33,7 @@ namespace PixivFSUWP
         {
             this.InitializeComponent();
             _ = loadContentsAsync();
+            
         }
 
         private bool _backflag { get; set; } = false;
@@ -93,10 +94,19 @@ namespace PixivFSUWP
             lstMainDev.ItemsSource = mainDevs;
             //加载贡献者信息
             _ = loadContributors();
+
             //TODO: 考虑设置项不存在的情况
-            //ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            //tbSauceNAO.Text = localSettings.Values["SauceNAOAPI"] as string;//读取设置项
-            //tbImgur.Text = localSettings.Values["ImgurAPI"] as string;
+            // 酱紫就可以不用catch ArgumentNullException啦!
+            ApplicationDataContainer lset = ApplicationData.Current.LocalSettings;
+            if (lset.Values["SauceNAOAPI"] != null)
+                tbSauceNAO.Text = lset.Values["SauceNAOAPI"] as string;//读取设置项
+            if (lset.Values["ImgurAPI"] != null)
+                tbImgur.Text = lset.Values["ImgurAPI"] as string;
+            if (lset.Values["PicName"] != null)
+                PicName_ASB.Text = lset.Values["PicName"] as string;
+            if (lset.Values["DownloadPath"] != null)
+                PicSaveDir_ASB.Text = lset.Values["DownloadPath"] as string;
+
             _ = calculateCacheSize();
             //等待头像加载完毕
             imgAvatar.ImageSource = await imgTask;
@@ -182,6 +192,37 @@ namespace PixivFSUWP
             //腾讯的一键加群
             await Launcher.LaunchUriAsync(new
                 Uri(@"https://shang.qq.com/wpa/qunwpa?idkey=d6ba54103ced0e2d7c5bbf6422e4f9f6fa4849c91d4521fe9a1beec72626bbb6"));
+        }
+
+        private void PicName_TC(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            ApplicationDataContainer lset = ApplicationData.Current.LocalSettings;
+            lset.Values["PicName"] = sender.Text;
+        }
+
+        private void PicSaveDir_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            localSettings.Values["DownloadPath"] = sender.Text;
+        }
+
+        private async void SelectSaveDir_QS(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            var folderPicker = new Windows.Storage.Pickers.FolderPicker();
+            folderPicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
+            folderPicker.FileTypeFilter.Add("*");
+
+            StorageFolder folder = await folderPicker.PickSingleFolderAsync();
+            if (folder != null)
+            {
+                Windows.Storage.AccessCache.StorageApplicationPermissions.
+                FutureAccessList.AddOrReplace("PickedFolderToken", folder);
+                sender.Text = folder.Path;
+            }
+            else
+            {
+                //this.tbDir.Text = "Operation cancelled.";
+            }
         }
     }
 }

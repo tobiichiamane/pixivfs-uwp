@@ -220,6 +220,82 @@ namespace PixivFSUWP
 
         private async void QuickSave_Click(object sender, RoutedEventArgs e)
         {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            if (tapped == null) return;
+            var i = tapped;
+            string saveDir = localSettings.Values["DownloadPath"] as string;
+            if (string.IsNullOrWhiteSpace(saveDir))
+            {
+                await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(GetResourceString("Error_NoSaveDir"));
+                Frame.Navigate(typeof(SettingsPage));
+                return;
+            }
+            Windows.Data.Json.JsonObject res = new Windows.Data.Json.JsonObject();
+            try
+            {
+                res = await new PixivAppAPI(Data.OverAll.GlobalBaseAPI).IllustDetail(i.ItemId.ToString());
+            }
+            catch (System.Net.Http.HttpRequestException ex)// 发送请求时发生错误。
+            {
+                System.Diagnostics.Debug.WriteLine(string.Format(GetResourceString("Error_DownloadFailed"), i.Title, ex.Message));
+                await ((Frame.Parent as Grid)?.Parent as MainPage)?.
+                    ShowTip(string.Format(GetResourceString("Error_DownloadFailed").Replace(@"\n", "\n"), i.Title, ex.Message));
+                return;
+            }
+            var illust = Data.IllustDetail.FromJsonValue(res);
+
+            string fileName = string.Empty;
+            try
+            {
+                fileName = StaticFuncs.GetPicName(illust);
+            }
+            catch (StaticFuncs.SettingNullException ex)
+            {
+                await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(GetResourceString("Error_NoSaveDir"));
+                Frame.Navigate(typeof(SettingsPage));
+                return;
+            }
+
+            StorageFolder storageFolder = await StorageFolder.GetFolderFromPathAsync(saveDir);
+            var file = await storageFolder.CreateFileAsync(fileName, CreationCollisionOption.GenerateUniqueName);
+            System.Diagnostics.Debug.WriteLine(string.Format(GetResourceString("DownloadStart").Replace(@"\n", "\n"), i.Title, fileName));
+            await ((Frame.Parent as Grid)?.Parent as MainPage)?.
+                ShowTip(string.Format(GetResourceString("DownloadStart").Replace(@"\n", "\n"), i.Title, fileName));
+
+
+            if (file != null)
+            {
+                CachedFileManager.DeferUpdates(file);
+                System.Diagnostics.Debug.WriteLine("Download From = " + illust.OriginalUrls[0]);
+                System.Diagnostics.Debug.WriteLine("Download To = " + file.Path);
+                try
+                {
+                    using (var imgstream = await Data.OverAll.DownloadImage(illust.OriginalUrls[0]))
+                    {
+                        using (var filestream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                        {
+                            await imgstream.CopyToAsync(filestream.AsStream());
+                        }
+                    }
+                    var updateStatus = await CachedFileManager.CompleteUpdatesAsync(file);
+                    if (updateStatus == FileUpdateStatus.Complete)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Download Complete = " + file.Name);
+                        await ((Frame.Parent as Grid)?.Parent as MainPage)?.
+                            ShowTip(string.Format(GetResourceString("WorkSavedPlain"), i.Title));
+                    }
+                    else
+                        await ((Frame.Parent as Grid)?.Parent as MainPage)?.
+                            ShowTip(string.Format(GetResourceString("WorkSaveFailedPlain"), i.Title));
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(string.Format(GetResourceString("Error_DownloadFailed").Replace(@"\n", "\n"), i.Title, ex.Message));
+                    await ((Frame.Parent as Grid)?.Parent as MainPage)?.
+                        ShowTip(string.Format(GetResourceString("Error_DownloadFailed").Replace(@"\n", "\n"), i.Title, ex.Message));
+                }
+            }
+            /*
             if (tapped == null) return;
             var i = tapped;
             FileSavePicker picker = new FileSavePicker();
@@ -248,6 +324,9 @@ namespace PixivFSUWP
                     await ((Frame.Parent as Grid)?.Parent as MainPage)?.
                             ShowTip(string.Format(GetResourceString("WorkSaveFailedPlain"), i.Title));
             }
+            
+            */
+
         }
     }
 }

@@ -188,6 +188,7 @@
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StaticFuncs.cs" />
     <Compile Include="UserDetailPage.xaml.cs">
       <DependentUpon>UserDetailPage.xaml</DependentUpon>
     </Compile>
