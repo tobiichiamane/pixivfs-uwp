@@ -100,7 +100,8 @@ namespace PixivFSUWP
 
         private void BtnSetting_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Navigate(typeof(SettingsPage));
+            //ContentFrame.Navigate(typeof(SettingsPage));
+            SettingFlyout.ShowAt(LayoutRoot);
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)

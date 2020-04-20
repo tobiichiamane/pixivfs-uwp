@@ -24,6 +24,11 @@
             <NavigationThemeTransition />
         </TransitionCollection>
     </Page.Transitions>
+    <FlyoutBase.AttachedFlyout>
+        <Flyout x:Name="SettingFlyout"  ShowMode="Auto" LightDismissOverlayMode="Auto" Placement="RightEdgeAlignedTop">
+            <local:SettingsPage/>
+        </Flyout>
+    </FlyoutBase.AttachedFlyout>
     <Grid x:Name="LayoutRoot">
         <Frame x:Name="ContentFrame"/>
         <NavigationView PaneDisplayMode="Top" x:Name="NavControl"
