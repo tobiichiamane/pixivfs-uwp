@@ -73,20 +73,20 @@
                     <Flyout x:Name="SaveNameHelper" Placement="Bottom">
                         <StackPanel>
                             <TextBlock Text="您可以使用以下变量" FontWeight="Bold" FontSize="18"/>
-                            <TextBlock Text="$P 作品ID"/>
-                            <TextBlock Text="$p 作品分P"/>
-                            <TextBlock Text="$t 作品标题"/>
-                            <TextBlock Text="$d 作品日期"/>
-                            <TextBlock Text="$l 作品链接"/>
-                            <TextBlock Text="$A 作者ID"/>
-                            <TextBlock Text="$a 作者名"/>
+                            <TextBlock Text="$P ${picture_id} 作品ID"/>
+                            <TextBlock Text="$p ${picture_page} 作品分P"/>
+                            <TextBlock Text="$t ${picture_title} 作品标题"/>
+                            <TextBlock Text="$l ${picture_url} 作品链接"/>
+                            <TextBlock Text="$d ${upload_date} 作品日期"/>
+                            <TextBlock Text="$A ${author_id} 作者ID"/>
+                            <TextBlock Text="$a ${author_name} 作者名"/>
                         </StackPanel>
                     </Flyout>
                 </FlyoutBase.AttachedFlyout>
                 <TextBlock Margin="15 0" FontSize="18" FontWeight="Bold" Text="下载管理"/>
                 <TextBlock Text="图片文件名格式" Margin="15 5"/>
                 <AutoSuggestBox x:Name="PicName_ASB" Margin="15 5" HorizontalAlignment="Left" QueryIcon="Help" Width="300"
-                                PlaceholderText="$P_$p" TextChanged="PicName_TextChanged" QuerySubmitted="PicNameHelp_QS"/>
+                                PlaceholderText="${picture_id}_${picture_page}" TextChanged="PicName_TextChanged" QuerySubmitted="PicNameHelp_QS"/>
                 <TextBlock Text="图片保存路径:" Margin="15 5"/>
                 <AutoSuggestBox x:Name="PicSaveDir_ASB" Margin="15 5" HorizontalAlignment="Left" QueryIcon="OpenLocal" Width="300"
                                 TextChanged="PicSaveDir_TextChanged" QuerySubmitted="SelectSaveDir_QS"/>

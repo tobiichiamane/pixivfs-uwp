@@ -34,7 +34,7 @@ namespace PixivFSUWP
             if (!(ApplicationData.Current.LocalSettings.Values["PictureSaveName"] is string picName) ||
                 string.IsNullOrWhiteSpace(picName))
             {
-                picName = "$P_$p";
+                picName = "${picture_id}_${picture_page}";
                 ApplicationData.Current.LocalSettings.Values["PictureSaveName"] = picName;
             }
             if (!(ApplicationData.Current.LocalSettings.Values["PictureSaveDirectory"] is string picDir) ||
@@ -156,14 +156,29 @@ namespace PixivFSUWP
                 .Replace("$p", p.ToString())
                 // 标题
                 .Replace("$t", illust.Title)
-                // 上传日期
-                .Replace("$d", illust.CreateDate)
                 // 来源URL
                 .Replace("$l", illust.OriginalUrls[p])
+                // 上传日期
+                .Replace("$d", illust.CreateDate)
                 // 作者UID
                 .Replace("$A", illust.AuthorID.ToString())
                 // 作者名
-                .Replace("$a", illust.Author),
+                .Replace("$a", illust.Author)
+                // PID
+                .Replace("${picture_id}", illust.IllustID.ToString(), StringComparison.OrdinalIgnoreCase)
+                // 分P数
+                .Replace("${picture_page}", p.ToString(), StringComparison.OrdinalIgnoreCase)
+                // 标题
+                .Replace("${picture_title}", illust.Title, StringComparison.OrdinalIgnoreCase)
+                // 来源URL
+                .Replace("${picture_url}", illust.OriginalUrls[p], StringComparison.OrdinalIgnoreCase)
+                // 上传日期
+                .Replace("${upload_date}", illust.CreateDate, StringComparison.OrdinalIgnoreCase)
+                // 作者UID
+                .Replace("${author_id}", illust.AuthorID.ToString(), StringComparison.OrdinalIgnoreCase)
+                // 作者名
+                .Replace("${author_name}", illust.Author, StringComparison.OrdinalIgnoreCase)
+                ,
                  // 文件名合法化 \ / : * ? " < > | 
                  "\\\\|\\/|\\:|\\*|\\?|\\<|\\>|\\||\"", " ") + "." + ((illust.Type == "ugoira") ? "gif" : illust.OriginalUrls[p].Split('.').Last());
         }
