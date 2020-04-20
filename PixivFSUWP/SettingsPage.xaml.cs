@@ -27,7 +27,7 @@ namespace PixivFSUWP
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class SettingsPage : Page, IGoBackFlag
+    public sealed partial class SettingsPage : IGoBackFlag
     {
         public SettingsPage()
         {
@@ -42,21 +42,21 @@ namespace PixivFSUWP
             _backflag = value;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            ((Frame.Parent as Grid)?.Parent as MainPage)?.SelectNavPlaceholder(GetResourceString("SettingsPagePlain"));
-        }
+        //protected override void OnNavigatedTo(NavigationEventArgs e)
+        //{
+        //    base.OnNavigatedTo(e);
+        //    ((Frame.Parent as Grid)?.Parent as MainPage)?.SelectNavPlaceholder(GetResourceString("SettingsPagePlain"));
+        //}
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-            if (!_backflag)
-            {
-                Data.Backstack.Default.Push(typeof(SettingsPage), null);
-                ((Frame.Parent as Grid)?.Parent as MainPage)?.UpdateNavButtonState();
-            }
-        }
+        //protected override void OnNavigatedFrom(NavigationEventArgs e)
+        //{
+        //    base.OnNavigatedFrom(e);
+        //    if (!_backflag)
+        //    {
+        //        Data.Backstack.Default.Push(typeof(SettingsPage), null);
+        //        ((Frame.Parent as Grid)?.Parent as MainPage)?.UpdateNavButtonState();
+        //    }
+        //}
 
         async Task loadContentsAsync()
         {
@@ -140,7 +140,7 @@ namespace PixivFSUWP
             catch { }
             finally
             {
-                ((Frame.Parent as Grid).Parent as MainPage).Frame.Navigate(typeof(LoginPage));
+                //((Frame.Parent as Grid).Parent as MainPage).Frame.Navigate(typeof(LoginPage));
             }
         }
 
