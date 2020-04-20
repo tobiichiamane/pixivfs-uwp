@@ -67,6 +67,30 @@
                     <TextBlock FontSize="12" Foreground="Gray" x:Uid="LogoutWarning"/>
                 </StackPanel>
             </Grid>
+            <!--图片保存地址-->
+            <StackPanel Margin="0 10">
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout x:Name="SaveNameHelper" Placement="Bottom">
+                        <StackPanel>
+                            <TextBlock Text="您可以使用以下变量" FontWeight="Bold" FontSize="18"/>
+                            <TextBlock Text="$P 作品ID"/>
+                            <TextBlock Text="$p 作品分P"/>
+                            <TextBlock Text="$t 作品标题"/>
+                            <TextBlock Text="$d 作品日期"/>
+                            <TextBlock Text="$l 作品链接"/>
+                            <TextBlock Text="$A 作者ID"/>
+                            <TextBlock Text="$a 作者名"/>
+                        </StackPanel>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+                <TextBlock Margin="15 0" FontSize="18" FontWeight="Bold" Text="保存设置"/>
+                <TextBlock Text="图片文件名格式" Margin="15 5"/>
+                <AutoSuggestBox x:Name="PicName_ASB" Margin="15 5" HorizontalAlignment="Left" QueryIcon="Help" Width="300"
+                                PlaceholderText="$P_$p" TextChanged="PicName_TextChanged" QuerySubmitted="PicNameHelp_QS"/>
+                <TextBlock Text="图片保存路径:" Margin="15 5"/>
+                <AutoSuggestBox x:Name="PicSaveDir_ASB" Margin="15 5" HorizontalAlignment="Left" QueryIcon="OpenLocal" Width="300"
+                                TextChanged="PicSaveDir_TextChanged" QuerySubmitted="SelectSaveDir_QS"/>
+            </StackPanel>
             <!--TODO：完善UI-->
             <StackPanel Margin="0,10" Visibility="Collapsed">
                 <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" Text="SauceNAO"/>
