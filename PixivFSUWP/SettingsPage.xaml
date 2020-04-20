@@ -83,7 +83,7 @@
                         </StackPanel>
                     </Flyout>
                 </FlyoutBase.AttachedFlyout>
-                <TextBlock Margin="15 0" FontSize="18" FontWeight="Bold" Text="保存设置"/>
+                <TextBlock Margin="15 0" FontSize="18" FontWeight="Bold" Text="下载管理"/>
                 <TextBlock Text="图片文件名格式" Margin="15 5"/>
                 <AutoSuggestBox x:Name="PicName_ASB" Margin="15 5" HorizontalAlignment="Left" QueryIcon="Help" Width="300"
                                 PlaceholderText="$P_$p" TextChanged="PicName_TextChanged" QuerySubmitted="PicNameHelp_QS"/>

@@ -16,16 +16,13 @@ using System.Collections;
 
 namespace PixivFSUWP
 {
-    public class DownloadQueue
+    public static class DownloadQueue
     {
-        public static DownloadQueue Queue = new DownloadQueue();
+        private static Queue<(WaterfallItemViewModel, Frame)> Queue = new Queue<(WaterfallItemViewModel, Frame)>();
+        public static Queue<(WaterfallItemViewModel, Frame)> FailQueue = new Queue<(WaterfallItemViewModel, Frame)>();
 
-        private Queue<(WaterfallItemViewModel, Frame)> list = new Queue<(WaterfallItemViewModel, Frame)>();
-
-        public bool Downloading { get; private set; } = false;
-        public int Count => list.Count;
-
-        public bool IsReadOnly => false;
+        public static bool Downloading { get; private set; } = false;
+        public static int Count => Queue.Count;
 
         static async Task Download((WaterfallItemViewModel, Frame) task)
         {
@@ -51,11 +48,14 @@ namespace PixivFSUWP
             var i = tapped;
             try
             {
+                System.Diagnostics.Debug.WriteLine(string.Format("[DownloadQueue]发送请求:{0}", i.Title));
                 res = await new PixivAppAPI(Data.OverAll.GlobalBaseAPI).IllustDetail(i.ItemId.ToString());
             }
             catch (System.Net.Http.HttpRequestException ex)// 发送请求时发生错误。
             {
-                System.Diagnostics.Debug.WriteLine(string.Format(GetResourceString("Error_DownloadFailed"), i.Title, ex.Message));
+                FailQueue.Enqueue(task);
+                System.Diagnostics.Debug.WriteLine(string.Format("[DownloadQueue]请求失败:{0}", ex.Message));
+                System.Diagnostics.Debug.WriteLine("[DownloadQueue]已添加到失败列表");
                 await ((Frame.Parent as Grid)?.Parent as MainPage)?.
                     ShowTip(string.Format(GetResourceString("Error_DownloadFailed").Replace(@"\n", "\n"), i.Title, ex.Message));
                 return;
@@ -66,18 +66,19 @@ namespace PixivFSUWP
             for (ushort loopnum = 0; loopnum < illust.OriginalUrls.Count; loopnum++)
             {
                 var file = await (await StorageFolder.GetFolderFromPathAsync(picDir)).CreateFileAsync(GetPicName(picName, illust, loopnum), CreationCollisionOption.GenerateUniqueName);
-                System.Diagnostics.Debug.WriteLine(string.Format(GetResourceString("DownloadStart").Replace(@"\n", "\n"), i.Title, file.Name));
+                System.Diagnostics.Debug.WriteLine(string.Format("[DownloadQueue]开始下载:{0};{1}", i.Title, file.Name));
                 await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(string.Format(GetResourceString("DownloadStart").Replace(@"\n", "\n"), i.Title, file.Name));
                 if (file != null)
                 {
                     CachedFileManager.DeferUpdates(file);
-                    System.Diagnostics.Debug.WriteLine("Download From = " + illust.OriginalUrls[loopnum]);
-                    System.Diagnostics.Debug.WriteLine("Download To = " + file.Path);
+                    System.Diagnostics.Debug.WriteLine("[DownloadQueue]From:" + illust.OriginalUrls[loopnum]);
+                    System.Diagnostics.Debug.WriteLine("[DownloadQueue]To  :" + file.Path);
                     try
                     {
                         // 是GIF
                         if (illust.Type == "ugoira")
                         {
+                            System.Diagnostics.Debug.WriteLine("[DownloadQueue]是一个动图");
                             using (var ugoira = await Data.UgoiraHelper.GetUgoiraAsync(illust.IllustID.ToString()))
                             using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
                             using (var renderer = new Lumia.Imaging.GifRenderer())
@@ -94,6 +95,7 @@ namespace PixivFSUWP
                         // 不是Gif
                         else
                         {
+                            System.Diagnostics.Debug.WriteLine("[DownloadQueue]不是一个动图");
                             using (var imgstream = await Data.OverAll.DownloadImage(illust.OriginalUrls[loopnum]))
                             using (var filestream = await file.OpenAsync(FileAccessMode.ReadWrite))
                                 await imgstream.CopyToAsync(filestream.AsStream());
@@ -101,32 +103,49 @@ namespace PixivFSUWP
                     }
                     catch (Exception ex)
                     {
-                        System.Diagnostics.Debug.WriteLine(string.Format(GetResourceString("Error_DownloadFailed").Replace(@"\n", "\n"), i.Title, ex.Message));
+                        FailQueue.Enqueue(task);
+                        System.Diagnostics.Debug.WriteLine(string.Format("[DownloadQueue]下载失败:{0}", ex.Message));
+                        System.Diagnostics.Debug.WriteLine("[DownloadQueue]已添加到失败列表");
                         await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(string.Format(GetResourceString("Error_DownloadFailed").Replace(@"\n", "\n"), i.Title, ex.Message));
                     }
                     var updateStatus = await CachedFileManager.CompleteUpdatesAsync(file);
                     if (updateStatus == FileUpdateStatus.Complete)
                     {
-                        System.Diagnostics.Debug.WriteLine("Download Complete = " + file.Name);
+                        System.Diagnostics.Debug.WriteLine("[DownloadQueue]下载完成:" + file.Name);
                         await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(string.Format(GetResourceString("WorkSavedPlain"), i.Title));
                     }
                     else
+                    {
+                        FailQueue.Enqueue(task);
+                        System.Diagnostics.Debug.WriteLine("[DownloadQueue]下载失败 已添加到失败列表");
                         await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(string.Format(GetResourceString("WorkSaveFailedPlain"), i.Title));
+                    }
                 }
             }
 
         }
-        public async void Start()
+        public static async void Start()
         {
             if (!Downloading)
             {
                 Downloading = true;
-                while (Downloading && list.Count > 0)
+                while (Downloading && Queue.Count > 0)
                 {
-                    await Download(list.Dequeue());
+                    System.Diagnostics.Debug.WriteLine("[DownloadQueue]开始下载任务 当前队列" + Count);
+                    await Download(Queue.Dequeue());
                 }
+                System.Diagnostics.Debug.WriteLine("[DownloadQueue]下载任务完成 当前队列" + Count);
                 Downloading = false;
             }
+        }
+        public static void ReDownload(Frame Frame)
+        {
+            System.Diagnostics.Debug.WriteLine("[DownloadQueue]重新添加失败任务 当前队列" + Count);
+            while (FailQueue.Count>0)
+            {
+                Queue.Enqueue(FailQueue.Dequeue());
+            }
+            System.Diagnostics.Debug.WriteLine("[DownloadQueue]重新添加失败任务结束 当前队列" + Count);
         }
         static string GetPicName(string s, IllustDetail illust, ushort p)
         {
@@ -149,13 +168,14 @@ namespace PixivFSUWP
                  "\\\\|\\/|\\:|\\*|\\?|\\<|\\>|\\||\"", " ") + "." + ((illust.Type == "ugoira") ? "gif" : illust.OriginalUrls[p].Split('.').Last());
         }
 
-        public void Add(WaterfallItemViewModel tapped, Frame Frame)
+        public static void Add(WaterfallItemViewModel tapped, Frame Frame)
         {
-            list.Enqueue((tapped, Frame));
+            Queue.Enqueue((tapped, Frame));
+            System.Diagnostics.Debug.WriteLine("[DownloadQueue]添加到队列 当前队列" + Count);
             Start();
         }
 
-        public void Clear() => list.Clear();
+        public static void Clear() => Queue.Clear();
 
 
     }

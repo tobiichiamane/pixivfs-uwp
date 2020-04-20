@@ -329,7 +329,7 @@ namespace PixivFSUWP
 
         private void QuickSave_Click(object sender, RoutedEventArgs e)
         {
-            DownloadQueue.Queue.Add(tapped, Frame);
+            DownloadQueue.Add(tapped, Frame);
         }
     }
 }
