@@ -104,6 +104,7 @@ namespace PixivFSUWP
                     catch (Exception ex)
                     {
                         FailQueue.Enqueue(task);
+                        await file.DeleteAsync();
                         System.Diagnostics.Debug.WriteLine(string.Format("[DownloadQueue]下载失败:{0}", ex.Message));
                         System.Diagnostics.Debug.WriteLine("[DownloadQueue]已添加到失败列表");
                         await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(string.Format(GetResourceString("Error_DownloadFailed").Replace(@"\n", "\n"), i.Title, ex.Message));
@@ -117,6 +118,7 @@ namespace PixivFSUWP
                     else
                     {
                         FailQueue.Enqueue(task);
+                        await file.DeleteAsync();
                         System.Diagnostics.Debug.WriteLine("[DownloadQueue]下载失败 已添加到失败列表");
                         await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(string.Format(GetResourceString("WorkSaveFailedPlain"), i.Title));
                     }
