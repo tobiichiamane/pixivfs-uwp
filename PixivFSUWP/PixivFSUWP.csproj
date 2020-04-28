@@ -166,8 +166,6 @@
     <Compile Include="Data\Collections\UserIllustsCollection.cs" />
     <Compile Include="Data\WaterfallItem.cs" />
     <Compile Include="DownloadQueue.cs" />
-    <Compile Include="Download\DownloadInfo.cs" />
-    <Compile Include="Download\DownloadManager.cs" />
     <Compile Include="IllustDetailPage.xaml.cs">
       <DependentUpon>IllustDetailPage.xaml</DependentUpon>
     </Compile>
