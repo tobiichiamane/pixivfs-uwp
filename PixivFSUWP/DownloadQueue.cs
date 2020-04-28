@@ -61,68 +61,65 @@ namespace PixivFSUWP
                 return;
             }
             var illust = Data.IllustDetail.FromJsonValue(res);
-
-            // 如果存在多张图片 一起下载下来
-            for (ushort loopnum = 0; loopnum < illust.OriginalUrls.Count; loopnum++)
+            try
             {
-                var file = await (await StorageFolder.GetFolderFromPathAsync(picDir)).CreateFileAsync(GetPicName(picName, illust, loopnum), CreationCollisionOption.GenerateUniqueName);
-                System.Diagnostics.Debug.WriteLine(string.Format("[DownloadQueue]开始下载:{0};{1}", i.Title, file.Name));
-                await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(string.Format(GetResourceString("DownloadStart").Replace(@"\n", "\n"), i.Title, file.Name));
-                if (file != null)
+                // 如果存在多张图片 一起下载下来
+                for (ushort loopnum = 0; loopnum < illust.OriginalUrls.Count; loopnum++)
                 {
-                    CachedFileManager.DeferUpdates(file);
-                    System.Diagnostics.Debug.WriteLine("[DownloadQueue]From:" + illust.OriginalUrls[loopnum]);
-                    System.Diagnostics.Debug.WriteLine("[DownloadQueue]To  :" + file.Path);
-                    try
+                    var file = await (await StorageFolder.GetFolderFromPathAsync(picDir)).CreateFileAsync(GetPicName(picName, illust, loopnum), CreationCollisionOption.GenerateUniqueName);
+                    System.Diagnostics.Debug.WriteLine(string.Format("[DownloadQueue]开始下载:{0};{1}", i.Title, file.Name));
+                    await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(string.Format(GetResourceString("DownloadStart").Replace(@"\n", "\n"), i.Title, file.Name));
+                    if (file != null)
                     {
-                        // 是GIF
-                        if (illust.Type == "ugoira")
-                        {
-                            System.Diagnostics.Debug.WriteLine("[DownloadQueue]是一个动图");
-                            using (var ugoira = await Data.UgoiraHelper.GetUgoiraAsync(illust.IllustID.ToString()))
-                            using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
-                            using (var renderer = new Lumia.Imaging.GifRenderer())
+                        CachedFileManager.DeferUpdates(file);
+                        System.Diagnostics.Debug.WriteLine("[DownloadQueue]From:" + illust.OriginalUrls[loopnum]);
+                        System.Diagnostics.Debug.WriteLine("[DownloadQueue]To  :" + file.Path);
+                            // 是GIF
+                            if (illust.Type == "ugoira")
                             {
-                                renderer.Duration = ugoira.Frames[0].Delay;
-                                renderer.Size = new Windows.Foundation.Size(ugoira.Frames[0].Image.PixelWidth, ugoira.Frames[0].Image.PixelHeight);
-                                var sources = new List<Lumia.Imaging.IImageProvider>();
-                                foreach (var img in ugoira.Frames)
-                                    sources.Add(new Lumia.Imaging.SoftwareBitmapImageSource(img.Image));
-                                renderer.Sources = sources;
-                                await stream.WriteAsync(await renderer.RenderAsync());
+                                System.Diagnostics.Debug.WriteLine("[DownloadQueue]是一个动图");
+                                using (var ugoira = await Data.UgoiraHelper.GetUgoiraAsync(illust.IllustID.ToString()))
+                                using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                                using (var renderer = new Lumia.Imaging.GifRenderer())
+                                {
+                                    renderer.Duration = ugoira.Frames[0].Delay;
+                                    renderer.Size = new Windows.Foundation.Size(ugoira.Frames[0].Image.PixelWidth, ugoira.Frames[0].Image.PixelHeight);
+                                    var sources = new List<Lumia.Imaging.IImageProvider>();
+                                    foreach (var img in ugoira.Frames)
+                                        sources.Add(new Lumia.Imaging.SoftwareBitmapImageSource(img.Image));
+                                    renderer.Sources = sources;
+                                    await stream.WriteAsync(await renderer.RenderAsync());
+                                }
                             }
+                            // 不是Gif
+                            else
+                            {
+                                System.Diagnostics.Debug.WriteLine("[DownloadQueue]不是一个动图");
+                                using (var imgstream = await Data.OverAll.DownloadImage(illust.OriginalUrls[loopnum]))
+                                using (var filestream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                                    await imgstream.CopyToAsync(filestream.AsStream());
+                            }
+                        var updateStatus = await CachedFileManager.CompleteUpdatesAsync(file);
+                        if (updateStatus == FileUpdateStatus.Complete)
+                        {
+                            System.Diagnostics.Debug.WriteLine("[DownloadQueue]下载完成:" + file.Name);
+                            await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(string.Format(GetResourceString("WorkSavedPlain"), i.Title));
                         }
-                        // 不是Gif
                         else
                         {
-                            System.Diagnostics.Debug.WriteLine("[DownloadQueue]不是一个动图");
-                            using (var imgstream = await Data.OverAll.DownloadImage(illust.OriginalUrls[loopnum]))
-                            using (var filestream = await file.OpenAsync(FileAccessMode.ReadWrite))
-                                await imgstream.CopyToAsync(filestream.AsStream());
+                            FailQueue.Enqueue(task);
+                            System.Diagnostics.Debug.WriteLine("[DownloadQueue]下载失败 已添加到失败列表");
+                            await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(string.Format(GetResourceString("WorkSaveFailedPlain"), i.Title));
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        FailQueue.Enqueue(task);
-                        System.Diagnostics.Debug.WriteLine(string.Format("[DownloadQueue]下载失败:{0}", ex.Message));
-                        System.Diagnostics.Debug.WriteLine("[DownloadQueue]已添加到失败列表");
-                        await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(string.Format(GetResourceString("Error_DownloadFailed").Replace(@"\n", "\n"), i.Title, ex.Message));
-                    }
-                    var updateStatus = await CachedFileManager.CompleteUpdatesAsync(file);
-                    if (updateStatus == FileUpdateStatus.Complete)
-                    {
-                        System.Diagnostics.Debug.WriteLine("[DownloadQueue]下载完成:" + file.Name);
-                        await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(string.Format(GetResourceString("WorkSavedPlain"), i.Title));
-                    }
-                    else
-                    {
-                        FailQueue.Enqueue(task);
-                        System.Diagnostics.Debug.WriteLine("[DownloadQueue]下载失败 已添加到失败列表");
-                        await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(string.Format(GetResourceString("WorkSaveFailedPlain"), i.Title));
-                    }
                 }
+            }catch(Exception ex)
+            {
+                FailQueue.Enqueue(task);
+                System.Diagnostics.Debug.WriteLine(string.Format("[DownloadQueue]下载失败:{0}", ex.Message));
+                System.Diagnostics.Debug.WriteLine("[DownloadQueue]已添加到失败列表");
+                await ((Frame.Parent as Grid)?.Parent as MainPage)?.ShowTip(string.Format(GetResourceString("Error_DownloadFailed").Replace(@"\n", "\n"), i.Title, ex.Message));
             }
-
         }
         public static async void Start()
         {
