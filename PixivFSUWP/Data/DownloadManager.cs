@@ -219,6 +219,7 @@ namespace PixivFSUWP.Data
 
         public static void systemctl_start_downloaderd()// 
         {
+            if (downloaderd_running) return;
             StopDownloader = false;
             lock (downloadJobs)
                 _ = Task.Run(downloaderd);
@@ -270,7 +271,9 @@ namespace PixivFSUWP.Data
         //下载完成时
         private static void Job_DownloadCompleted(DownloadJob source, DownloadCompletedEventArgs args)
         {
-            RemoveJob(source);
+            source.DownloadCompleted -= Job_DownloadCompleted;
+            _ = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
+                CoreDispatcherPriority.Normal, () => DownloadJobs.Remove(source));
             FinishedJobs.Add(source);
             DownloadCompleted?.Invoke(source.Title, args.HasError);
         }
