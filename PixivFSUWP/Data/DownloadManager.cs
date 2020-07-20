@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Windows.Storage;
+using Windows.Storage.Pickers;
 
 namespace PixivFSUWP.Data
 {
@@ -71,7 +72,7 @@ namespace PixivFSUWP.Data
                 {
                     //await Task.Run(() =>
                     //{
-                        Progress = (int)(loaded * 100 / length);
+                    Progress = (int)(loaded * 100 / length);
                     //});
                 }))
                 {
@@ -154,6 +155,118 @@ namespace PixivFSUWP.Data
             Job.DownloadCompleted -= Job_DownloadCompleted;
             Job.Cancel();
             DownloadJobs.Remove(Job);
+        }
+
+        public static async Task<StorageFile> GetPicFile(IllustDetail illust, ushort p)
+        {
+            var LocalSettings = ApplicationData.Current.LocalSettings.Values;
+            if (LocalSettings["PictureAutoSave"] is bool b && b)
+            {
+                var fileName = GetPicName(LocalSettings["PictureSaveName"] as string, illust, p);
+                var folder = await StorageFolder.GetFolderFromPathAsync(LocalSettings["PictureSaveDirectory"] as string);
+                return await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+            }
+            else
+            {
+                var picker = new FileSavePicker();
+                picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+                picker.FileTypeChoices.Add(OverAll.GetResourceString("ImageFilePlain"),
+                    new List<string>() {
+                            (illust.Type.Equals("ugoira", StringComparison.OrdinalIgnoreCase))
+                                ? "gif"
+                                : illust.OriginalUrls[p].Split('.').Last()
+                    });
+                picker.SuggestedFileName = illust.Title;
+                return await picker.PickSaveFileAsync();
+            }
+        }
+        public static string GetPicName(string template, IllustDetail illust, ushort p)
+        {
+            var sb = new StringBuilder();
+            for (int i = 0; i < template.Length; i++)
+            {
+                var ch = template[i];
+                if (ch.Equals('$'))
+                {
+                    i++;
+                    switch (ch = template[i])
+                    {
+                        case 'P': // PID
+                            sb.Append(illust.IllustID);
+                            break;
+                        case 'p': // 分P数
+                            sb.Append(p);
+                            break;
+                        case 't': // 标题
+                            sb.Append(illust.Title);
+                            break;
+                        case 'l': // 来源URL
+                            sb.Append(illust.OriginalUrls[p]);
+                            break;
+                        case 'd': // 上传日期
+                            sb.Append(illust.CreateDate);
+                            break;
+                        case 'A': // 作者UID
+                            sb.Append(illust.AuthorID);
+                            break;
+                        case 'a': // 作者名
+                            sb.Append(illust.Author);
+                            break;
+                        case '{':
+                            var longname = new StringBuilder();
+                            i++;
+                            ch = template[i];
+                            while (!ch.Equals('}'))
+                            {
+                                longname.Append(ch);
+                                i++;
+                                ch = template[i];
+                            }
+                            switch (longname.ToString())
+                            {
+                                case "picture_id": // PID
+                                    sb.Append(illust.IllustID);
+                                    break;
+                                case "picture_page": // 分P数
+                                    sb.Append(p);
+                                    break;
+                                case "picture_title": // 标题
+                                    sb.Append(illust.Title);
+                                    break;
+                                case "picture_url": // 来源URL
+                                    sb.Append(illust.OriginalUrls[p]);
+                                    break;
+                                case "upload_date": // 上传日期
+                                    sb.Append(illust.CreateDate);
+                                    break;
+                                case "author_id": // 作者UID
+                                    sb.Append(illust.AuthorID);
+                                    break;
+                                case "author_name": // 作者名
+                                    sb.Append(illust.Author);
+                                    break;
+                            }
+                            break;
+                        case '\\':
+                        case '/':
+                        case ':':
+                        case '*':
+                        case '?':
+                        case '"':
+                        case '<':
+                        case '>':
+                        case '|':
+                            sb.Append(' ');
+                            break;
+                    }
+                }
+            }
+            sb.Append('.');
+            if (illust.Type.Equals("ugoira", StringComparison.OrdinalIgnoreCase))
+                sb.Append("gif");
+            else sb.Append(illust.OriginalUrls[p].Split('.').Last());
+
+            return sb.ToString();
         }
     }
 }

@@ -280,36 +280,42 @@ namespace PixivFSUWP
         {
             if (tapped == null) return;
             var i = tapped;
+
             try
             {
+
                 var res = await new PixivAppAPI(Data.OverAll.GlobalBaseAPI).GetIllustDetailAsync(i.ItemId.ToString());
                 var illust = Data.IllustDetail.FromObject(res);
-
-
-                FileSavePicker picker = new FileSavePicker();
-                picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-                picker.FileTypeChoices.Add(GetResourceString("ImageFilePlain"), new List<string>() { ".png" });
-                picker.SuggestedFileName = i.Title;
-
-
-                var file = await picker.PickSaveFileAsync();
+                var file = await Data.DownloadManager.GetPicFile(illust, 0);
                 if (file != null)
                 {
-                    CachedFileManager.DeferUpdates(file);
                     Data.DownloadManager.NewJob(i.Title, illust.OriginalUrls[0], file.Path);
-                    //using (var imgstream = await Data.OverAll.DownloadImage(illust.OriginalUrls[0]))
-                    //{
-                    //    using (var filestream = await file.OpenAsync(FileAccessMode.ReadWrite))
-                    //    {
-                    //        await imgstream.CopyToAsync(filestream.AsStream());
-                    //    }
-                    //}
-                    var updateStatus = await CachedFileManager.CompleteUpdatesAsync(file);
-                    if (updateStatus == FileUpdateStatus.Complete)
-                        await TheMainPage?.ShowTip(string.Format(GetResourceString("WorkSavedPlain"), i.Title));
-                    else
-                        await TheMainPage?.ShowTip(string.Format(GetResourceString("WorkSaveFailedPlain"), i.Title));
                 }
+
+                //    FileSavePicker picker = new FileSavePicker();
+                //    picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+                //    picker.FileTypeChoices.Add(GetResourceString("ImageFilePlain"), new List<string>() { ".png" });
+                //    picker.SuggestedFileName = i.Title;
+
+
+                //    var file = await picker.PickSaveFileAsync();
+                //    if (file != null)
+                //    {
+                //        CachedFileManager.DeferUpdates(file);
+                //        Data.DownloadManager.NewJob(i.Title, illust.OriginalUrls[0], file.Path);
+                //        //using (var imgstream = await Data.OverAll.DownloadImage(illust.OriginalUrls[0]))
+                //        //{
+                //        //    using (var filestream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                //        //    {
+                //        //        await imgstream.CopyToAsync(filestream.AsStream());
+                //        //    }
+                //        //}
+                //        var updateStatus = await CachedFileManager.CompleteUpdatesAsync(file);
+                //        if (updateStatus == FileUpdateStatus.Complete)
+                //            await TheMainPage?.ShowTip(string.Format(GetResourceString("WorkSavedPlain"), i.Title));
+                //        else
+                //            await TheMainPage?.ShowTip(string.Format(GetResourceString("WorkSaveFailedPlain"), i.Title));
+                //    }
             }
             catch
             {
