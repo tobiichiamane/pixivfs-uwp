@@ -396,6 +396,7 @@ namespace PixivFSUWP.Data
                             break;
                     }
                 }
+                else sb.Append(ch);
             }
             sb.Append('.');
             if (illust.Type.Equals("ugoira", StringComparison.OrdinalIgnoreCase))
