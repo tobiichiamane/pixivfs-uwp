@@ -62,7 +62,7 @@ namespace PixivFSUWP
         {
             base.OnNavigatedTo(e);
             if (e.Parameter is ListContent) listContent = (ListContent)e.Parameter;
-            else if(e.Parameter is ValueTuple<ListContent,int?> tuple)
+            else if (e.Parameter is ValueTuple<ListContent, int?> tuple)
             {
                 (listContent, clicked) = tuple;
             }
@@ -171,7 +171,7 @@ namespace PixivFSUWP
                 (((Frame.Parent as Grid).Parent as Page).Parent as Frame)
                 .Navigate(typeof(IllustDetailPage),
                 (new ValueTuple<int, int?>((e.ClickedItem as ViewModels
-                .WaterfallItemViewModel).ItemId, clickedIndex)), 
+                .WaterfallItemViewModel).ItemId, clickedIndex)),
                 App.DrillInTransitionInfo);
             else
                 Frame.Navigate(typeof(IllustDetailPage),
@@ -282,24 +282,28 @@ namespace PixivFSUWP
             var i = tapped;
             try
             {
+                var res = await new PixivAppAPI(Data.OverAll.GlobalBaseAPI).GetIllustDetailAsync(i.ItemId.ToString());
+                var illust = Data.IllustDetail.FromObject(res);
+
+
                 FileSavePicker picker = new FileSavePicker();
                 picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
                 picker.FileTypeChoices.Add(GetResourceString("ImageFilePlain"), new List<string>() { ".png" });
                 picker.SuggestedFileName = i.Title;
+
+
                 var file = await picker.PickSaveFileAsync();
                 if (file != null)
                 {
                     CachedFileManager.DeferUpdates(file);
-                    var res = await new PixivAppAPI(Data.OverAll.GlobalBaseAPI)
-                        .GetIllustDetailAsync(i.ItemId.ToString());
-                    var illust = Data.IllustDetail.FromObject(res);
-                    using (var imgstream = await Data.OverAll.DownloadImage(illust.OriginalUrls[0]))
-                    {
-                        using (var filestream = await file.OpenAsync(FileAccessMode.ReadWrite))
-                        {
-                            await imgstream.CopyToAsync(filestream.AsStream());
-                        }
-                    }
+                    Data.DownloadManager.NewJob(i.Title, illust.OriginalUrls[0], file.Path);
+                    //using (var imgstream = await Data.OverAll.DownloadImage(illust.OriginalUrls[0]))
+                    //{
+                    //    using (var filestream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                    //    {
+                    //        await imgstream.CopyToAsync(filestream.AsStream());
+                    //    }
+                    //}
                     var updateStatus = await CachedFileManager.CompleteUpdatesAsync(file);
                     if (updateStatus == FileUpdateStatus.Complete)
                         await TheMainPage?.ShowTip(string.Format(GetResourceString("WorkSavedPlain"), i.Title));
