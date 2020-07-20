@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
+using Windows.UI.Core;
 
 namespace PixivFSUWP.Data
 {
@@ -35,12 +36,17 @@ namespace PixivFSUWP.Data
             protected set
             {
                 progress = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Progress"));
+                _ = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
+                    CoreDispatcherPriority.Normal,
+                    () =>
+                    {
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Progress"));
+                    });
+                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Progress"));
             }
         }
         protected DownloadJob()
         {
-
         }
         public DownloadJob(string Title, string Uri, string FilePath)
         {
@@ -78,10 +84,10 @@ namespace PixivFSUWP.Data
                 Downloading = true;
                 using (var memStream = await OverAll.DownloadImage(Uri, tokenSource.Token, pauseEvent, async (loaded, length) =>
                 {
-                    //await Task.Run(() =>
-                    //{
-                    Progress = (int)(loaded * 100 / length);
-                    //});
+                    await Task.Run(() =>
+                    {
+                        Progress = (int)(loaded * 100 / length);
+                    });
                 }))
                 {
                     if (tokenSource.IsCancellationRequested) return;
@@ -157,26 +163,31 @@ namespace PixivFSUWP.Data
     //静态的下载管理器。应用程序不会有多个下载管理器实例。
     public static class DownloadManager
     {
+        private static bool downloaderd_running = false;
         private static void downloaderd()
         {
+            if (downloaderd_running) return;
             while (true)
             {
                 if (downloadingJobs.Count < MaxJob)
                 {
+                    if (downloadJobs.Count == 0) break;
                     var job = downloadJobs.Dequeue();
-                    if (job is null) return;
                     downloadingJobs.Add(job);
                     job.DownloadPause += job_pause;
                     job.DownloadCancel += job_cancel;
                     job.DownloadCompleted += job_completed;
                     _ = job.Download();
+
                 }
                 if (StopDownloader)
                 {
                     downloadingJobs.ForEach(i => i.Pause());
-                    return;
+                    break;
                 }
             }
+            downloaderd_running = false;
+            return;
             // 下载完成
             void job_completed(DownloadJob job, DownloadCompletedEventArgs args)
             {
@@ -209,7 +220,8 @@ namespace PixivFSUWP.Data
         public static void systemctl_start_downloaderd()// 
         {
             StopDownloader = false;
-            _ = Task.Run(downloaderd);
+            lock (downloadJobs)
+                _ = Task.Run(downloaderd);
         }
         public static void systemctl_stop_downloaderd()
         {
@@ -258,7 +270,7 @@ namespace PixivFSUWP.Data
         //下载完成时
         private static void Job_DownloadCompleted(DownloadJob source, DownloadCompletedEventArgs args)
         {
-            DownloadJobs.Remove(source);
+            RemoveJob(source);
             FinishedJobs.Add(source);
             DownloadCompleted?.Invoke(source.Title, args.HasError);
         }
@@ -269,20 +281,15 @@ namespace PixivFSUWP.Data
             FinishedJobs.Add(job);
         }
         //移除下载任务
-        public static void RemoveJob(int Index)
-        {
-            var job = DownloadJobs[Index];
-            job.DownloadCompleted -= Job_DownloadCompleted;
-            job.Cancel();
-            DownloadJobs.Remove(job);
-        }
+        public static void RemoveJob(int Index) => RemoveJob(DownloadJobs[Index]);
 
         //移除下载任务
         public static void RemoveJob(DownloadJob Job)
         {
             Job.DownloadCompleted -= Job_DownloadCompleted;
             Job.Cancel();
-            DownloadJobs.Remove(Job);
+            _ = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
+                CoreDispatcherPriority.Normal, () => DownloadJobs.Remove(Job));
         }
         // 获取文件对象
         public static async Task<StorageFile> GetPicFile(IllustDetail illust, ushort p)
