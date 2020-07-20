@@ -289,7 +289,7 @@ namespace PixivFSUWP
                 var file = await Data.DownloadManager.GetPicFile(illust, 0);
                 if (file != null)
                 {
-                    Data.DownloadManager.NewJob(i.Title, illust.OriginalUrls[0], file.Path);
+                    Data.DownloadManager.NewJob(i.Title, illust.OriginalUrls[0], file);
                 }
 
                 //    FileSavePicker picker = new FileSavePicker();

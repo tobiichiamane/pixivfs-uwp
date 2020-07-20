@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.Storage.Provider;
 
 namespace PixivFSUWP.Data
 {
@@ -31,13 +32,16 @@ namespace PixivFSUWP.Data
         public int Progress
         {
             get => progress;
-            private set
+            protected set
             {
                 progress = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Progress"));
             }
         }
+        protected DownloadJob()
+        {
 
+        }
         public DownloadJob(string Title, string Uri, string FilePath)
         {
             this.Title = Title;
@@ -48,22 +52,26 @@ namespace PixivFSUWP.Data
         }
 
         //下载状态
-        public bool Downloading { get; private set; }
+        public bool Downloading { get; protected set; }
 
         //用于暂停的ManualResetEvent
-        ManualResetEvent pauseEvent = new ManualResetEvent(true);
+        protected ManualResetEvent pauseEvent = new ManualResetEvent(true);
 
         //用于取消任务的CancellationTokenSource
-        CancellationTokenSource tokenSource = new CancellationTokenSource();
+        protected CancellationTokenSource tokenSource = new CancellationTokenSource();
 
         //下载完成时的事件
         public event Action<DownloadJob, DownloadCompletedEventArgs> DownloadCompleted;
+
+        public event Action<DownloadJob> DownloadPause;
+        public event Action<DownloadJob> DownloadResume;
+        public event Action<DownloadJob> DownloadCancel;
 
         //通知属性更改
         public event PropertyChangedEventHandler PropertyChanged;
 
         //进行下载
-        public async Task Download()
+        public virtual async Task Download()
         {
             if (!Downloading)
             {
@@ -77,57 +85,171 @@ namespace PixivFSUWP.Data
                 }))
                 {
                     if (tokenSource.IsCancellationRequested) return;
-                    var file = await StorageFile.GetFileFromPathAsync(FilePath);
-                    CachedFileManager.DeferUpdates(file);
-                    using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite))
-                    {
-                        await memStream.CopyToAsync(fileStream.AsStream());
-                    }
-                    var result = await CachedFileManager.CompleteUpdatesAsync(file);
-                    if (result == Windows.Storage.Provider.FileUpdateStatus.Complete)
-                    {
-                        DownloadCompleted?.Invoke(this, new DownloadCompletedEventArgs() { HasError = false });
-                    }
-                    else
-                    {
-                        DownloadCompleted?.Invoke(this, new DownloadCompletedEventArgs() { HasError = true });
-                    }
+                    Check(await WriteToFile(memStream));
                 }
             }
         }
 
+        protected virtual async Task<FileUpdateStatus> WriteToFile(Stream memStream)
+        {
+            var file = await StorageFile.GetFileFromPathAsync(FilePath);
+            CachedFileManager.DeferUpdates(file);
+            using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+            {
+                await memStream.CopyToAsync(fileStream.AsStream());
+            }
+            return await CachedFileManager.CompleteUpdatesAsync(file);
+
+        }
+        protected void Check(FileUpdateStatus result)
+        {
+            if (result == Windows.Storage.Provider.FileUpdateStatus.Complete)
+            {
+                DownloadCompleted?.Invoke(this, new DownloadCompletedEventArgs() { HasError = false });
+            }
+            else
+            {
+                DownloadCompleted?.Invoke(this, new DownloadCompletedEventArgs() { HasError = true });
+            }
+        }
         //暂停下载
         public void Pause()
         {
             pauseEvent.Reset();
+            DownloadPause?.Invoke(this);
         }
 
         //恢复下载
         public void Resume()
         {
             pauseEvent.Set();
+            DownloadResume?.Invoke(this);
         }
 
         //取消下载
         public void Cancel()
         {
             tokenSource.Cancel();
+            DownloadCancel?.Invoke(this);
+        }
+    }
+
+    // 直接传StorageFile对象的...可以避免用FileSavePicker选中的文件传过来没有权限的问题
+    // 对FileSavePicker选择的文件直接修改不需要应用访问权限
+    public class DownloadJobPlus : DownloadJob
+    {
+        private readonly StorageFile File;
+        public DownloadJobPlus(string Title, string Uri, StorageFile File) : base(Title, Uri, File.Path)
+        {
+            this.File = File;
+        }
+        protected override async Task<FileUpdateStatus> WriteToFile(Stream memStream)
+        {
+            CachedFileManager.DeferUpdates(File);
+            using (var fileStream = await File.OpenAsync(FileAccessMode.ReadWrite))
+            {
+                await memStream.CopyToAsync(fileStream.AsStream());
+            }
+            return await CachedFileManager.CompleteUpdatesAsync(File);
         }
     }
 
     //静态的下载管理器。应用程序不会有多个下载管理器实例。
     public static class DownloadManager
     {
+        private static void downloaderd()
+        {
+            while (true)
+            {
+                if (downloadingJobs.Count < MaxJob)
+                {
+                    var job = downloadJobs.Dequeue();
+                    if (job is null) return;
+                    downloadingJobs.Add(job);
+                    job.DownloadPause += job_pause;
+                    job.DownloadCancel += job_cancel;
+                    job.DownloadCompleted += job_completed;
+                    _ = job.Download();
+                }
+                if (StopDownloader)
+                {
+                    downloadingJobs.ForEach(i => i.Pause());
+                    return;
+                }
+            }
+            // 下载完成
+            void job_completed(DownloadJob job, DownloadCompletedEventArgs args)
+            {
+                job_cancel(job);
+            }
+            // 下载取消 注销事件
+            void job_cancel(DownloadJob job)
+            {
+                job.DownloadPause -= job_pause;
+                job.DownloadCancel -= job_cancel;
+                job.DownloadCompleted -= job_completed;
+                downloadingJobs.Remove(job);
+            }
+            // 下载暂停
+            void job_pause(DownloadJob job)
+            {
+                job_cancel(job);
+                pausedJobs.Add(job);
+                job.DownloadResume += job_resume;// 等待继续
+            }
+            // 下载继续
+            void job_resume(DownloadJob job)
+            {
+                pausedJobs.Remove(job);
+                downloadJobs.Enqueue(job);
+                job.DownloadResume -= job_resume;
+            }
+        }
+
+        public static void systemctl_start_downloaderd()// 
+        {
+            StopDownloader = false;
+            _ = Task.Run(downloaderd);
+        }
+        public static void systemctl_stop_downloaderd()
+        {
+            StopDownloader = true;
+        }
+
+        public static int MaxJob = 3;
+        public static bool StopDownloader = false;
+
+        private static Queue<DownloadJob> downloadJobs = new Queue<DownloadJob>();
+        private static List<DownloadJob> pausedJobs = new List<DownloadJob>();
+        private static List<DownloadJob> downloadingJobs = new List<DownloadJob>();
+
         //下载任务列表
         public static ObservableCollection<DownloadJob> DownloadJobs = new ObservableCollection<DownloadJob>();
+
+        //完成任务列表
+        public static ObservableCollection<DownloadJob> FinishedJobs = new ObservableCollection<DownloadJob>();
 
         //添加下载任务
         public static void NewJob(string Title, string Uri, string FilePath)
         {
             var job = new DownloadJob(Title, Uri, FilePath);
             job.DownloadCompleted += Job_DownloadCompleted;
+            job.DownloadCancel += Job_DownloadCancel;
+            downloadJobs.Enqueue(job);
             DownloadJobs.Add(job);
-            _ = job.Download();
+            systemctl_start_downloaderd();
+            //_ = job.Download();
+        }
+
+
+        public static void NewJob(string Title, string Uri, StorageFile File)
+        {
+            var job = new DownloadJobPlus(Title, Uri, File);
+            job.DownloadCompleted += Job_DownloadCompleted;
+            job.DownloadCancel += Job_DownloadCancel;
+            downloadJobs.Enqueue(job);
+            DownloadJobs.Add(job);
+            systemctl_start_downloaderd();
         }
 
         //有任务下载完成时的事件
@@ -137,9 +259,15 @@ namespace PixivFSUWP.Data
         private static void Job_DownloadCompleted(DownloadJob source, DownloadCompletedEventArgs args)
         {
             DownloadJobs.Remove(source);
+            FinishedJobs.Add(source);
             DownloadCompleted?.Invoke(source.Title, args.HasError);
         }
 
+        private static void Job_DownloadCancel(DownloadJob job)
+        {
+            RemoveJob(job);
+            FinishedJobs.Add(job);
+        }
         //移除下载任务
         public static void RemoveJob(int Index)
         {
@@ -156,7 +284,7 @@ namespace PixivFSUWP.Data
             Job.Cancel();
             DownloadJobs.Remove(Job);
         }
-
+        // 获取文件对象
         public static async Task<StorageFile> GetPicFile(IllustDetail illust, ushort p)
         {
             var LocalSettings = ApplicationData.Current.LocalSettings.Values;
@@ -180,6 +308,7 @@ namespace PixivFSUWP.Data
                 return await picker.PickSaveFileAsync();
             }
         }
+        // 获取文件名
         public static string GetPicName(string template, IllustDetail illust, ushort p)
         {
             var sb = new StringBuilder();
