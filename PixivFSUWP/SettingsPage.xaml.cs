@@ -103,6 +103,19 @@ namespace PixivFSUWP
                     break;
             }
             
+            // 图片名格式
+            if (ApplicationData.Current.LocalSettings.Values["PictureSaveName"] is string psn &&
+                !string.IsNullOrWhiteSpace(psn))
+            {
+                PicName_ASB.Text = psn;
+            }
+            // 图片保存位置
+            if (ApplicationData.Current.LocalSettings.Values["PictureSaveDirectory"] is string psd &&
+                !string.IsNullOrWhiteSpace(psd))
+            {
+                PicSaveDir_ASB.Text = psd;
+            }
+            PicSaveDir_ASB.PlaceholderText = KnownFolders.SavedPictures.Path;
             _ = calculateCacheSize();
             //等待头像加载完毕
             imgAvatar.ImageSource = await imgTask;
@@ -209,6 +222,48 @@ namespace PixivFSUWP
                 }
                 _ = TheMainPage?.ShowTip(GetResourceString("RestartApplyColorTheme"));
             }
+        }
+
+        private void PicSaveDir_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            var text = sender.Text;
+            ApplicationData.Current.LocalSettings.Values["PictureSaveDirectory"] = text;
+
+        }
+
+        private async void SelectSaveDir_QS(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            var folderPicker = new Windows.Storage.Pickers.FolderPicker
+            {
+                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop
+            };
+            folderPicker.FileTypeFilter.Add("*");
+
+            StorageFolder folder = await folderPicker.PickSingleFolderAsync();
+            if (folder != null)
+            {
+                Windows.Storage.AccessCache.StorageApplicationPermissions.
+                FutureAccessList.AddOrReplace("PickedFolderToken", folder);
+                sender.Text = folder.Path;
+            }
+        }
+
+        private void PicName_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (!string.IsNullOrWhiteSpace(sender.Text))
+            {
+                ApplicationData.Current.LocalSettings.Values["PictureSaveName"] = sender.Text;
+            }
+        }
+        private void PicNameHelp_QS(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            SaveNameHelper.ShowAt(sender);
+        }
+
+
+        private void FileSystemHelp_HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.UI.Xaml.Controls.Primitives.FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
     }
 }
