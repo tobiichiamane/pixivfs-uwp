@@ -1,4 +1,5 @@
 ﻿using Lumia.Imaging.Compositing;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Windows.Storage;
 
 namespace PixivFSUWP.Data
@@ -67,10 +69,10 @@ namespace PixivFSUWP.Data
                 Downloading = true;
                 using (var memStream = await OverAll.DownloadImage(Uri, tokenSource.Token, pauseEvent, async (loaded, length) =>
                 {
-                    await Task.Run(() =>
-                    {
+                    //await Task.Run(() =>
+                    //{
                         Progress = (int)(loaded * 100 / length);
-                    });
+                    //});
                 }))
                 {
                     if (tokenSource.IsCancellationRequested) return;
