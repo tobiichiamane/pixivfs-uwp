@@ -8,7 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
+
     <Page.Resources>
         <converters:ContributionsConverter x:Key="ContributionsConverter"/>
         <DataTemplate x:Key="contributorTemplate" x:DataType="viewmodels:ContributorViewModel">
@@ -33,7 +33,7 @@
             </Grid>
         </DataTemplate>
     </Page.Resources>
-    
+
     <ScrollViewer Background="{StaticResource PageBackGround}" VerticalScrollBarVisibility="Hidden">
         <StackPanel Margin="0,75,0,0">
             <TextBlock Margin="15,20,15,0" FontSize="18" FontWeight="Bold" x:Uid="CurrentUser"/>
@@ -68,30 +68,6 @@
                     <TextBlock FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}" x:Uid="LogoutWarning"/>
                 </StackPanel>
             </Grid>
-            <!--图片保存地址-->
-            <StackPanel Margin="0 10">
-                <FlyoutBase.AttachedFlyout>
-                    <Flyout x:Name="SaveNameHelper" Placement="Bottom">
-                        <StackPanel>
-                            <TextBlock Text="您可以使用以下变量" FontWeight="Bold" FontSize="18"/>
-                            <TextBlock Text="$P ${picture_id} 作品ID"/>
-                            <TextBlock Text="$p ${picture_page} 作品分P"/>
-                            <TextBlock Text="$t ${picture_title} 作品标题"/>
-                            <TextBlock Text="$l ${picture_url} 作品链接"/>
-                            <TextBlock Text="$d ${upload_date} 作品日期"/>
-                            <TextBlock Text="$A ${author_id} 作者ID"/>
-                            <TextBlock Text="$a ${author_name} 作者名"/>
-                        </StackPanel>
-                    </Flyout>
-                </FlyoutBase.AttachedFlyout>
-                <TextBlock Margin="15 0" FontSize="18" FontWeight="Bold" Text="下载管理"/>
-                <TextBlock Text="图片文件名格式" Margin="15 5"/>
-                <AutoSuggestBox x:Name="PicName_ASB" Margin="15 5" HorizontalAlignment="Left" QueryIcon="Help" Width="300"
-                                PlaceholderText="${picture_id}_${picture_page}" TextChanged="PicName_TextChanged" QuerySubmitted="PicNameHelp_QS"/>
-                <TextBlock Text="图片保存路径:" Margin="15 5"/>
-                <AutoSuggestBox x:Name="PicSaveDir_ASB" Margin="15 5" HorizontalAlignment="Left" QueryIcon="OpenLocal" Width="300"
-                                TextChanged="PicSaveDir_TextChanged" QuerySubmitted="SelectSaveDir_QS"/>
-            </StackPanel>
             <!--TODO：完善UI-->
             <StackPanel Margin="0,10" Visibility="Collapsed">
                 <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" Text="SauceNAO"/>
@@ -113,29 +89,58 @@
                     <ComboBoxItem x:Uid="DefaultColorTheme"/>
                 </ComboBox>
             </StackPanel>
+            <!--图片保存地址-->
             <!--文件系统访问-->
-            <StackPanel Margin="0 10" HorizontalAlignment="Left">
-                <TextBlock Text="图片保存位置" Margin="15 0" FontSize="18" FontWeight="Bold"/>
-                <AutoSuggestBox Margin="15 10 15 0" Width="300" HorizontalAlignment="Left" QueryIcon="Folder"/>
-                <TextBlock Text="文件名模板" Margin="15 0" FontSize="18" FontWeight="Bold"/>
-                <AutoSuggestBox Margin="15 10 15 0" Width="300" HorizontalAlignment="Left"/>
-                <HyperlinkButton Margin="15 10 15 0" Width="300" Content="不会填?" Click="FileSystemHelp_HyperlinkButton_Click">
-                    <FlyoutBase.AttachedFlyout>
-                        <Flyout>
-                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Margin="0,0,0,12">
-                                <Run Text="aaaa"/><LineBreak/>
-                                <Run Text="aaaa"/><LineBreak/>
-                                <Run Text="aaaa"/><LineBreak/>
-                                <Run Text="aaaa"/><LineBreak/>
-                                <Run Text="aaaa"/><LineBreak/>
-                                <Run Text="aaaa"/><LineBreak/>
-                                <Run Text="aaaa"/>
-                            </TextBlock>
-                        </Flyout>
-                    </FlyoutBase.AttachedFlyout>
-                </HyperlinkButton>
+            <StackPanel Margin="0 10">
+                <TextBlock Margin="15 0" FontSize="18" FontWeight="Bold" Text="下载管理"/>
+                <CheckBox x:Name="UseAutoSave_CB" Content="不再询问下载路径" Margin="15 5"
+                          Checked="AutoSave_CheckBox_Checked" Unchecked="AutoSave_CheckBox_Checked"/>
+
+                <StackPanel x:Name="AutoSavePanel" Visibility="Collapsed">
+                    <TextBlock Text="图片文件名格式" Margin="15 5"/>
+                    <AutoSuggestBox x:Name="PicName_ASB" Margin="15 5" HorizontalAlignment="Left" QueryIcon="Help" Width="300"
+                                TextChanged="PicName_TextChanged" QuerySubmitted="PicNameHelp_QS">
+                        <FlyoutBase.AttachedFlyout>
+                            <Flyout Placement="Bottom">
+                                <TextBlock>
+                            <Run Text="您可以使用以下变量" FontWeight="Bold" FontSize="18"/><LineBreak/>
+                            <Run Text="$P ${picture_id} 作品ID"/><LineBreak/>
+                            <Run Text="$p ${picture_page} 作品分P"/><LineBreak/>
+                            <Run Text="$t ${picture_title} 作品标题"/><LineBreak/>
+                            <Run Text="$l ${picture_url} 作品链接"/><LineBreak/>
+                            <Run Text="$d ${upload_date} 作品日期"/><LineBreak/>
+                            <Run Text="$A ${author_id} 作者ID"/><LineBreak/>
+                            <Run Text="$a ${author_name} 作者名"/>
+                                </TextBlock>
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </AutoSuggestBox>
+
+                    <TextBlock Text="图片保存路径:" Margin="15 5"/>
+                    <AutoSuggestBox x:Name="PicSaveDir_ASB" Margin="15 5" HorizontalAlignment="Left" QueryIcon="OpenLocal" Width="300"
+                                TextChanged="PicSaveDir_TextChanged" QuerySubmitted="SelectSaveDir_QS"/>
+                    <HyperlinkButton x:Name="FSProblem_LinkBtn" Visibility="Collapsed" Margin="15 10 15 0" Width="300"
+                                 Content="设置存储目录时发生了一个问题" Click="FileSystemHelp_HyperlinkButton_Click">
+                        <FlyoutBase.AttachedFlyout>
+                            <Flyout Placement="Bottom">
+                                <TextBlock>
+                                <Run Text="您需要检查是否授予以下权限" FontWeight="Bold" FontSize="18"/><LineBreak/>
+                                <Hyperlink NavigateUri="ms-settings:privacy-pictures">
+                                    <Run Text="图片目录访问权"/>
+                                </Hyperlink>
+                                <Run Text="用于下载至图片目录"/>
+                                <LineBreak/>
+                                <Hyperlink NavigateUri="ms-settings:privacy-broadfilesystemaccess">
+                                    <Run Text="文件系统访问权"/>
+                                </Hyperlink>
+                                <Run Text="用于下载至任何位置"/>
+                                </TextBlock>
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </HyperlinkButton>
+                </StackPanel>
             </StackPanel>
-            
+
             <!--缓存管理-->
             <StackPanel Margin="0,10">
                 <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" x:Uid="Cache"/>

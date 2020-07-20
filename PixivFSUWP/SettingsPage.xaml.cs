@@ -102,20 +102,28 @@ namespace PixivFSUWP
                     cboxColorTheme.SelectedIndex = 2;
                     break;
             }
-            
+            // 检查文件系统访问权限
+            //_ = FileAccessPermissionsCheck();
+
+            // 自动保存
+            if (ApplicationData.Current.LocalSettings.Values["PictureAutoSave"] is bool autosave)
+                UseAutoSave_CB.IsChecked = autosave;
+            else UseAutoSave_CB.IsChecked = false;
+
             // 图片名格式
             if (ApplicationData.Current.LocalSettings.Values["PictureSaveName"] is string psn &&
                 !string.IsNullOrWhiteSpace(psn))
-            {
                 PicName_ASB.Text = psn;
-            }
+            else PicName_ASB.Text = "${picture_id}_${picture_page}";
+            PicName_ASB.PlaceholderText = PicName_ASB.Text;
+
             // 图片保存位置
             if (ApplicationData.Current.LocalSettings.Values["PictureSaveDirectory"] is string psd &&
                 !string.IsNullOrWhiteSpace(psd))
-            {
                 PicSaveDir_ASB.Text = psd;
-            }
-            PicSaveDir_ASB.PlaceholderText = KnownFolders.SavedPictures.Path;
+            else
+                PicSaveDir_ASB.Text = KnownFolders.SavedPictures.Path;
+            PicSaveDir_ASB.PlaceholderText = PicSaveDir_ASB.Text;
             _ = calculateCacheSize();
             //等待头像加载完毕
             imgAvatar.ImageSource = await imgTask;
@@ -205,7 +213,7 @@ namespace PixivFSUWP
 
         private void ComboBox_DropDownClosed(object sender, object e)
         {
-            if(sender is ComboBox cb)
+            if (sender is ComboBox cb)
             {
                 // 保存颜色主题信息
                 switch (cb.SelectedIndex)
@@ -224,11 +232,20 @@ namespace PixivFSUWP
             }
         }
 
-        private void PicSaveDir_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        private async void PicSaveDir_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             var text = sender.Text;
-            ApplicationData.Current.LocalSettings.Values["PictureSaveDirectory"] = text;
 
+            try
+            {
+                _ = await StorageFolder.GetFolderFromPathAsync(text);
+                ApplicationData.Current.LocalSettings.Values["PictureSaveDirectory"] = text;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                FSProblem_LinkBtn.Visibility = Visibility.Visible;
+                sender.Text = ApplicationData.Current.LocalSettings.Values["PictureSaveDirectory"] as string;
+            }
         }
 
         private async void SelectSaveDir_QS(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
@@ -257,13 +274,54 @@ namespace PixivFSUWP
         }
         private void PicNameHelp_QS(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            SaveNameHelper.ShowAt(sender);
+            Windows.UI.Xaml.Controls.Primitives.FlyoutBase.ShowAttachedFlyout(sender);
         }
-
 
         private void FileSystemHelp_HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             Windows.UI.Xaml.Controls.Primitives.FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+        }
+
+        // 检查文件系统访问权限
+        private static async Task<ValueTuple<bool, bool>> FileAccessPermissionsCheck()
+        {
+            // 看我这神奇的写法 用捕捉异常来实现
+            // 主要是因为我不会用别的方式检查...
+
+            (bool PictureLibrary, bool FileSystem) result;
+            try
+            {
+                _ = await StorageLibrary.GetLibraryAsync(KnownLibraryId.Pictures);
+                result.PictureLibrary = true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                result.PictureLibrary = false;
+            }
+            try
+            {
+                _ = await StorageFolder.GetFolderFromPathAsync(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory, Environment.SpecialFolderOption.DoNotVerify));
+                result.FileSystem = true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                result.FileSystem = false;
+            }
+            return result;
+        }
+
+        private void AutoSave_CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if ((sender as CheckBox).IsChecked ?? false)
+            {
+                AutoSavePanel.Visibility = Visibility.Visible;
+                ApplicationData.Current.LocalSettings.Values["PictureAutoSave"] = true;
+            }
+            else
+            {
+                AutoSavePanel.Visibility = Visibility.Collapsed;
+                ApplicationData.Current.LocalSettings.Values["PictureAutoSave"] = false;
+            }
         }
     }
 }
