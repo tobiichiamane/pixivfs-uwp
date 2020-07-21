@@ -146,6 +146,7 @@
     <Compile Include="Controls\WaterfallContentPanel.cs" />
     <Compile Include="Controls\WaterfallListView.cs" />
     <Compile Include="Converters\BookmarkHeartVisibilityConverter.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ChildrenCommentVisibilityConverter.cs" />
     <Compile Include="Converters\ContributionsConverter.cs" />
     <Compile Include="Converters\MultiPageVisibilityConverter.cs" />
@@ -171,6 +172,9 @@
     <Compile Include="Data\UserDetail.cs" />
     <Compile Include="Data\Collections\UserIllustsCollection.cs" />
     <Compile Include="Data\WaterfallItem.cs" />
+    <Compile Include="DownloadedPage.xaml.cs">
+      <DependentUpon>DownloadedPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DownloadingPage.xaml.cs">
       <DependentUpon>DownloadingPage.xaml</DependentUpon>
     </Compile>
@@ -252,6 +256,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DownloadedPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DownloadingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -326,6 +334,7 @@
     <XliffResource Include="MultilingualResources\PixivFSUWP.zh-Hans.xlf" />
     <XliffResource Include="MultilingualResources\PixivFSUWP.zh-Hant.xlf" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

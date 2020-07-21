@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="PixivFSUWP.DownloadingPage"
+    x:Class="PixivFSUWP.DownloadedPage"
     x:Name="thisPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,12 +7,7 @@
     xmlns:data="using:PixivFSUWP.Data"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:cvtr="using:PixivFSUWP.Converters"
     mc:Ignorable="d">
-    <Page.Resources>
-        <cvtr:BooleanToVisibilityConverter x:Key="btvc"/>
-        <cvtr:BooleanToVisibilityReverseConverter x:Key="btvrc"/>
-    </Page.Resources>
 
     <Grid>
         <ListView x:Name="lstDownloading" SelectionMode="None">
@@ -35,14 +30,15 @@
                         <TextBlock Text="{Binding Title}"/>
                         <ProgressBar Grid.Row="1" Minimum="0" Maximum="100" Value="{Binding Progress}" HorizontalAlignment="Stretch"/>
                         <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.RowSpan="2">
-                            <Button Style="{StaticResource ButtonRevealStyleWithAcrylic}" Visibility="{Binding IsPaused,Converter={StaticResource btvrc}}"
-                                    FontFamily="Segoe MDL2 Assets" Content="&#xEDB4;" Margin="5 0"
-                                    Click="Pause_Button_Click" DataContext="{Binding}"/>
-                            <Button Style="{StaticResource ButtonRevealStyleWithAcrylic}" Visibility="{Binding IsPaused,Converter={StaticResource btvc}}"
-                                    FontFamily="Segoe MDL2 Assets" Content="&#xEDB5;" Margin="5 0"
-                                    Click="Resume_Button_Click" DataContext="{Binding}"/>
                             <Button Style="{StaticResource ButtonRevealStyleWithAcrylic}"
-                                    FontFamily="Segoe MDL2 Assets" Content="" Margin="5 0"
+                                FontFamily="Segoe MDL2 Assets" Content="&#xE72C;" Margin="5 0"
+                                    Click="Retry_Button_Click" DataContext="{Binding}"/>
+                            <Button Style="{StaticResource ButtonRevealStyleWithAcrylic}" Visibility="Collapsed"
+                                FontFamily="Segoe MDL2 Assets" Content="&#xE838;" Margin="5 0"
+                                    Click="OpenFolder_Button_Click" DataContext="{Binding}"/>
+                            <!--打开文件夹-->
+                            <Button Style="{StaticResource ButtonRevealStyleWithAcrylic}"
+                                    FontFamily="Segoe MDL2 Assets" Content="&#xE74D;" Margin="5 0"
                                     Click="Remove_Button_Click" DataContext="{Binding}"/>
                         </StackPanel>
                     </Grid>

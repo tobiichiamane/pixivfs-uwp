@@ -63,6 +63,7 @@ namespace PixivFSUWP
             else
             {
                 //选择了“下载完毕”
+                ContentFrame.Navigate(typeof(DownloadedPage));
             }
         }
     }

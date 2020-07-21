@@ -45,9 +45,6 @@ namespace PixivFSUWP.Data
                 //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Progress"));
             }
         }
-        protected DownloadJob()
-        {
-        }
         public DownloadJob(string Title, string Uri, string FilePath)
         {
             this.Title = Title;
@@ -55,16 +52,17 @@ namespace PixivFSUWP.Data
             this.FilePath = FilePath;
             Progress = 0;
             Downloading = false;
+            isPaused = true;
         }
 
         //下载状态
-        public bool Downloading { get; protected set; }
-
+        public bool Downloading { get; private set; }
         //用于暂停的ManualResetEvent
         protected ManualResetEvent pauseEvent = new ManualResetEvent(true);
 
         //用于取消任务的CancellationTokenSource
         protected CancellationTokenSource tokenSource = new CancellationTokenSource();
+        private bool isPaused;
 
         //下载完成时的事件
         public event Action<DownloadJob, DownloadCompletedEventArgs> DownloadCompleted;
@@ -82,6 +80,7 @@ namespace PixivFSUWP.Data
             if (!Downloading)
             {
                 Downloading = true;
+                isPaused = false;
                 using (var memStream = await OverAll.DownloadImage(Uri, tokenSource.Token, pauseEvent, async (loaded, length) =>
                 {
                     await Task.Run(() =>
@@ -115,10 +114,25 @@ namespace PixivFSUWP.Data
 
         }
 
+        public bool IsPaused
+        {
+            get => isPaused; private set
+            {
+                isPaused = value;
+                _ = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
+                    CoreDispatcherPriority.Normal,
+                    () =>
+                    {
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPaused)));
+                    });
+            }
+        }
+
         //暂停下载
         public void Pause()
         {
             pauseEvent.Reset();
+            IsPaused = true;
             DownloadPause?.Invoke(this);
         }
 
@@ -126,6 +140,7 @@ namespace PixivFSUWP.Data
         public void Resume()
         {
             pauseEvent.Set();
+            IsPaused = false;
             DownloadResume?.Invoke(this);
         }
 
@@ -134,6 +149,12 @@ namespace PixivFSUWP.Data
         {
             tokenSource.Cancel();
             DownloadCancel?.Invoke(this);
+        }
+        // 重置状态
+        public void Reset()
+        {
+            Progress = 0;
+            Downloading = false;
         }
     }
 
@@ -156,10 +177,73 @@ namespace PixivFSUWP.Data
             return await CachedFileManager.CompleteUpdatesAsync(File);
         }
     }
+    public class FinishedJob : DownloadJob
+    {
+        public FinishedJob(string Title, string Uri, string FilePath) : base(Title, Uri, FilePath)
+        {
+            Progress = 100;
+        }
+    }
 
     //静态的下载管理器。应用程序不会有多个下载管理器实例。
     public static class DownloadManager
     {
+        // 从文件反序列化下载任务
+        public static async Task Init()
+        {
+            var file = await ApplicationData.Current.LocalFolder.GetFileAsync("DownloadManager.json");
+            if (file is null) return;
+            var json = Windows.Data.Json.JsonValue.Parse(await FileIO.ReadTextAsync(file)).GetObject();
+            var downloading = json["Downloading"].GetArray().Select(i =>
+            new DownloadJob(i.GetObject()["Title"].GetString(), i.GetObject()["Uri"].GetString(), i.GetObject()["FilePath"].GetString()));
+            var downloaded = json["Downloaded"].GetArray().Select(i =>
+            new FinishedJob(i.GetObject()["Title"].GetString(), i.GetObject()["Uri"].GetString(), i.GetObject()["FilePath"].GetString()));
+            _ = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
+                CoreDispatcherPriority.Normal, () =>
+                {
+                    DownloadJobs = new ObservableCollection<DownloadJob>(downloading);
+                    FinishedJobs = new ObservableCollection<DownloadJob>(downloaded);
+                });
+        }
+        // 将下载任务序列化到文件
+        public static async Task Save()
+        {
+            var fileTask = ApplicationData.Current.LocalFolder.GetFileAsync("DownloadManager.json");
+            var downloadings = new Windows.Data.Json.JsonArray();
+            var downloaded = new Windows.Data.Json.JsonArray();
+            var t1 = Task.Run(() => DownloadJobs.ForEach(i =>
+                 downloadings.Add(new Windows.Data.Json.JsonObject
+                 {
+                    { "Title", Windows.Data.Json.JsonValue.CreateStringValue(i.Title) },
+                    { "Uri", Windows.Data.Json.JsonValue.CreateStringValue(i.Uri) },
+                    { "FilePath", Windows.Data.Json.JsonValue.CreateStringValue(i.FilePath) }
+                 }
+             )));
+            var t2 = Task.Run(() => FinishedJobs.ForEach(i =>
+                    downloaded.Add(new Windows.Data.Json.JsonObject
+                    {
+                    { "Title", Windows.Data.Json.JsonValue.CreateStringValue(i.Title) },
+                    { "Uri", Windows.Data.Json.JsonValue.CreateStringValue(i.Uri) },
+                    { "FilePath", Windows.Data.Json.JsonValue.CreateStringValue(i.FilePath) }
+                    }
+                )));
+            var file = await fileTask;
+            if (file is null) return;
+            await Task.WhenAll(t1, t2);
+            var json = new Windows.Data.Json.JsonObject
+            {
+                { "Downloading", downloadings },
+                { "Downloaded", downloaded }
+            };
+            using (var fs = await file.OpenStreamForWriteAsync())
+            using (var sw = new StreamWriter(fs))
+                sw.Write(json.ToString());
+        }
+        private static void ForEach<T>(this IList<T> list, Action<T> action)
+        {
+            for (int i = 0; i < list.Count; i++) action.Invoke(list[i]);
+        }
+
         //下载任务列表
         public static ObservableCollection<DownloadJob> DownloadJobs = new ObservableCollection<DownloadJob>();
 
@@ -181,6 +265,12 @@ namespace PixivFSUWP.Data
         //添加下载任务
         public static void NewJob(string Title, string Uri, StorageFile File) => AddJob(new DownloadJobPlus(Title, Uri, File));
 
+        public static void ResetJob(DownloadJob job)
+        {
+            RemoveFinishedJob(job);
+            job.Reset();
+            AddJob(job);
+        }
         //有任务下载完成时的事件
         public static event Action<string, bool> DownloadCompleted;
 
@@ -190,8 +280,11 @@ namespace PixivFSUWP.Data
             source.DownloadCompleted -= Job_DownloadCompleted;
             source.DownloadCancel -= Job_DownloadCancel;
             _ = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, () => DownloadJobs.Remove(source));
-            FinishedJobs.Add(source);
+                CoreDispatcherPriority.Normal, () =>
+                {
+                    DownloadJobs.Remove(source);
+                    FinishedJobs.Add(source);
+                });
             DownloadCompleted?.Invoke(source.Title, args.HasError);
         }
         // 下载被取消时
@@ -204,6 +297,7 @@ namespace PixivFSUWP.Data
             FinishedJobs.Add(job);
         }
         //移除下载任务
+        [Obsolete]
         public static void RemoveJob(int Index) => RemoveJob(DownloadJobs[Index]);
 
         //移除下载任务
@@ -214,6 +308,15 @@ namespace PixivFSUWP.Data
             Job.Cancel();
             _ = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
                 CoreDispatcherPriority.Normal, () => DownloadJobs.Remove(Job));
+        }
+        //移除已完成下载任务
+        public static void RemoveFinishedJob(DownloadJob Job)
+        {
+            Job.DownloadCompleted -= Job_DownloadCompleted;
+            Job.DownloadCancel -= Job_DownloadCancel;
+            Job.Cancel();
+            _ = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
+                CoreDispatcherPriority.Normal, () => FinishedJobs.Remove(Job));
         }
 
         // 本地设置
@@ -341,7 +444,8 @@ namespace PixivFSUWP.Data
             {
                 get => isDownloading; private set
                 {
-                    if (isDownloading == value) return;// 不需要重复执行相同的操作
+                    //if (isDownloading == value) return;// 不需要重复执行相同的操作
+                    // 不  需要重复执行相同的操作
                     if (isDownloading = value)// 开始下载线程
                         lock (downloadJobs) _ = Task.Run(downloaderd);
                     else  // 结束下载线程
