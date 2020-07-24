@@ -10,8 +10,8 @@
     xmlns:cvtr="using:PixivFSUWP.Converters"
     mc:Ignorable="d">
     <Page.Resources>
-        <cvtr:BooleanToVisibilityConverter x:Key="btvc"/>
-        <cvtr:BooleanToVisibilityReverseConverter x:Key="btvrc"/>
+        <cvtr:DownloadJobStatus_Pause_Converter x:Key="btvc"/>
+        <cvtr:DownloadJobStatus_Continue_Retry_Converter x:Key="btvrc"/>
     </Page.Resources>
 
     <Grid>
@@ -35,10 +35,11 @@
                         <TextBlock Text="{Binding Title}"/>
                         <ProgressBar Grid.Row="1" Minimum="0" Maximum="100" Value="{Binding Progress}" HorizontalAlignment="Stretch"/>
                         <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.RowSpan="2">
-                            <Button Style="{StaticResource ButtonRevealStyleWithAcrylic}" Visibility="{Binding IsPaused,Converter={StaticResource btvrc}}"
+                            <TextBlock Text="{Binding Status}"/>
+                            <Button Style="{StaticResource ButtonRevealStyleWithAcrylic}" Visibility="{Binding Status,Converter={StaticResource btvc}}"
                                     FontFamily="Segoe MDL2 Assets" Content="&#xEDB4;" Margin="5 0"
                                     Click="Pause_Button_Click" DataContext="{Binding}"/>
-                            <Button Style="{StaticResource ButtonRevealStyleWithAcrylic}" Visibility="{Binding IsPaused,Converter={StaticResource btvc}}"
+                            <Button Style="{StaticResource ButtonRevealStyleWithAcrylic}" Visibility="{Binding Status,Converter={StaticResource btvrc}}"
                                     FontFamily="Segoe MDL2 Assets" Content="&#xEDB5;" Margin="5 0"
                                     Click="Resume_Button_Click" DataContext="{Binding}"/>
                             <Button Style="{StaticResource ButtonRevealStyleWithAcrylic}"

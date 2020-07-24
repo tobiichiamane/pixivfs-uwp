@@ -146,7 +146,7 @@
     <Compile Include="Controls\WaterfallContentPanel.cs" />
     <Compile Include="Controls\WaterfallListView.cs" />
     <Compile Include="Converters\BookmarkHeartVisibilityConverter.cs" />
-    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\DownloadJobStatus_Pause_Converter.cs" />
     <Compile Include="Converters\ChildrenCommentVisibilityConverter.cs" />
     <Compile Include="Converters\ContributionsConverter.cs" />
     <Compile Include="Converters\MultiPageVisibilityConverter.cs" />
