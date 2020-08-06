@@ -398,10 +398,10 @@ namespace PixivFSUWP.Data
                 var picker = new FileSavePicker();
                 picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
                 picker.FileTypeChoices.Add(OverAll.GetResourceString("ImageFilePlain"),
-                    new List<string>() {
-                            (illust.Type.Equals("ugoira", StringComparison.OrdinalIgnoreCase))
+                    new List<string>() {"."+
+                            (illust.Type.Equals("ugoira", StringComparison.OrdinalIgnoreCase)
                                 ? "gif"
-                                : illust.OriginalUrls[p].Split('.').Last()
+                                : illust.OriginalUrls[p].Split('.').Last())
                     });
                 picker.SuggestedFileName = illust.Title;
                 return await picker.PickSaveFileAsync();
