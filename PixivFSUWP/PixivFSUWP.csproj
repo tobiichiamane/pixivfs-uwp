@@ -150,7 +150,6 @@
     <Compile Include="Converters\ChildrenCommentVisibilityConverter.cs" />
     <Compile Include="Converters\ContributionsConverter.cs" />
     <Compile Include="Converters\MultiPageVisibilityConverter.cs" />
-    <Compile Include="Converters\StringToImageSourceConverter.cs" />
     <Compile Include="Data\Backstack.cs" />
     <Compile Include="Data\BigImageDetail.cs" />
     <Compile Include="Data\Collections\BookmarkIllustsCollection.cs" />

@@ -21,7 +21,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition MaxHeight="50"/>
                         </Grid.RowDefinitions>
-                        <Image Grid.RowSpan="2" Stretch="Uniform" Source="{Binding FilePath,Converter={StaticResource StringToImageSourceConverter}}"/>
+                        <Image Grid.RowSpan="2" Stretch="Uniform" Tag="{Binding FilePath}" Loaded="Image_Loaded"/>
                         <Grid Grid.Row="1" Background="{ThemeResource SystemAltMediumColor}">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
