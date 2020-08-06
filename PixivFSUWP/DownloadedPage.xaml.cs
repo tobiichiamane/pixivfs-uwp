@@ -49,5 +49,14 @@ namespace PixivFSUWP
             var btn = sender as Button;
             //if (btn.DataContext is Data.DownloadJob job)
         }
+
+        private void WaterfallContent_Loaded(object sender, RoutedEventArgs e)
+        {
+            var WaterfallContent = sender as Controls.WaterfallContentPanel;
+            if (ActualWidth < 700) WaterfallContent.Colums = 3;
+            else if (ActualWidth < 900) WaterfallContent.Colums = 4;
+            else if (ActualWidth < 1100) WaterfallContent.Colums = 5;
+            else WaterfallContent.Colums = 6;
+        }
     }
 }
