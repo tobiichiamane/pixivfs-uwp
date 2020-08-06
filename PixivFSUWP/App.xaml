@@ -12,8 +12,11 @@
                 <ResourceDictionary x:Key="Dark" Source="/Themes/Dark.xaml" />
                 <ResourceDictionary x:Key="Default" Source="/Themes/Light.xaml" />
             </ResourceDictionary.ThemeDictionaries>
+            
         <converters:MultiPageVisibilityConverter x:Name="MultiPageVisibilityConverter"/>
         <converters:BookmarkHeartVisibilityConverter x:Name="BookmarkHeartVisibilityConverter"/>
+        <converters:StringToImageSourceConverter x:Key="StringToImageSourceConverter"/>
+            
         <AcrylicBrush x:Name="PageBackGround" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAltHighColor}" TintOpacity="{ThemeResource PageBackGroundTintOpacity}" FallbackColor="{ThemeResource SystemAltHighColor}"/>
         <ControlTemplate x:Name="ScrollViewerScrollBarlessTemplate" TargetType="ScrollViewer">
             <Grid Background="{TemplateBinding Background}">
