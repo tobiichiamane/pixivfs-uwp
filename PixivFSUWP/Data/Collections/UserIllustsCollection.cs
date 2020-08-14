@@ -13,57 +13,16 @@ using Windows.UI.Xaml.Data;
 
 namespace PixivFSUWP.Data.Collections
 {
-    public class UserIllustsCollection : ObservableCollection<ViewModels.WaterfallItemViewModel>, ISupportIncrementalLoading
+    public class UserIllustsCollection : IllustsCollectionBase<ViewModels.WaterfallItemViewModel>
     {
         readonly string userID;
-        string nexturl = "begin";
-        bool _busy = false;
-        bool _emergencyStop = false;
-        EventWaitHandle pause = new ManualResetEvent(true);
 
         public UserIllustsCollection(string UserID)
         {
             userID = UserID;
         }
 
-        public bool HasMoreItems
-        {
-            get => !string.IsNullOrEmpty(nexturl);
-        }
-
-        public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
-        {
-            if (_busy)
-                throw new InvalidOperationException("Only one operation in flight at a time");
-            _busy = true;
-            return AsyncInfo.Run((c) => LoadMoreItemsAsync(c, count));
-        }
-
-        public void StopLoading()
-        {
-            _emergencyStop = true;
-            if (_busy)
-            {
-                ResumeLoading();
-            }
-            else
-            {
-                Clear();
-                GC.Collect();
-            }
-        }
-
-        public void PauseLoading()
-        {
-            pause.Reset();
-        }
-
-        public void ResumeLoading()
-        {
-            pause.Set();
-        }
-
-        protected async Task<LoadMoreItemsResult> LoadMoreItemsAsync(CancellationToken c, uint count)
+        protected override async Task<LoadMoreItemsResult> LoadMoreItemsAsync(CancellationToken c, uint count)
         {
             try
             {

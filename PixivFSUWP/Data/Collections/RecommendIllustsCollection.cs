@@ -11,62 +11,22 @@ using Windows.Foundation;
 using Windows.UI.Xaml.Data;
 using System.Web;
 using Windows.Data.Json;
+using System.Diagnostics;
 
 namespace PixivFSUWP.Data.Collections
 {
-    public class RecommendIllustsCollection : ObservableCollection<ViewModels.WaterfallItemViewModel>, ISupportIncrementalLoading
+    public class RecommendIllustsCollection : IllustsCollectionBase<ViewModels.WaterfallItemViewModel>
     {
-        string nexturl = "begin";
-        bool _busy = false;
-        bool _emergencyStop = false;
-        EventWaitHandle pause = new ManualResetEvent(true);
-
-        public bool HasMoreItems
-        {
-            get => !string.IsNullOrEmpty(nexturl);
-        }
-
-        public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
-        {
-            if (_busy)
-                throw new InvalidOperationException("Only one operation in flight at a time");
-            _busy = true;
-            return AsyncInfo.Run((c) => LoadMoreItemsAsync(c, count));
-        }
-
-        public void StopLoading()
-        {
-            _emergencyStop = true;
-            if (_busy)
-            {
-                ResumeLoading();
-            }
-            else
-            {
-                Clear();
-                GC.Collect();
-            }
-        }
-
-        public void PauseLoading()
-        {
-            pause.Reset();
-        }
-
-        public void ResumeLoading()
-        {
-            pause.Set();
-        }
-
-        protected async Task<LoadMoreItemsResult> LoadMoreItemsAsync(CancellationToken c, uint count)
+        protected override async Task<LoadMoreItemsResult> LoadMoreItemsAsync(CancellationToken c, uint count)
         {
             try
             {
-                if (!HasMoreItems) return new LoadMoreItemsResult() { Count = 0 };
-                LoadMoreItemsResult toret = new LoadMoreItemsResult() { Count = 0 };
+                LoadMoreItemsResult toret = new LoadMoreItemsResult{ Count = 0 };
+                if (!HasMoreItems) return toret;
                 PixivCS.Objects.IllustRecommended recommendres = null;
                 try
                 {
+                    Trace.WriteLine(nexturl);
                     if (nexturl == "begin")
                         recommendres = await new PixivAppAPI(OverAll.GlobalBaseAPI)
                             .GetIllustRecommendedAsync();
@@ -86,11 +46,13 @@ namespace PixivFSUWP.Data.Collections
                                 IncludePrivacyPolicy: getparam("include_privacy_policy"));
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
+                    Debug.WriteLine(ex);
                     return toret;
                 }
                 nexturl = recommendres.NextUrl?.ToString() ?? "";
+                Trace.WriteLine(nexturl);
                 foreach (var recillust in recommendres.Illusts)
                 {
                     await Task.Run(() => pause.WaitOne());
