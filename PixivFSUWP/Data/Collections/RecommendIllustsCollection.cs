@@ -21,12 +21,12 @@ namespace PixivFSUWP.Data.Collections
         {
             try
             {
-                LoadMoreItemsResult toret = new LoadMoreItemsResult{ Count = 0 };
+                LoadMoreItemsResult toret = new LoadMoreItemsResult { Count = 0 };
                 if (!HasMoreItems) return toret;
                 PixivCS.Objects.IllustRecommended recommendres = null;
                 try
                 {
-                    Trace.WriteLine(nexturl);
+                    Debug.WriteLine($"[RecommendIllustsCollection.LoadMoreItemsAsync]\t{nexturl}");
                     if (nexturl == "begin")
                         recommendres = await new PixivAppAPI(OverAll.GlobalBaseAPI)
                             .GetIllustRecommendedAsync();
@@ -35,8 +35,8 @@ namespace PixivFSUWP.Data.Collections
                         Uri next = new Uri(nexturl);
                         string getparam(string param) => HttpUtility.ParseQueryString(next.Query).Get(param);
                         recommendres = await new PixivAppAPI(OverAll.GlobalBaseAPI)
-                            .GetIllustRecommendedAsync(ContentType:
-                                getparam("content_type"),
+                            .GetIllustRecommendedAsync(
+                                ContentType: getparam("content_type"),
                                 IncludeRankingLabel: bool.Parse(getparam("include_ranking_label")),
                                 Filter: getparam("filter"),
                                 MinBookmarkIDForRecentIllust: getparam("min_bookmark_id_for_recent_illust"),
@@ -46,21 +46,31 @@ namespace PixivFSUWP.Data.Collections
                                 IncludePrivacyPolicy: getparam("include_privacy_policy"));
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
                     return toret;
                 }
                 nexturl = recommendres.NextUrl?.ToString() ?? "";
-                Trace.WriteLine(nexturl);
+                Debug.WriteLine($"[RecommendIllustsCollection.LoadMoreItemsAsync]\t{nexturl}");
+                if (recommendres.Illusts is null)
+                {
+                    Debug.WriteLine("出现了NULL");
+                    // 这里调用更新身份信息的方法
+
+                    Debug.WriteLine("Done");
+                }
+                else
                 foreach (var recillust in recommendres.Illusts)
                 {
-                    await Task.Run(() => pause.WaitOne());
+                    await Task.Run(pause.WaitOne);
+                    Debug.WriteLine($"[RecommendIllustsCollection.LoadMoreItemsAsync]\t加载图片:{toret.Count + 1}/{recommendres.Illusts.Length}");
                     if (_emergencyStop)
                     {
+                        Debug.WriteLine("_emergencyStop = " + _emergencyStop);
                         nexturl = "";
                         Clear();
-                        return new LoadMoreItemsResult() { Count = 0 };
+                        return new LoadMoreItemsResult { Count = 0 };
                     }
                     WaterfallItem recommendi = WaterfallItem.FromObject(recillust);
                     var recommendmodel = ViewModels.WaterfallItemViewModel.FromItem(recommendi);
@@ -72,13 +82,7 @@ namespace PixivFSUWP.Data.Collections
             }
             finally
             {
-                _busy = false;
-                if (_emergencyStop)
-                {
-                    nexturl = "";
-                    Clear();
-                    GC.Collect();
-                }
+                LoadMoreItemsAsync_Finally();
             }
         }
     }

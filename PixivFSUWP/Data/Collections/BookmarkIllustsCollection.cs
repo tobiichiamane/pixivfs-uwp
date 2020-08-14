@@ -28,8 +28,8 @@ namespace PixivFSUWP.Data.Collections
         {
             try
             {
-                if (!HasMoreItems) return new LoadMoreItemsResult() { Count = 0 };
-                LoadMoreItemsResult toret = new LoadMoreItemsResult() { Count = 0 };
+                LoadMoreItemsResult toret = new LoadMoreItemsResult { Count = 0 };
+                if (!HasMoreItems) return toret;
                 PixivCS.Objects.UserIllusts bookmarkres = null;
                 try
                 {
@@ -71,13 +71,7 @@ namespace PixivFSUWP.Data.Collections
             }
             finally
             {
-                _busy = false;
-                if (_emergencyStop)
-                {
-                    nexturl = "";
-                    Clear();
-                    GC.Collect();
-                }
+                LoadMoreItemsAsync_Finally();
             }
         }
     }

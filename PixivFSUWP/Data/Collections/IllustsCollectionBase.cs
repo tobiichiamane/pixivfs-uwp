@@ -32,7 +32,7 @@ namespace PixivFSUWP.Data.Collections
 
         public virtual void StopLoading()
         {
-            Trace.WriteLine(_busy);
+            Debug.WriteLine(_busy);
             _emergencyStop = true;
             if (_busy)
             {
@@ -47,16 +47,26 @@ namespace PixivFSUWP.Data.Collections
 
         public virtual void PauseLoading()
         {
-            Trace.WriteLine("Pause");
+            Debug.WriteLine("Pause");
             pause.Reset();
         }
 
         public virtual void ResumeLoading()
         {
-            Trace.WriteLine("Resume");
+            Debug.WriteLine("Resume");
             pause.Set();
         }
 
         protected abstract Task<LoadMoreItemsResult> LoadMoreItemsAsync(CancellationToken c, uint count);
+
+        protected virtual void LoadMoreItemsAsync_Finally()
+        {
+            Debug.WriteLine("[LoadMoreItemsAsync]\tFinally");
+            _busy = false;
+            if (!_emergencyStop) return;
+            nexturl = string.Empty;
+            Clear();
+            GC.Collect();
+        }
     }
 }
