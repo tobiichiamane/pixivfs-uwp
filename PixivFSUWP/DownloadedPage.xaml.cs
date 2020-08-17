@@ -34,7 +34,7 @@ namespace PixivFSUWP
         {
             var btn = sender as Button;
             if (btn.DataContext is Data.DownloadJob job)
-                Data.DownloadManager.RemoveFinishedJob(job);
+                _ = Data.DownloadManager.RemoveFinishedJob(job);
         }
 
         private void Retry_Button_Click(object sender, RoutedEventArgs e)
@@ -42,7 +42,7 @@ namespace PixivFSUWP
             var btn = sender as Button;
             if (btn.DataContext is Data.DownloadJob job)
             {
-                Data.DownloadManager.ResetJob(job);
+                _ = Data.DownloadManager.ResetJob(job);
             }
         }
 
@@ -64,6 +64,7 @@ namespace PixivFSUWP
         private async void Image_Loaded(object sender, RoutedEventArgs e)
         {
             var img = sender as Image;
+            if (img.DataContext is Data.DownloadJob job && job.Status != Data.DownloadJobStatus.Finished) return;
             if (img.Tag is string imagePath)
             {
                 var file = await StorageFile.GetFileFromPathAsync(imagePath);
