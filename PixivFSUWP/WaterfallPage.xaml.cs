@@ -283,13 +283,18 @@ namespace PixivFSUWP
 
             try
             {
-
                 var res = await new PixivAppAPI(Data.OverAll.GlobalBaseAPI).GetIllustDetailAsync(i.ItemId.ToString());
                 var illust = Data.IllustDetail.FromObject(res);
                 var file = await Data.DownloadManager.GetPicFile(illust, 0);
                 if (file != null)
                 {
-                    Data.DownloadManager.NewJob(i.Title, illust.OriginalUrls[0], file);
+                    if (illust.Type == "ugoira")
+                    {
+                        var ures = await new PixivAppAPI(Data.OverAll.GlobalBaseAPI).GetUgoiraMetadataAsync(illust.IllustID.ToString());
+                        Data.DownloadManager.NewUgoiraJob(i.Title, ures.UgoiraMetadataUgoiraMetadata.ZipUrls.Medium?.ToString() ?? string.Empty, file, ures);
+                    }
+                    else
+                        Data.DownloadManager.NewJob(i.Title, illust.OriginalUrls[0], file);
                 }
 
                 //    FileSavePicker picker = new FileSavePicker();

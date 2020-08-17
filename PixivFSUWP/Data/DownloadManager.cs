@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
@@ -226,7 +228,7 @@ namespace PixivFSUWP.Data
     // 对FileSavePicker选择的文件直接修改不需要对应的文件系统访问权限
     public class DownloadJobPlus : DownloadJob
     {
-        private readonly StorageFile File;
+        protected readonly StorageFile File;
 
         public DownloadJobPlus(string Title, string Uri, StorageFile File) : base(Title, Uri, File.Path) => this.File = File;
 
@@ -242,6 +244,80 @@ namespace PixivFSUWP.Data
     public class FinishedJob : DownloadJob
     {
         public FinishedJob(string Title, string Uri, string FilePath, DownloadJobStatus status = DownloadJobStatus.Finished) : base(Title, Uri, FilePath) => _ = SetStatus(status);
+    }
+
+    public class DownloadUgoiraJob : DownloadJobPlus
+    {
+        private PixivCS.Objects.UgoiraMetadata res;
+        public DownloadUgoiraJob(string Title, string Uri, StorageFile File, PixivCS.Objects.UgoiraMetadata res) : base(Title, Uri, File)
+        {
+            this.res = res;
+            if (string.IsNullOrEmpty(Uri))
+                _ = SetStatus(DownloadJobStatus.Failed);
+        }
+
+        protected override async Task<FileUpdateStatus> WriteToFile(Stream zipfile)
+        {
+            var framefiles = new List<string>();
+            var framedelays = new Dictionary<string, int>();
+            var frameimgs = new Dictionary<string, SoftwareBitmap>();
+            try
+            {
+                Ugoira ugoira = null;
+                if (res.UgoiraMetadataUgoiraMetadata != null)
+                {
+                    var framesarray = res.UgoiraMetadataUgoiraMetadata.Frames;
+                    foreach (var frame in framesarray)
+                    {
+                        var filePath = frame.File;
+                        framefiles.Add(filePath);
+                        framedelays.Add(filePath, (int)frame.Delay);
+
+                    }
+                    using (var ziparc = new ZipArchive(zipfile, ZipArchiveMode.Read))
+                    {
+                        foreach (var entry in ziparc.Entries)
+                        {
+                            var file = entry.FullName;
+                            using (var memStream = new MemoryStream())
+                            {
+                                await entry.Open().CopyToAsync(memStream);
+                                memStream.Position = 0;
+                                var decoder = await BitmapDecoder.CreateAsync(memStream.AsRandomAccessStream());
+                                frameimgs.Add(file, await decoder.GetSoftwareBitmapAsync());
+                            }
+                        }
+                    }
+                    ugoira = new Ugoira();
+                    foreach (var i in framefiles)
+                        ugoira.Frames.Add(new Ugoira.Frame() { Image = frameimgs[i], Delay = framedelays[i] });
+                }
+                using (var stream = await base.File.OpenAsync(FileAccessMode.ReadWrite))
+                using (var renderer = new Lumia.Imaging.GifRenderer())
+                {
+                    renderer.Duration = ugoira.Frames[0].Delay;
+                    renderer.Size = new Windows.Foundation.Size(ugoira.Frames[0].Image.PixelWidth, ugoira.Frames[0].Image.PixelHeight);
+                    var sources = new List<Lumia.Imaging.IImageProvider>();
+                    foreach (var img in ugoira.Frames)
+                        sources.Add(new Lumia.Imaging.SoftwareBitmapImageSource(img.Image));
+                    renderer.Sources = sources;
+                    var asyncOperationWithProgress = stream.WriteAsync(await renderer.RenderAsync());
+                    asyncOperationWithProgress.Progress = (_, progress) => base.Progress = (int)progress;
+                    await asyncOperationWithProgress;
+                }
+                return FileUpdateStatus.Complete;
+            }
+            catch
+            {
+                return FileUpdateStatus.Failed;
+            }
+            finally
+            {
+                framefiles.Clear();
+                framedelays.Clear();
+                frameimgs.Clear();
+            }
+        }
     }
 
     //静态的下载管理器。应用程序不会有多个下载管理器实例。
@@ -325,6 +401,8 @@ namespace PixivFSUWP.Data
 
         //添加下载任务
         public static void NewJob(string Title, string Uri, StorageFile File) => AddJob(new DownloadJobPlus(Title, Uri, File));
+
+        public static void NewUgoiraJob(string title, string zipurl, StorageFile file, PixivCS.Objects.UgoiraMetadata res) => AddJob(new DownloadUgoiraJob(title, zipurl, file, res));
 
         // 重置任务状态
         public static async Task ResetJob(DownloadJob job)
