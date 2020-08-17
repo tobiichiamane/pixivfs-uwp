@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using PixivFSUWP.Data.DownloadJobs;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
@@ -14,17 +16,17 @@ namespace PixivFSUWP.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            switch ((Data.DownloadJobStatus)value)
+            switch ((DownloadJobStatus)value)
             {
-                case Data.DownloadJobStatus.Created:
-                case Data.DownloadJobStatus.Ready:
-                case Data.DownloadJobStatus.Running:
+                case DownloadJobStatus.Created:
+                case DownloadJobStatus.Ready:
+                case DownloadJobStatus.Running:
                     return Visibility.Visible;
                 default:
-                case Data.DownloadJobStatus.Finished:
-                case Data.DownloadJobStatus.Cancel:
-                case Data.DownloadJobStatus.Failed:
-                case Data.DownloadJobStatus.Pause:
+                case DownloadJobStatus.Finished:
+                case DownloadJobStatus.Cancel:
+                case DownloadJobStatus.Failed:
+                case DownloadJobStatus.Pause:
                     return Visibility.Collapsed;
             }
         }
@@ -36,18 +38,18 @@ namespace PixivFSUWP.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            switch ((Data.DownloadJobStatus)value)
+            switch ((DownloadJobStatus)value)
             {
                 default:
-                case Data.DownloadJobStatus.Created:
-                case Data.DownloadJobStatus.Ready:
-                case Data.DownloadJobStatus.Finished:
-                case Data.DownloadJobStatus.Running:
+                case DownloadJobStatus.Created:
+                case DownloadJobStatus.Ready:
+                case DownloadJobStatus.Finished:
+                case DownloadJobStatus.Running:
                     return Visibility.Collapsed;
 
-                case Data.DownloadJobStatus.Cancel:
-                case Data.DownloadJobStatus.Failed:
-                case Data.DownloadJobStatus.Pause:
+                case DownloadJobStatus.Cancel:
+                case DownloadJobStatus.Failed:
+                case DownloadJobStatus.Pause:
                     return Visibility.Visible;
             }
         }

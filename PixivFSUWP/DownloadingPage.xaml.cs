@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 
+using PixivFSUWP.Data.DownloadJobs;
+
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -37,20 +39,20 @@ namespace PixivFSUWP
         private void Remove_Button_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            if (btn.DataContext is Data.DownloadJob job)
+            if (btn.DataContext is DownloadJob job)
                 Data.DownloadManager.RemoveJob(job);
         }
         private void Pause_Button_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            if (btn.DataContext is Data.DownloadJob job)
+            if (btn.DataContext is DownloadJob job)
                 job.Pause();
         }
 
         private void Resume_Button_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            if (btn.DataContext is Data.DownloadJob job)
+            if (btn.DataContext is DownloadJob job)
                 job.Resume();
         }
     }

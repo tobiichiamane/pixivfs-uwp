@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 
+using PixivFSUWP.Data.DownloadJobs;
+
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -33,14 +35,14 @@ namespace PixivFSUWP
         private void Remove_Button_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            if (btn.DataContext is Data.DownloadJob job)
+            if (btn.DataContext is DownloadJob job)
                 _ = Data.DownloadManager.RemoveFinishedJob(job);
         }
 
         private void Retry_Button_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            if (btn.DataContext is Data.DownloadJob job)
+            if (btn.DataContext is DownloadJob job)
             {
                 _ = Data.DownloadManager.ResetJob(job);
             }
@@ -64,7 +66,7 @@ namespace PixivFSUWP
         private async void Image_Loaded(object sender, RoutedEventArgs e)
         {
             var img = sender as Image;
-            if (img.DataContext is Data.DownloadJob job && job.Status != Data.DownloadJobStatus.Finished) return;
+            if (img.DataContext is DownloadJob job && job.Status != DownloadJobStatus.Finished) return;
             if (img.Tag is string imagePath)
             {
                 var file = await StorageFile.GetFileFromPathAsync(imagePath);

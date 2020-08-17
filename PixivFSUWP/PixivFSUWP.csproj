@@ -160,7 +160,12 @@
     <Compile Include="Data\ContributorsHelper.cs" />
     <Compile Include="Data\CurrentUser.cs" />
     <Compile Include="Data\Collections\FollowingIllustsCollection.cs" />
+    <Compile Include="Data\DownloadJobs\DownloadJob.cs" />
+    <Compile Include="Data\DownloadJobs\DownloadJobPlus.cs" />
+    <Compile Include="Data\DownloadJobs\DownloadJobStatus.cs" />
+    <Compile Include="Data\DownloadJobs\UgoiraDownloadJob.cs" />
     <Compile Include="Data\DownloadManager.cs" />
+    <Compile Include="Data\DownloadManager.Downloader.cs" />
     <Compile Include="Data\IllustCommentItem.cs" />
     <Compile Include="Data\IllustDetail.cs" />
     <Compile Include="Data\CacheManager.cs" />
