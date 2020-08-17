@@ -5,14 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PixivFSUWP"
     xmlns:controls="using:PixivFSUWP.Controls"
-    xmlns:data="using:PixivFSUWP.Data"
+    xmlns:job="using:PixivFSUWP.Data.DownloadJobs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid>
         <controls:WaterfallListView x:Name="lstDownloading" SelectionMode="None" ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="3 0" ItemContainerTransitions="{x:Null}" IsItemClickEnabled="True">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="data:DownloadJob">
+                <DataTemplate x:DataType="job:DownloadJob">
                     <Grid Height="Auto" Width="Auto" Margin="-12,0" BorderThickness="1.5">
                         <Grid.BorderBrush>
                             <RevealBorderBrush Color="Transparent" FallbackColor="LightGray" />
