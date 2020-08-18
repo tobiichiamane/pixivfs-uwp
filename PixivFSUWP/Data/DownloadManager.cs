@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,25 +16,22 @@ namespace PixivFSUWP.Data
     //静态的下载管理器。应用程序不会有多个下载管理器实例。
     public static partial class DownloadManager
     {
+        #region 私有成员
         // 本地设置
         private static readonly Windows.Foundation.Collections.IPropertySet LocalSettings = ApplicationData.Current.LocalSettings.Values;
 
         // 添加任务
         private static void AddJob(DownloadJob job)
         {
+            DownloadJobsAdd?.Invoke(job.Title);
             job.DownloadCompleted += Job_DownloadCompleted;
             job.DownloadCancel += Job_DownloadCancel;
             DownloadJobs.Add(job);
             Downloader.Add(job);
         }
 
-        private static void ForEach<T>(this IList<T> list, Action<T> action)
-        {
-            for (int i = 0; i < list.Count; i++) action.Invoke(list[i]);
-        }
-
         // 获取文件名
-        private static string GetPicName(string template, IllustDetail illust, ushort p)
+        private static string GetDownloadTargetFileName(string template, IllustDetail illust, ushort p)
         {
             var sb = new StringBuilder();
             for (int i = 0; i < template.Length; i++)
@@ -164,25 +160,103 @@ namespace PixivFSUWP.Data
             for (int i = 0; i < list.Count; i++)
                 if (list[i].FilePath.Equals(job.FilePath)) list.RemoveAt(i);
         }
+        #endregion
 
-        //下载任务列表
-        public static ObservableCollection<DownloadJob> DownloadJobs = new ObservableCollection<DownloadJob>();
+        #region 添加下载任务
+        /// <summary>
+        /// 添加下载任务
+        /// </summary>
+        /// <param name="title">下载任务标题</param>
+        /// <param name="uri">下载地址</param>
+        /// <param name="filePath">目标文件地址</param>
+        public static void NewJob(string title, string uri, string filePath) => AddJob(new DownloadJob(title, uri, filePath));
 
-        //完成任务列表
-        public static ObservableCollection<DownloadJob> FinishedJobs = new ObservableCollection<DownloadJob>();
+        /// <summary>
+        /// 添加下载任务
+        /// </summary>
+        /// <param name="title">下载任务标题</param>
+        /// <param name="uri">下载地址</param>
+        /// <param name="file">目标文件</param>
+        public static void NewJob(string title, string uri, StorageFile file) => AddJob(new DownloadJobPlus(title, uri, file));
 
-        //有任务下载完成时的事件
+        /// <summary>
+        /// 添加动画下载任务
+        /// </summary>
+        /// <param name="title">下载任务标题</param>
+        /// <param name="zipurl">下载地址</param>
+        /// <param name="file">目标文件</param>
+        /// <param name="res"></param>
+        public static void NewUgoiraJob(string title, string zipurl, StorageFile file, PixivCS.Objects.UgoiraMetadata res) => AddJob(new UgoiraDownloadJob(title, zipurl, file, res));
+        #endregion
+
+        /// <summary>
+        /// 下载任务列表
+        /// </summary>
+        public readonly static ObservableCollection<DownloadJob> DownloadJobs = new ObservableCollection<DownloadJob>();
+
+        /// <summary>
+        /// 完成任务列表
+        /// </summary>
+        public readonly static ObservableCollection<DownloadJob> FinishedJobs = new ObservableCollection<DownloadJob>();
+
+        /// <summary>
+        /// 有任务下载完成时的事件
+        /// </summary>
         public static event Action<string, bool> DownloadCompleted;
 
-        // 获取文件对象
-        public static async Task<StorageFile> GetPicFile(IllustDetail illust, ushort p)
+        /// <summary>
+        /// 有任务开始时的事件
+        /// </summary>
+        public static event Action<string> DownloadJobsAdd;
+
+        #region 扩展方法-下载
+        /// <summary>
+        /// 自动判断<see cref="IllustDetail"/>的类型并选择合适的下载方法
+        /// </summary>
+        public static Task AutoDownload(this IllustDetail illust) =>
+                illust.Type == "ugoira"// 判断类型
+                ? illust.DownloadUgoiraImage()// 保存动图
+                                              // TODO: 把保存全部图片做成设置
+                : illust.OriginalUrls.Count > 1// 不是动图 读取设置
+                ? illust.DownloadAllImage()// 保存全部图片
+                : illust.DownloadFirstImage();// 保存第一张图片
+
+        /// <summary>
+        /// 下载全部 分P
+        /// </summary>
+        public static async Task DownloadAllImage(this IllustDetail illust)
         {
+            for (ushort i = 0; i < illust.OriginalUrls.Count; i++)
+                NewJob(illust.Title, illust.OriginalUrls[i], await illust.GetDownloadTargetFile(i));
+        }
+
+        /// <summary>
+        /// 下载第一张图片
+        /// </summary>
+        public static async Task DownloadFirstImage(this IllustDetail illust) => NewJob(illust.Title, illust.OriginalUrls[0], await illust.GetDownloadTargetFile(0));
+
+        /// <summary>
+        /// 下载动图
+        /// </summary>
+        public static async Task DownloadUgoiraImage(this IllustDetail illust)
+        {
+            var file = await illust.GetDownloadTargetFile(0);
+            var res = await new PixivCS.PixivAppAPI(OverAll.GlobalBaseAPI).GetUgoiraMetadataAsync(illust.IllustID.ToString());
+            var zipurl = res.UgoiraMetadataUgoiraMetadata.ZipUrls.Medium?.ToString() ?? string.Empty;
+            NewUgoiraJob(illust.Title, zipurl, file, res);
+        }
+        #endregion
+
+        #region 其他扩展方法
+        /// <summary>
+        /// 获取下载管理器将要下载到的文件对象
+        /// </summary>
+        public static async Task<StorageFile> GetDownloadTargetFile(this IllustDetail illust, ushort p)
+        {
+            var fileName = GetDownloadTargetFileName(LocalSettings["PictureSaveName"] as string, illust, p);
+            var folder = await StorageFolder.GetFolderFromPathAsync(LocalSettings["PictureSaveDirectory"] as string);
             if (LocalSettings["PictureAutoSave"] is bool b && b)// 启用自动保存
-            {
-                var fileName = GetPicName(LocalSettings["PictureSaveName"] as string, illust, p);
-                var folder = await StorageFolder.GetFolderFromPathAsync(LocalSettings["PictureSaveDirectory"] as string);
                 return await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
-            }
             else// 不启用自动保存 将使用 FileSavePicke
             {
                 var picker = new FileSavePicker();
@@ -193,102 +267,43 @@ namespace PixivFSUWP.Data
                                 ? "gif"
                                 : illust.OriginalUrls[p].Split('.').Last())
                     });
-                picker.SuggestedFileName = illust.Title;
+                picker.SuggestedFileName = fileName;
                 return await picker.PickSaveFileAsync();
             }
         }
 
-        // 从文件反序列化下载任务
-        public static async Task Init()
-        {
-            var file = await ApplicationData.Current.LocalFolder.GetFileAsync("DownloadManager.json");
-            if (file is null) return;
-            var json = Windows.Data.Json.JsonValue.Parse(await FileIO.ReadTextAsync(file)).GetObject();
-            var downloading = json["Downloading"].GetArray().Select(i =>
-            new DownloadJob(i.GetObject()["Title"].GetString(), i.GetObject()["Uri"].GetString(), i.GetObject()["FilePath"].GetString()));
-            var downloaded = json["Downloaded"].GetArray().Select(i =>
-            new FinishedJob(i.GetObject()["Title"].GetString(), i.GetObject()["Uri"].GetString(), i.GetObject()["FilePath"].GetString()));
-            _ = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, () =>
-                {
-                    DownloadJobs = new ObservableCollection<DownloadJob>(downloading);
-                    FinishedJobs = new ObservableCollection<DownloadJob>(downloaded);
-                });
-        }
-
-        //添加下载任务
-        public static void NewJob(string Title, string Uri, string FilePath) => AddJob(new DownloadJob(Title, Uri, FilePath));
-
-        //添加下载任务
-        public static void NewJob(string Title, string Uri, StorageFile File) => AddJob(new DownloadJobPlus(Title, Uri, File));
-
-        public static void NewUgoiraJob(string title, string zipurl, StorageFile file, PixivCS.Objects.UgoiraMetadata res) => AddJob(new UgoiraDownloadJob(title, zipurl, file, res));
-
-        //移除已完成下载任务
-        public static async Task RemoveFinishedJob(DownloadJob Job)
+        /// <summary>
+        /// 从队列中移除下载任务
+        /// </summary>
+        /// <param name="jobs">队列 <see cref="DownloadJobs"/> 或 <see cref="FinishedJobs"/></param>
+        /// <param name="Job">下载任务</param>
+        public static async Task RemoveJob(this ObservableCollection<DownloadJob> jobs, DownloadJob Job)
         {
             Job.DownloadCompleted -= Job_DownloadCompleted;
             Job.DownloadCancel -= Job_DownloadCancel;
             Job.Cancel();
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, () => FinishedJobs.Remove(Job));
+                CoreDispatcherPriority.Normal, () => jobs.Remove(Job));
         }
 
-        //移除下载任务
-        [Obsolete]
-        public static void RemoveJob(int Index) => RemoveJob(DownloadJobs[Index]);
+        /// <summary>
+        /// 从正在下载队列中移除下载任务
+        /// </summary>
+        public static Task RemoveJobFromDownloading(this DownloadJob job) => DownloadJobs.RemoveJob(job);
 
-        //移除下载任务
-        public static void RemoveJob(DownloadJob Job)
+        /// <summary>
+        /// 从已完成下载队列中移除下载任务
+        /// </summary>
+        public static Task RemoveJobFromFinished(this DownloadJob job) => FinishedJobs.RemoveJob(job);
+        /// <summary>
+        /// 重置任务状态
+        /// </summary>
+        public static async Task ResetJob(this DownloadJob job)
         {
-            Job.DownloadCompleted -= Job_DownloadCompleted;
-            Job.DownloadCancel -= Job_DownloadCancel;
-            Job.Cancel();
-            _ = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, () => DownloadJobs.Remove(Job));
-        }
-
-        // 重置任务状态
-        public static async Task ResetJob(DownloadJob job)
-        {
-            await RemoveFinishedJob(job);
+            await FinishedJobs.RemoveJob(job);
             job.Reset();
             AddJob(job);
         }
-
-        // 将下载任务序列化到文件
-        public static async Task Save()
-        {
-            var fileTask = ApplicationData.Current.LocalFolder.GetFileAsync("DownloadManager.json");
-            var downloadings = new Windows.Data.Json.JsonArray();
-            var downloaded = new Windows.Data.Json.JsonArray();
-            var t1 = Task.Run(() => DownloadJobs.ForEach(i =>
-                 downloadings.Add(new Windows.Data.Json.JsonObject
-                 {
-                    { "Title", Windows.Data.Json.JsonValue.CreateStringValue(i.Title) },
-                    { "Uri", Windows.Data.Json.JsonValue.CreateStringValue(i.Uri) },
-                    { "FilePath", Windows.Data.Json.JsonValue.CreateStringValue(i.FilePath) }
-                 }
-             )));
-            var t2 = Task.Run(() => FinishedJobs.ForEach(i =>
-                    downloaded.Add(new Windows.Data.Json.JsonObject
-                    {
-                    { "Title", Windows.Data.Json.JsonValue.CreateStringValue(i.Title) },
-                    { "Uri", Windows.Data.Json.JsonValue.CreateStringValue(i.Uri) },
-                    { "FilePath", Windows.Data.Json.JsonValue.CreateStringValue(i.FilePath) }
-                    }
-                )));
-            var file = await fileTask;
-            if (file is null) return;
-            await Task.WhenAll(t1, t2);
-            var json = new Windows.Data.Json.JsonObject
-            {
-                { "Downloading", downloadings },
-                { "Downloaded", downloaded }
-            };
-            using (var fs = await file.OpenStreamForWriteAsync())
-            using (var sw = new StreamWriter(fs))
-                sw.Write(json.ToString());
-        }
+        #endregion
     }
 }

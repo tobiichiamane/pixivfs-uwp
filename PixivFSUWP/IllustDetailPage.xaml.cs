@@ -452,44 +452,7 @@ namespace PixivFSUWP
             _playing = !_playing;
         }
 
-        private async void BtnSaveGif_Click(object sender, RoutedEventArgs e)
-        {
-            await saveImage();
-        }
-
-        async Task saveImage()
-        {
-            FileSavePicker picker = new FileSavePicker();
-            picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-            picker.FileTypeChoices.Add(GetResourceString("GifFilePlain"), new List<string>() { ".gif" });
-            picker.SuggestedFileName = illust.Title;
-            var file = await picker.PickSaveFileAsync();
-            if (file != null)
-            {
-                CachedFileManager.DeferUpdates(file);
-                using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
-                {
-                    await stream.WriteAsync(buffer);
-                }
-                var updateStatus = await CachedFileManager.CompleteUpdatesAsync(file);
-                if (updateStatus != FileUpdateStatus.Complete)
-                {
-                    var messageDialog = new MessageDialog(GetResourceString("SaveUgoiraFailedPlain"));
-                    messageDialog.Commands.Add(new UICommand(GetResourceString("RetryPlain"), async (a) => { await saveImage(); }));
-                    messageDialog.Commands.Add(new UICommand(GetResourceString("CancelPlain")));
-                    messageDialog.DefaultCommandIndex = 0;
-                    messageDialog.CancelCommandIndex = 1;
-                    await messageDialog.ShowAsync();
-                }
-                else
-                {
-                    var messageDialog = new MessageDialog(GetResourceString("SaveUgoiraSucceededPlain"));
-                    messageDialog.Commands.Add(new UICommand(GetResourceString("OKPlain")));
-                    messageDialog.DefaultCommandIndex = 0;
-                    await messageDialog.ShowAsync();
-                }
-            }
-        }
+        private async void BtnSaveGif_Click(object sender, RoutedEventArgs e) => await Data.DownloadManager.DownloadUgoiraImage(illust);
 
         private async void btnPublishComment_Click(object sender, RoutedEventArgs e)
         {

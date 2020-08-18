@@ -10,14 +10,16 @@ namespace PixivFSUWP.Data
 {
     public static partial class DownloadManager
     {
-        // 下载管理
+        // 下载管理 这是DownloadManager的内部类
+        // 由DownloadManager直接管理 不应直接暴露在外面
         private static class Downloader
         {
-            private static readonly Mutex download_lock = new Mutex();
+            private static readonly Mutex download_lock = new Mutex();// 同步锁
             private static readonly List<DownloadJob> downloadingJobs = new List<DownloadJob>();// 正在下载任务列表
             private static readonly Queue<DownloadJob> downloadJobs = new Queue<DownloadJob>();// 下载队列
             private static readonly List<DownloadJob> waitingJobs = new List<DownloadJob>();// 暂停任务列表
 
+            [Obsolete]
             private static void AutoRemove(List<DownloadJob> list)
             {
                 for (int i = list.Count - 1; i >= 0; i--)
@@ -36,7 +38,7 @@ namespace PixivFSUWP.Data
                     if (!download_lock.WaitOne(3)) continue;
                     try
                     {
-                        if (downloadingJobs.Count < MaxJob || MaxJob == 0)// 同时进行的任务数限制
+                        if (downloadingJobs.Count < MaxJobs || MaxJobs == 0)// 同时进行的任务数限制
                         {
                             if (downloadJobs.Count > 0)// 判断队列是否为空
                             {
@@ -96,13 +98,19 @@ namespace PixivFSUWP.Data
                 downloadJobs.Enqueue(job);// 排队
                 job.DownloadResume -= job_resume;
             }
-
-            public static int MaxJob { get; set; } = 3;// 同时下载最大进程数 为0不限制
-
+            /// <summary>
+            /// 同时下载最大进程数 为0不限制
+            /// </summary>
+            public static int MaxJobs { get; set; } = 3;
+            /// <summary>
+            /// 下载任务完成
+            /// </summary>
             public static event Action<DownloadJob> JobFinished;
 
-            static Downloader() => _ = Task.Run(Downloaderd);
-
+            static Downloader() => _ = Task.Run(Downloaderd);// 用于开始下载线程
+            /// <summary>
+            /// 添加任务到队列
+            /// </summary>
             public static void Add(DownloadJob job)
             {
                 job.PropertyChanged += Job_PropertyChanged;

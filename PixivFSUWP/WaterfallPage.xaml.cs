@@ -22,6 +22,7 @@ using PixivFSUWP.Interfaces;
 using static PixivFSUWP.Data.OverAll;
 using Windows.UI.Core;
 using PixivFSUWP.Data.Collections;
+using PixivFSUWP.Data;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -278,54 +279,8 @@ namespace PixivFSUWP
 
         private async void QuickSave_Click(object sender, RoutedEventArgs e)
         {
-            if (tapped == null) return;
-            var i = tapped;
-
-            try
-            {
-                var res = await new PixivAppAPI(Data.OverAll.GlobalBaseAPI).GetIllustDetailAsync(i.ItemId.ToString());
-                var illust = Data.IllustDetail.FromObject(res);
-                var file = await Data.DownloadManager.GetPicFile(illust, 0);
-                if (file != null)
-                {
-                    if (illust.Type == "ugoira")
-                    {
-                        var ures = await new PixivAppAPI(Data.OverAll.GlobalBaseAPI).GetUgoiraMetadataAsync(illust.IllustID.ToString());
-                        Data.DownloadManager.NewUgoiraJob(i.Title, ures.UgoiraMetadataUgoiraMetadata.ZipUrls.Medium?.ToString() ?? string.Empty, file, ures);
-                    }
-                    else
-                        Data.DownloadManager.NewJob(i.Title, illust.OriginalUrls[0], file);
-                }
-
-                //    FileSavePicker picker = new FileSavePicker();
-                //    picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-                //    picker.FileTypeChoices.Add(GetResourceString("ImageFilePlain"), new List<string>() { ".png" });
-                //    picker.SuggestedFileName = i.Title;
-
-
-                //    var file = await picker.PickSaveFileAsync();
-                //    if (file != null)
-                //    {
-                //        CachedFileManager.DeferUpdates(file);
-                //        Data.DownloadManager.NewJob(i.Title, illust.OriginalUrls[0], file.Path);
-                //        //using (var imgstream = await Data.OverAll.DownloadImage(illust.OriginalUrls[0]))
-                //        //{
-                //        //    using (var filestream = await file.OpenAsync(FileAccessMode.ReadWrite))
-                //        //    {
-                //        //        await imgstream.CopyToAsync(filestream.AsStream());
-                //        //    }
-                //        //}
-                //        var updateStatus = await CachedFileManager.CompleteUpdatesAsync(file);
-                //        if (updateStatus == FileUpdateStatus.Complete)
-                //            await TheMainPage?.ShowTip(string.Format(GetResourceString("WorkSavedPlain"), i.Title));
-                //        else
-                //            await TheMainPage?.ShowTip(string.Format(GetResourceString("WorkSaveFailedPlain"), i.Title));
-                //    }
-            }
-            catch
-            {
-                await TheMainPage?.ShowTip(string.Format(GetResourceString("WorkSaveFailedPlain"), i.Title));
-            }
+            if (tapped is null) return;
+            await IllustDetail.FromObject(await new PixivAppAPI(GlobalBaseAPI).GetIllustDetailAsync(tapped.ItemId.ToString())).AutoDownload();
         }
     }
 }

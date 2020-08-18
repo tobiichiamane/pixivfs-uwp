@@ -40,7 +40,7 @@ namespace PixivFSUWP
         {
             var btn = sender as Button;
             if (btn.DataContext is DownloadJob job)
-                Data.DownloadManager.RemoveJob(job);
+                Data.DownloadManager.RemoveJobFromDownloading(job);
         }
         private void Pause_Button_Click(object sender, RoutedEventArgs e)
         {

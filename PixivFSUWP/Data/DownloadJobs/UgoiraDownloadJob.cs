@@ -10,6 +10,7 @@ using Windows.Storage.Provider;
 
 namespace PixivFSUWP.Data.DownloadJobs
 {
+    [Serializable]
     public class UgoiraDownloadJob : DownloadJobPlus
     {
         private readonly PixivCS.Objects.UgoiraMetadata res;

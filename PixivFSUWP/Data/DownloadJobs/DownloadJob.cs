@@ -13,6 +13,7 @@ namespace PixivFSUWP.Data.DownloadJobs
     /// <summary>
     /// 下载任务
     /// </summary>
+    [Serializable]
     public class DownloadJob : INotifyPropertyChanged
     {
         private int progress;
@@ -190,10 +191,6 @@ namespace PixivFSUWP.Data.DownloadJobs
         /// 重置状态
         /// </summary>
         public async void Reset() => await SetStatus(DownloadJobStatus.Created);
-    }
-    public class FinishedJob : DownloadJob
-    {
-        public FinishedJob(string Title, string Uri, string FilePath, DownloadJobStatus status = DownloadJobStatus.Finished) : base(Title, Uri, FilePath) => _ = SetStatus(status);
     }
 
     //下载完成时的事件参数

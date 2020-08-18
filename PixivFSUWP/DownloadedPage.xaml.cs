@@ -36,7 +36,7 @@ namespace PixivFSUWP
         {
             var btn = sender as Button;
             if (btn.DataContext is DownloadJob job)
-                _ = Data.DownloadManager.RemoveFinishedJob(job);
+                _ = Data.DownloadManager.RemoveJobFromFinished(job);
         }
 
         private void Retry_Button_Click(object sender, RoutedEventArgs e)

@@ -1,12 +1,15 @@
 ﻿using PixivFSUWP.Data;
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+
 using static PixivFSUWP.Data.OverAll;
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
@@ -28,6 +31,16 @@ namespace PixivFSUWP
             view.Title = "";
             btnExperimentalWarning.Visibility = GlobalBaseAPI.ExperimentalConnection ? Visibility.Visible : Visibility.Collapsed;
             TheMainPage = this;
+
+            Data.DownloadManager.DownloadJobsAdd += async (s) =>
+                await TheMainPage?.ShowTip(
+                    string.Format(GetResourceString("WorkSavePlainAdd"), s));
+            Data.DownloadManager.DownloadCompleted += async (s, b) =>
+                await TheMainPage?.ShowTip(
+                    string.Format(b
+                        ? GetResourceString("WorkSavedPlain")
+                        : GetResourceString("WorkSaveFailedPlain"),
+                        s));
         }
 
         bool _programmablechange = false;

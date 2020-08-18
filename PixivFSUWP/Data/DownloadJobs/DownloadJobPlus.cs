@@ -9,6 +9,7 @@ namespace PixivFSUWP.Data.DownloadJobs
 {
     // 直接传StorageFile对象的...可以避免用FileSavePicker选中的文件传过来没有权限的问题
     // 对FileSavePicker选择的文件直接修改不需要对应的文件系统访问权限
+    [Serializable]
     public class DownloadJobPlus : DownloadJob
     {
         protected readonly StorageFile File;
