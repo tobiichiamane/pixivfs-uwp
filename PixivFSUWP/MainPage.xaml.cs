@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -33,14 +34,16 @@ namespace PixivFSUWP
             TheMainPage = this;
 
             Data.DownloadManager.DownloadJobsAdd += async (s) =>
-                await TheMainPage?.ShowTip(
-                    string.Format(GetResourceString("WorkSavePlainAdd"), s));
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+            async () => await TheMainPage?.ShowTip(string.Format(GetResourceString("WorkSavePlainAdd"), s)));
+
             Data.DownloadManager.DownloadCompleted += async (s, b) =>
-                await TheMainPage?.ShowTip(
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+            async () => await TheMainPage?.ShowTip(
                     string.Format(b
-                        ? GetResourceString("WorkSavedPlain")
-                        : GetResourceString("WorkSaveFailedPlain"),
-                        s));
+                        ? GetResourceString("WorkSaveFailedPlain")
+                        : GetResourceString("WorkSavedPlain"),
+                        s)));
         }
 
         bool _programmablechange = false;

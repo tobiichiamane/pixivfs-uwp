@@ -23,7 +23,6 @@ namespace PixivFSUWP.Data
         // 添加任务
         private static void AddJob(DownloadJob job)
         {
-            DownloadJobsAdd?.Invoke(job.Title);
             job.DownloadCompleted += Job_DownloadCompleted;
             job.DownloadCancel += Job_DownloadCancel;
             DownloadJobs.Add(job);
@@ -226,6 +225,7 @@ namespace PixivFSUWP.Data
         /// </summary>
         public static async Task DownloadAllImage(this IllustDetail illust)
         {
+            DownloadJobsAdd?.Invoke(illust.Title);
             for (ushort i = 0; i < illust.OriginalUrls.Count; i++)
                 NewJob(illust.Title, illust.OriginalUrls[i], await illust.GetDownloadTargetFile(i));
         }
@@ -233,13 +233,18 @@ namespace PixivFSUWP.Data
         /// <summary>
         /// 下载第一张图片
         /// </summary>
-        public static async Task DownloadFirstImage(this IllustDetail illust) => NewJob(illust.Title, illust.OriginalUrls[0], await illust.GetDownloadTargetFile(0));
+        public static async Task DownloadFirstImage(this IllustDetail illust)
+        {
+            DownloadJobsAdd?.Invoke(illust.Title);
+            NewJob(illust.Title, illust.OriginalUrls[0], await illust.GetDownloadTargetFile(0));
+        }
 
         /// <summary>
         /// 下载动图
         /// </summary>
         public static async Task DownloadUgoiraImage(this IllustDetail illust)
         {
+            DownloadJobsAdd?.Invoke(illust.Title);
             var file = await illust.GetDownloadTargetFile(0);
             var res = await new PixivCS.PixivAppAPI(OverAll.GlobalBaseAPI).GetUgoiraMetadataAsync(illust.IllustID.ToString());
             var zipurl = res.UgoiraMetadataUgoiraMetadata.ZipUrls.Medium?.ToString() ?? string.Empty;
