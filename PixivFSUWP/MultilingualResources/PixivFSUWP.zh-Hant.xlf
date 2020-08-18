@@ -813,6 +813,11 @@ Do you want to disable them?</source>
           <target state="new">Download Manager</target>
           <note from="MultilingualBuild" annotates="source" priority="2">NavigationViewItemHeader</note>
         </trans-unit>
+        <trans-unit id="WorkSavePlainAdd" translate="yes" xml:space="preserve">
+          <source>Add 「{0}」 to the Download List.</source>
+          <target state="new">Add 「{0}」 to the Download List.</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        </trans-unit>
       </group>
     </body>
   </file>

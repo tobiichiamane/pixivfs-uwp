@@ -758,6 +758,10 @@ Do you want to disable them?</value>
     <value>Failed to save「{0}」</value>
     <comment>PlainText</comment>
   </data>
+  <data name="WorkSavePlainAdd" xml:space="preserve">
+    <value>Add 「{0}」 to the Download List.</value>
+    <comment>PlainText</comment>
+  </data>
   <data name="YesButtonPlain" xml:space="preserve">
     <value>Sure</value>
     <comment>PlainText (❌Unworkable)</comment>
