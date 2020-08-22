@@ -129,7 +129,7 @@
                     </StackPanel>
                 </ToggleButton>
             </StackPanel>
-            <TextBlock x:Name="txtCaption" Margin="15,15,15,0" Height="Auto" TextWrapping="WrapWholeWords"/>
+            <TextBlock x:Name="txtCaption" Margin="15,15,15,0" Height="Auto" TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True"/>
             <ItemsControl x:Name="panelTags" Margin="15 5 0 0">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="viewmodels:TagViewModel">
@@ -173,7 +173,7 @@
                     <DataTemplate x:DataType="viewmodels:CommentViewModel">
                         <Border Background="{ThemeResource SystemChromeLowColor}" Margin="5,10" BorderThickness="1.5">
                             <Border.BorderBrush>
-                                <RevealBorderBrush Color="Transparent" FallbackColor="LightGray"/>
+                                <RevealBorderBrush Color="Transparent" FallbackColor="{ThemeResource SystemColorBackgroundColor}"/>
                             </Border.BorderBrush>
                             <Grid Margin="15,15,15,10">
                                 <Grid.RowDefinitions>
@@ -196,11 +196,11 @@
                                             <ImageBrush ImageSource="{Binding Avatar}"/>
                                         </Ellipse.Fill>
                                     </Ellipse>
-                                    <TextBlock Margin="5,0" Grid.Column="1" FontSize="14" FontWeight="Bold" VerticalAlignment="Bottom" Text="{Binding UserName}"/>
-                                    <TextBlock Margin="5,0" Grid.Row="1" Grid.Column="1" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}" VerticalAlignment="Top" Text="{Binding UserAccount}"/>
+                                    <TextBlock Margin="5,0" Grid.Column="1" FontSize="14" FontWeight="Bold" VerticalAlignment="Bottom" Text="{Binding UserName}" IsTextSelectionEnabled="True"/>
+                                    <TextBlock Margin="5,0" Grid.Row="1" Grid.Column="1" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}" VerticalAlignment="Top" Text="{Binding UserAccount}" IsTextSelectionEnabled="True"/>
                                 </Grid>
-                                <TextBlock Grid.Row="1" Margin="0,5,0,0" Text="{Binding Comment}" TextWrapping="WrapWholeWords"/>
-                                <TextBlock Grid.Row="2" Margin="0,3,0,0" Text="{Binding DateTime}" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}"/>
+                                <TextBlock Grid.Row="1" Margin="0,5,0,0" Text="{Binding Comment}" TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True"/>
+                                <TextBlock Grid.Row="2" Margin="0,3,0,0" Text="{Binding DateTime}" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}" IsTextSelectionEnabled="True"/>
                                 <ListView Grid.Row="3" Margin="10,5,0,0" Visibility="{Binding ChildrenComments,Converter={StaticResource ChildrenCommentVisibilityConverter}}"
                                           ItemsSource="{Binding ChildrenComments}" SelectionMode="None"
                                           ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled">
@@ -227,11 +227,11 @@
                                                                 <ImageBrush ImageSource="{Binding Avatar}"/>
                                                             </Ellipse.Fill>
                                                         </Ellipse>
-                                                        <TextBlock Margin="5,0" Grid.Column="1" FontSize="14" FontWeight="Bold" VerticalAlignment="Bottom" Text="{Binding UserName}"/>
-                                                        <TextBlock Margin="5,0" Grid.Row="1" Grid.Column="1" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}" VerticalAlignment="Top" Text="{Binding UserAccount}"/>
+                                                        <TextBlock Margin="5,0" Grid.Column="1" FontSize="14" FontWeight="Bold" VerticalAlignment="Bottom" Text="{Binding UserName}" IsTextSelectionEnabled="True"/>
+                                                        <TextBlock Margin="5,0" Grid.Row="1" Grid.Column="1" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}" VerticalAlignment="Top" Text="{Binding UserAccount}" IsTextSelectionEnabled="True"/>
                                                     </Grid>
-                                                    <TextBlock Grid.Row="1" Text="{Binding Comment}" TextWrapping="WrapWholeWords"/>
-                                                    <TextBlock Grid.Row="2" Margin="0,3,0,0" Text="{Binding DateTime}" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}"/>
+                                                    <TextBlock Grid.Row="1" Text="{Binding Comment}" TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True"/>
+                                                    <TextBlock Grid.Row="2" Margin="0,3,0,0" Text="{Binding DateTime}" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}" IsTextSelectionEnabled="True"/>
                                                 </Grid>
                                             </Border>
                                         </DataTemplate>
