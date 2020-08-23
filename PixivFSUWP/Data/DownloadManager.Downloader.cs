@@ -19,15 +19,6 @@ namespace PixivFSUWP.Data
             private static readonly Queue<DownloadJob> downloadJobs = new Queue<DownloadJob>();// 下载队列
             private static readonly List<DownloadJob> waitingJobs = new List<DownloadJob>();// 暂停任务列表
 
-            [Obsolete]
-            private static void AutoRemove(List<DownloadJob> list)
-            {
-                for (int i = list.Count - 1; i >= 0; i--)
-                    if (list[i].Status == DownloadJobStatus.Finished
-                        || list[i].Status == DownloadJobStatus.Failed
-                        || list[i].Status == DownloadJobStatus.Cancel)
-                        list.RemoveAt(i);
-            }
 
             // 下载管理线程
             private static void Downloaderd() // Downloader Daemon
@@ -45,6 +36,25 @@ namespace PixivFSUWP.Data
                                 var job = downloadJobs.Dequeue();
                                 System.Diagnostics.Debug.WriteLine("下载管理线程:出队 " + job.Title);
                                 _ = job.Download();
+                            }
+                        }
+                        else
+                        {
+                            if (downloadingJobs.Count > 0 && downloadJobs.Count > 0)
+                            {
+                                try
+                                {
+                                    lock (downloadingJobs)
+                                    {
+                                        for (int i = downloadingJobs.Count - 1; i >= 0; i--)
+                                        {
+                                            var item = (int)downloadingJobs[i].Status;
+                                            if (item >= 4 && item <= 6) downloadingJobs.RemoveAt(i);
+                                            else break;
+                                        }
+                                    }
+                                }
+                                catch { }
                             }
                         }
                     }
@@ -71,17 +81,17 @@ namespace PixivFSUWP.Data
                             downloadJobs.Enqueue(job);// 任务排队
                             break;
                         case DownloadJobStatus.Running:// 开始下载
-                            downloadingJobs.Add(job); // 任务开始
+                            lock (downloadingJobs) downloadingJobs.Add(job); // 任务开始
                             break;
                         case DownloadJobStatus.Pause:// 下载暂停
-                            downloadingJobs.RemoveJob(job);// 从正在下载列表中移除
+                            lock (downloadingJobs) downloadingJobs.RemoveJob(job);// 从正在下载列表中移除
                             waitingJobs.Add(job);// 添加任务到暂停列表
                             job.DownloadResume += job_resume;// 等待继续
                             break;
                         case DownloadJobStatus.Cancel:// 下载取消 
                         case DownloadJobStatus.Failed:// 下载失败
                         case DownloadJobStatus.Finished:// 下载完成
-                            downloadingJobs.RemoveJob(job);// 从正在下载列表中移除
+                            lock (downloadingJobs) downloadingJobs.RemoveJob(job);// 从正在下载列表中移除
                             //AutoRemove(downloadingJobs);// 自动从列表中移除已完成任务
                             job.PropertyChanged -= Job_PropertyChanged;// 取消订阅
                             JobFinished?.Invoke(job);
