@@ -220,45 +220,30 @@ namespace PixivFSUWP
             if (Backstack.Default.CanBack)
             {
                 var param = ContentFrame.Back();
-                if (param is WaterfallPage.ListContent)
-                {
-                    _programmablechange = true;
-                    switch ((WaterfallPage.ListContent)param)
-                    {
-                        case WaterfallPage.ListContent.Recommend:
-                            NavSelect(0);
-                            break;
-                        case WaterfallPage.ListContent.Bookmark:
-                            NavSelect(1);
-                            break;
-                        case WaterfallPage.ListContent.Following:
-                            NavSelect(2);
-                            break;
-                        case WaterfallPage.ListContent.Ranking:
-                            NavSelect(3);
-                            break;
-                    }
-                }
-                if (param is ValueTuple<WaterfallPage.ListContent, int?>)
-                {
-                    _programmablechange = true;
-                    switch ((((WaterfallPage.ListContent, int?))param).Item1)
-                    {
-                        case WaterfallPage.ListContent.Recommend:
-                            NavSelect(0);
-                            break;
-                        case WaterfallPage.ListContent.Bookmark:
-                            NavSelect(1);
-                            break;
-                        case WaterfallPage.ListContent.Following:
-                            NavSelect(2);
-                            break;
-                        case WaterfallPage.ListContent.Ranking:
-                            NavSelect(3);
-                            break;
-                    }
-                }
+                if (param is WaterfallPage.ListContent content) select(content);
+                else if (param is ValueTuple<WaterfallPage.ListContent, double> tuple) select(tuple.Item1);
                 UpdateNavButtonState();
+
+                // 本地方法
+                void select(WaterfallPage.ListContent type)
+                {
+                    _programmablechange = true;
+                    switch (type)
+                    {
+                        case WaterfallPage.ListContent.Recommend:
+                            NavSelect(0);
+                            break;
+                        case WaterfallPage.ListContent.Bookmark:
+                            NavSelect(1);
+                            break;
+                        case WaterfallPage.ListContent.Following:
+                            NavSelect(2);
+                            break;
+                        case WaterfallPage.ListContent.Ranking:
+                            NavSelect(3);
+                            break;
+                    }
+                }
             }
         }
 

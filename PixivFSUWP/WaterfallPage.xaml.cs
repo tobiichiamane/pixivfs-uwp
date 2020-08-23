@@ -57,15 +57,15 @@ namespace PixivFSUWP
             this.InitializeComponent();
         }
 
-        int? clicked = null;
-
+        //int? clicked = null;
+        private double? verticalOffset;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (e.Parameter is ListContent) listContent = (ListContent)e.Parameter;
-            else if (e.Parameter is ValueTuple<ListContent, int?> tuple)
+            if (e.Parameter is ListContent content) listContent = content;
+            else if (e.Parameter is ValueTuple<ListContent, double> tuple)
             {
-                (listContent, clicked) = tuple;
+                (listContent, verticalOffset) = tuple;
             }
             switch (listContent)
             {
@@ -116,7 +116,7 @@ namespace PixivFSUWP
             base.OnNavigatedFrom(e);
             if (!_backflag)
             {
-                Data.Backstack.Default.Push(typeof(WaterfallPage), (listContent, clickedIndex));
+                Data.Backstack.Default.Push(typeof(WaterfallPage), (listContent, WaterfallListView.VerticalOffset));
                 TheMainPage?.UpdateNavButtonState();
             }
             ItemsSource = null;
@@ -129,14 +129,13 @@ namespace PixivFSUWP
             else if (ActualWidth < 900) WaterfallContent.Colums = 4;
             else if (ActualWidth < 1100) WaterfallContent.Colums = 5;
             else WaterfallContent.Colums = 6;
-            if (clicked != null)
+            if (verticalOffset != null)
             {
                 _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     try
                     {
-                        var element = WaterfallListView.ContainerFromIndex(clicked.Value) as UIElement;
-                        WaterfallListView.ScrollToItem(element);
+                        WaterfallListView.ScrollToOffset(verticalOffset);
                     }
                     catch
                     { }
@@ -145,34 +144,33 @@ namespace PixivFSUWP
         }
 
         //记录点击的项目索引
-        int? clickedIndex = null;
+        //int? clickedIndex = null;
 
         private void WaterfallListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            switch (listContent)
-            {
-                case ListContent.Recommend:
-                    clickedIndex = Data.OverAll.RecommendList.IndexOf(e.ClickedItem as ViewModels.WaterfallItemViewModel);
-                    break;
-                case ListContent.Bookmark:
-                    clickedIndex = Data.OverAll.BookmarkList.IndexOf(e.ClickedItem as ViewModels.WaterfallItemViewModel);
-                    break;
-                case ListContent.Following:
-                    clickedIndex = Data.OverAll.FollowingList.IndexOf(e.ClickedItem as ViewModels.WaterfallItemViewModel);
-                    break;
-                case ListContent.Ranking:
-                    clickedIndex = Data.OverAll.RankingList.IndexOf(e.ClickedItem as ViewModels.WaterfallItemViewModel);
-                    break;
-                case ListContent.SearchResult:
-                    clickedIndex = Data.OverAll.SearchResultList.IndexOf(e.ClickedItem as ViewModels.WaterfallItemViewModel);
-                    break;
-            }
+            //switch (listContent)
+            //{
+            //    case ListContent.Recommend:
+            //        clickedIndex = Data.OverAll.RecommendList.IndexOf(e.ClickedItem as ViewModels.WaterfallItemViewModel);
+            //        break;
+            //    case ListContent.Bookmark:
+            //        clickedIndex = Data.OverAll.BookmarkList.IndexOf(e.ClickedItem as ViewModels.WaterfallItemViewModel);
+            //        break;
+            //    case ListContent.Following:
+            //        clickedIndex = Data.OverAll.FollowingList.IndexOf(e.ClickedItem as ViewModels.WaterfallItemViewModel);
+            //        break;
+            //    case ListContent.Ranking:
+            //        clickedIndex = Data.OverAll.RankingList.IndexOf(e.ClickedItem as ViewModels.WaterfallItemViewModel);
+            //        break;
+            //    case ListContent.SearchResult:
+            //        clickedIndex = Data.OverAll.SearchResultList.IndexOf(e.ClickedItem as ViewModels.WaterfallItemViewModel);
+            //        break;
+            //}
 
             if (ItemsSource != null)
                 (((Frame.Parent as Grid).Parent as Page).Parent as Frame)
-                .Navigate(typeof(IllustDetailPage),
-                (new ValueTuple<int, int?>((e.ClickedItem as ViewModels
-                .WaterfallItemViewModel).ItemId, clickedIndex)),
+                    .Navigate(typeof(IllustDetailPage),
+                (new ValueTuple<int, double>((e.ClickedItem as ViewModels.WaterfallItemViewModel).ItemId, WaterfallListView.VerticalOffset)),
                 App.DrillInTransitionInfo);
             else
                 Frame.Navigate(typeof(IllustDetailPage),
