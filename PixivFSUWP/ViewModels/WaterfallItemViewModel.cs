@@ -23,6 +23,8 @@ namespace PixivFSUWP.ViewModels
         public int Width { get; set; }
         public int Height { get; set; }
 
+        public bool IsManga { get; private set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public async Task LoadImageAsync()
@@ -30,13 +32,7 @@ namespace PixivFSUWP.ViewModels
             ImageSource = await Data.OverAll.LoadImageAsync(ImageUri);
         }
 
-        public string StarsString
-        {
-            get
-            {
-                return "★" + Stars.ToString();
-            }
-        }
+        public string StarsString => "★" + Stars.ToString();
 
         public static WaterfallItemViewModel FromItem(WaterfallItem Item)
             => new WaterfallItemViewModel()
@@ -49,12 +45,10 @@ namespace PixivFSUWP.ViewModels
                 Stars = Item.Stars,
                 Pages = Item.Pages,
                 Width = Item.Width,
-                Height = Item.Height
+                Height = Item.Height,
+                IsManga = Item.Type.Equals("manga")
             };
 
-        public void NotifyChange(string PropertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
-        }
+        public void NotifyChange(string PropertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
     }
 }

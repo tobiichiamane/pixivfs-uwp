@@ -18,7 +18,7 @@ namespace PixivFSUWP.Data
         public bool IsBookmarked { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-
+        public string Type { get; set; }
         public static WaterfallItem FromObject(PixivCS.Objects.UserPreviewIllust Source)
         {
             var toret = new WaterfallItem();
@@ -31,6 +31,7 @@ namespace PixivFSUWP.Data
             toret.IsBookmarked = Source.IsBookmarked;
             toret.Width = (int)Source.Width;
             toret.Height = (int)Source.Height;
+            toret.Type = Source.Type;
             return toret;
         }
     }

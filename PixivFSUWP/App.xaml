@@ -2,7 +2,7 @@
     x:Class="PixivFSUWP.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:viewmodels="using:PixivFSUWP.ViewModels"
+    xmlns:vm="using:PixivFSUWP.ViewModels"
     xmlns:local="using:PixivFSUWP"
     xmlns:converters="using:PixivFSUWP.Converters"
     >
@@ -53,6 +53,12 @@
                                     <FontIcon Foreground="Pink" FontSize="12" Glyph="&#xEB52;"/>
                                     <FontIcon FontSize="12" Glyph="&#xEB51;"/>
                                 </Grid>
+
+                                <Grid Margin="4 0 2 0" VerticalAlignment="Center"
+                                  Visibility="{Binding IsManga, Converter={StaticResource BookmarkHeartVisibilityConverter}}">
+                                    <FontIcon FontSize="14" Glyph="&#xE7DE;"/>
+                                </Grid>
+                                
                                 <FontIcon Margin="2 0 0 0" VerticalAlignment="Center" FontSize="14" Glyph="&#xE8B9;"
                                       Visibility="{Binding Pages, Converter={StaticResource MultiPageVisibilityConverter}}"/>
                             </StackPanel>
