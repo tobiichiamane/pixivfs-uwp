@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid>
-        <controls:WaterfallListView x:Name="lstDownloading" SelectionMode="None" ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="3 0" ItemContainerTransitions="{x:Null}" IsItemClickEnabled="True">
+        <controls:WaterfallListView x:Name="lstDownloading" SelectionMode="None" ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="3 0" ItemContainerTransitions="{x:Null}" IsItemClickEnabled="True" ItemClick="Downloaded_ItemClick">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="job:DownloadJob">
                     <Grid Height="Auto" Width="Auto" Margin="-12,0" BorderThickness="1.5">

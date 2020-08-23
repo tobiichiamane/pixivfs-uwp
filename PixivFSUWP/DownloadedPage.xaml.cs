@@ -48,10 +48,13 @@ namespace PixivFSUWP
             }
         }
 
-        private void OpenFolder_Button_Click(object sender, RoutedEventArgs e)
+        private async void OpenFolder_Button_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            //if (btn.DataContext is Data.DownloadJob job)
+            if (btn.DataContext is Data.DownloadJobs.DownloadJob job)
+            {
+                await Windows.System.Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(job.FilePath));
+            }
         }
 
         private void WaterfallContent_Loaded(object sender, RoutedEventArgs e)
@@ -77,6 +80,12 @@ namespace PixivFSUWP
                     img.Source = bitmap;
                 }
             }
+        }
+
+        private async void Downloaded_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem is DownloadJob job)
+                await Windows.System.Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(job.FilePath));
         }
     }
 }
