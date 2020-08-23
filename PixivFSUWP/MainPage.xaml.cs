@@ -276,5 +276,6 @@ namespace PixivFSUWP
         {
             ContentFrame.Navigate(typeof(DownloadManager));
         }
+        public void GoBack() => NavControl_BackRequested(NavControl, null);
     }
 }

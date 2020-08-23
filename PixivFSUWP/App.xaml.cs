@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -48,6 +49,12 @@ namespace PixivFSUWP
                     Current.RequestedTheme = ApplicationTheme.Dark;
                     break;
             }
+        }
+
+        private void CoreWindow_PointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
+        {
+            if (args.CurrentPoint.Properties.IsXButton1Pressed) Data.OverAll.TheMainPage.GoBack();
+            bool forward = args.CurrentPoint.Properties.IsXButton2Pressed;
         }
 
         private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
@@ -105,6 +112,8 @@ namespace PixivFSUWP
         /// <param name="e">有关启动请求和过程的详细信息。</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             // 不要在窗口已包含内容时重复应用程序初始化，
