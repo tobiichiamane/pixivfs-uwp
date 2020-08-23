@@ -212,11 +212,11 @@ namespace PixivFSUWP.Data
         /// <summary>
         /// 自动判断<see cref="IllustDetail"/>的类型并选择合适的下载方法
         /// </summary>
-        public static Task AutoDownload(this IllustDetail illust) =>
+        public static Task AutoDownload(this IllustDetail illust, bool forcsSaveAll = false) =>
                 illust.Type == "ugoira"// 判断类型
                 ? illust.DownloadUgoiraImage()// 保存动图
                                               // TODO: 把保存全部图片做成设置
-                : illust.OriginalUrls.Count > 1// 不是动图 读取设置
+                : (illust.OriginalUrls.Count > 1) || forcsSaveAll// 不是动图 读取设置
                 ? illust.DownloadAllImage()// 保存全部图片
                 : illust.DownloadFirstImage();// 保存第一张图片
 

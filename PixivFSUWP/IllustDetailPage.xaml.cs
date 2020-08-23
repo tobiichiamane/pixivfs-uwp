@@ -180,8 +180,6 @@ namespace PixivFSUWP
                     ImageList.Visibility = Visibility.Collapsed;
                     btnPlay.IsEnabled = false;
                     btnPlay.Visibility = Visibility.Visible;
-                    btnSaveGif.IsEnabled = false;
-                    btnSaveGif.Visibility = Visibility.Visible;
                     txtLoadingStatus.Text = GetResourceString("LoadingPreviewPlain");
                     ugoiraPlayer.Source = await Data.OverAll.LoadImageAsync(illust.OriginalUrls[0], cancellation.Token);
                     txtLoadingStatus.Text = GetResourceString("DownloadingUgoiraPlain");
@@ -194,7 +192,6 @@ namespace PixivFSUWP
                     await playUgoira();
                     txtLoadingStatus.Text = GetResourceString("PlayingUgoiraPlain");
                     btnPlay.IsEnabled = true;
-                    btnSaveGif.IsEnabled = true;
                 }
                 else
                 {
@@ -452,7 +449,7 @@ namespace PixivFSUWP
             _playing = !_playing;
         }
 
-        private async void BtnSaveGif_Click(object sender, RoutedEventArgs e) => await Data.DownloadManager.DownloadUgoiraImage(illust);
+        private async void BtnSaveIllusts_Click(object sender, RoutedEventArgs e) => await Data.DownloadManager.AutoDownload(illust,true);
 
         private async void btnPublishComment_Click(object sender, RoutedEventArgs e)
         {

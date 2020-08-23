@@ -85,9 +85,9 @@
                         <TextBlock x:Name="txtPlay" Margin="0,5,0,0" x:Uid="Stop"/>
                     </StackPanel>
                 </Button>
-                <Button Style="{StaticResource ButtonRevealStyle}" x:Name="btnSaveGif" Click="BtnSaveGif_Click"
+                <Button Style="{StaticResource ButtonRevealStyle}" x:Name="btnSaveIllusts" Click="BtnSaveIllusts_Click"
                               Margin="5,0,0,0" Background="{ThemeResource SystemChromeLowColor}" BorderThickness="1.5" Height="70" 
-                              Width="70" Visibility="Collapsed">
+                              Width="70">
                     <StackPanel Margin="5">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
                                   FontSize="20" Glyph="&#xE74E;"/>
