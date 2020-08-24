@@ -169,14 +169,16 @@ namespace PixivFSUWP
             //}
 
             if (ItemsSource != null)
-                (((Frame.Parent as Grid).Parent as Page).Parent as Frame)
-                    .Navigate(typeof(IllustDetailPage),
-                (new ValueTuple<int, double>((e.ClickedItem as ViewModels.WaterfallItemViewModel).ItemId, WaterfallListView.VerticalOffset)),
-                App.DrillInTransitionInfo);
+                //(((Frame.Parent as Grid).Parent as Page).Parent as Frame)
+                Frame.Navigate(
+                        typeof(IllustDetailPage),
+                        (e.ClickedItem as ViewModels.WaterfallItemViewModel).ItemId,
+                        App.DrillInTransitionInfo);
             else
-                Frame.Navigate(typeof(IllustDetailPage),
-                (e.ClickedItem as ViewModels
-                .WaterfallItemViewModel).ItemId, App.DrillInTransitionInfo);
+                Frame.Navigate(
+                    typeof(IllustDetailPage),
+                    (e.ClickedItem as ViewModels.WaterfallItemViewModel).ItemId,
+                    App.DrillInTransitionInfo);
         }
 
         ViewModels.WaterfallItemViewModel tapped = null;
