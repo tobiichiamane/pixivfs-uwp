@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-
+using PixivFSUWP.Data;
 using PixivFSUWP.Data.DownloadJobs;
-
+using PixivFSUWP.Interfaces;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -25,7 +25,7 @@ namespace PixivFSUWP
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class DownloadedPage : Page
+    public sealed partial class DownloadedPage : Page, IGoBackFlag
     {
         public DownloadedPage()
         {
@@ -87,5 +87,21 @@ namespace PixivFSUWP
             if (e.ClickedItem is DownloadJob job)
                 await Windows.System.Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(job.FilePath));
         }
+
+        bool _backflag = false;
+
+        public void SetBackFlag(bool value)
+        {
+            _backflag = value;
+        }
+        //protected override void OnNavigatedFrom(NavigationEventArgs e)
+        //{
+        //    if (!_backflag)
+        //    {
+        //        Backstack.Default.Push(typeof(DownloadedPage), null);
+        //        ((Frame.Parent as Grid)?.Parent as MainPage)?.UpdateNavButtonState();
+        //    }
+        //    base.OnNavigatedFrom(e);
+        //}
     }
 }

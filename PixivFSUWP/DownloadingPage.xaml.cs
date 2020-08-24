@@ -55,5 +55,10 @@ namespace PixivFSUWP
             if (btn.DataContext is DownloadJob job)
                 job.Resume();
         }
+
+        private void Downloaded_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tag is Frame frame) frame.Navigate(typeof(DownloadedPage));
+        }
     }
 }

@@ -9,7 +9,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Margin="0 75 0 0">
         <controls:WaterfallListView x:Name="lstDownloading" SelectionMode="None" ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="3 0" ItemContainerTransitions="{x:Null}" IsItemClickEnabled="True" ItemClick="Downloaded_ItemClick">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="job:DownloadJob">

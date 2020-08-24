@@ -15,7 +15,13 @@
     </Page.Resources>
 
     <Grid>
-        <ListView x:Name="lstDownloading" SelectionMode="None">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button x:Uid="DownloadedCaption" Click="Downloaded_Button_Click" HorizontalAlignment="Stretch" Margin="5 0"/>
+
+        <ListView x:Name="lstDownloading" Grid.Row="1" SelectionMode="None">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

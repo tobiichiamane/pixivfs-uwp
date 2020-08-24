@@ -44,6 +44,8 @@ namespace PixivFSUWP
                         ? GetResourceString("WorkSaveFailedPlain")
                         : GetResourceString("WorkSavedPlain"),
                         s)));
+
+            btnDownload.Flyout = new Flyout { Content = new DownloadingPage { Tag = ContentFrame } };
         }
 
         bool _programmablechange = false;
