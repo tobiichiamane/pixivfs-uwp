@@ -94,6 +94,11 @@ namespace PixivFSUWP
         {
             _backflag = value;
         }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            ((Frame.Parent as Grid)?.Parent as MainPage)?.SelectNavPlaceholder(OverAll.GetResourceString("DownloadedCaption\\Content"));
+        }
         //protected override void OnNavigatedFrom(NavigationEventArgs e)
         //{
         //    if (!_backflag)
