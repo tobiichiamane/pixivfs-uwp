@@ -135,6 +135,8 @@ namespace PixivFSUWP
                 iconView.Visibility = Visibility.Visible;
                 iconStar.Visibility = Visibility.Visible;
                 stkAuthor.Visibility = Visibility.Visible;
+                txtPIDTitle.Visibility = Visibility.Visible;
+                txtPID.Text = illust.IllustID.ToString();
                 txtViewStatus.Text = illust.TotalView.ToString();
                 txtBookmarkStatus.Text = illust.TotalBookmarks.ToString();
                 txtAuthor.Text = illust.Author;

@@ -16,7 +16,7 @@
         <StackPanel Margin="0,75,0,0">
             <StackPanel Orientation="Horizontal" Margin="15,15,15,0">
                 <TextBlock x:Name="txtTitle" FontSize="24" FontWeight="Bold"/>
-                <TextBlock Margin="15,0,0,3" Text="PID" FontSize="10" VerticalAlignment="Bottom"/>
+                <TextBlock x:Name="txtPIDTitle" Margin="15,0,0,3" Text="PID" FontSize="10" VerticalAlignment="Bottom" Visibility="Collapsed"/>
                 <TextBlock x:Name="txtPID" Margin="3,0,0,0" FontSize="12" VerticalAlignment="Bottom" IsTextSelectionEnabled="True"/>
                 <FontIcon x:Name="iconView" Margin="15,0,0,2" FontFamily="{StaticResource SymbolThemeFontFamily}" FontSize="10" Glyph="&#xE890;" VerticalAlignment="Bottom"/>
                 <TextBlock x:Name="txtViewStatus" Margin="3,0,0,0" FontSize="12" VerticalAlignment="Bottom"/>
