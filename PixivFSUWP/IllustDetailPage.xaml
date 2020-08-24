@@ -135,7 +135,8 @@
                     <DataTemplate x:DataType="viewmodels:TagViewModel">
                         <Grid Width="Auto" VerticalAlignment="Stretch">
                             <Button x:Name="btnTag" Tag="{Binding Tag}" HorizontalAlignment="Stretch" 
-                                        Style="{StaticResource ButtonRevealStyle}" Height="25">
+                                    Style="{StaticResource ButtonRevealStyle}" Height="25"
+                                    Click="Search_Tag_Click">
                                 <Grid Background="Transparent" Margin="0 -5">
                                     <TextBlock Text="{Binding Tag}" FontSize="12"/>
                                 </Grid>

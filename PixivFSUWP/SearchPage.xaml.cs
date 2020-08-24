@@ -61,7 +61,7 @@ namespace PixivFSUWP
                         (WaterfallPage.ListContent.SearchResult, tuple.Item2));
                 }
                 else
-                    Data.Backstack.Default.Push(typeof(SearchPage), WaterfallPage.ListContent.SearchResult);               
+                    Data.Backstack.Default.Push(typeof(SearchPage), WaterfallPage.ListContent.SearchResult);
             }
             ((Frame.Parent as Grid)?.Parent as MainPage)?.UpdateNavButtonState();
         }
@@ -95,7 +95,12 @@ namespace PixivFSUWP
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (e.Parameter is WaterfallPage.ListContent)
+            if (e.Parameter is string s)
+            {
+                txtWord.Text = s;
+                TxtWord_QuerySubmitted(txtWord, null);
+            }
+            else if (e.Parameter is WaterfallPage.ListContent)
             {
                 _ = loadContents();
                 SearchResultList?.StopLoading();
@@ -226,7 +231,7 @@ namespace PixivFSUWP
             //读取设置项
             if (localSettings.Values["SauceNAOAPI"] as string == null)
             {
-                Frame.Navigate(typeof(SettingsPage),null, App.FromRightTransitionInfo);
+                Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
                 SAUCENAO_API_KEY = sauceNAOAPI;
                 return;
             }
@@ -276,7 +281,7 @@ namespace PixivFSUWP
             {
                 Frame.Navigate(typeof(IllustDetailPage), int.Parse(asbGTPID.Text), App.FromRightTransitionInfo);
             }
-            catch(OverflowException)
+            catch (OverflowException)
             {
                 //吞了异常。一般是由于输入的数字过大，超过了Int32的限制导致
             }

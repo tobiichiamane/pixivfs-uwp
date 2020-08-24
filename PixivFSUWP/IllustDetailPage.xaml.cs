@@ -489,5 +489,10 @@ namespace PixivFSUWP
             var id = ((ViewModels.CommentViewModel)(sender as Button).Tag).UserID;
             Frame.Navigate(typeof(UserDetailPage), id, App.FromRightTransitionInfo);
         }
+
+        private void Search_Tag_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SearchPage), (sender as Button).Tag);
+        }
     }
 }
