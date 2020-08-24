@@ -33,6 +33,7 @@ namespace PixivFSUWP.Data
         private static string GetDownloadTargetFileName(string template, IllustDetail illust, ushort p)
         {
             var sb = new StringBuilder();
+            if (string.IsNullOrEmpty(template)) return illust.Title;
             for (int i = 0; i < template.Length; i++)
             {
                 var ch = template[i];
@@ -227,7 +228,11 @@ namespace PixivFSUWP.Data
         {
             DownloadJobsAdd?.Invoke(illust.Title);
             for (ushort i = 0; i < illust.OriginalUrls.Count; i++)
-                NewJob(illust.Title, illust.OriginalUrls[i], await illust.GetDownloadTargetFile(i));
+            {
+                var file = await illust.GetDownloadTargetFile(i);
+                if (file != null)
+                    NewJob(illust.Title, illust.OriginalUrls[i], file);
+            }
         }
 
         /// <summary>
@@ -236,7 +241,9 @@ namespace PixivFSUWP.Data
         public static async Task DownloadFirstImage(this IllustDetail illust)
         {
             DownloadJobsAdd?.Invoke(illust.Title);
-            NewJob(illust.Title, illust.OriginalUrls[0], await illust.GetDownloadTargetFile(0));
+            var file = await illust.GetDownloadTargetFile(0);
+            if (file != null)
+                NewJob(illust.Title, illust.OriginalUrls[0], file);
         }
 
         /// <summary>
@@ -248,7 +255,8 @@ namespace PixivFSUWP.Data
             var file = await illust.GetDownloadTargetFile(0);
             var res = await new PixivCS.PixivAppAPI(OverAll.GlobalBaseAPI).GetUgoiraMetadataAsync(illust.IllustID.ToString());
             var zipurl = res.UgoiraMetadataUgoiraMetadata.ZipUrls.Medium?.ToString() ?? string.Empty;
-            NewUgoiraJob(illust.Title, zipurl, file, res);
+            if (file != null)
+                NewUgoiraJob(illust.Title, zipurl, file, res);
         }
         #endregion
 
@@ -256,12 +264,14 @@ namespace PixivFSUWP.Data
         /// <summary>
         /// 获取下载管理器将要下载到的文件对象
         /// </summary>
-        public static async Task<StorageFile> GetDownloadTargetFile(this IllustDetail illust, ushort p)
+        private static async Task<StorageFile> GetDownloadTargetFile(this IllustDetail illust, ushort p)
         {
             var fileName = GetDownloadTargetFileName(LocalSettings["PictureSaveName"] as string, illust, p);
-            var folder = await StorageFolder.GetFolderFromPathAsync(LocalSettings["PictureSaveDirectory"] as string);
             if (LocalSettings["PictureAutoSave"] is bool b && b)// 启用自动保存
+            {
+                var folder = await StorageFolder.GetFolderFromPathAsync(LocalSettings["PictureSaveDirectory"] as string);
                 return await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+            }
             else// 不启用自动保存 将使用 FileSavePicke
             {
                 var picker = new FileSavePicker();
