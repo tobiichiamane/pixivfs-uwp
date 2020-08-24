@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+
 using PixivFSUWP.Data;
 using PixivFSUWP.Data.DownloadJobs;
 using PixivFSUWP.Interfaces;
+
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -72,20 +74,30 @@ namespace PixivFSUWP
             if (img.DataContext is DownloadJob job && job.Status != DownloadJobStatus.Finished) return;
             if (img.Tag is string imagePath)
             {
-                var file = await StorageFile.GetFileFromPathAsync(imagePath);
-                if (file != null)
+                try
                 {
-                    var bitmap = new BitmapImage();
-                    await bitmap.SetSourceAsync(await file.OpenAsync(FileAccessMode.Read));
-                    img.Source = bitmap;
+                    var file = await StorageFile.GetFileFromPathAsync(imagePath);
+                    if (file != null)
+                    {
+                        var bitmap = new BitmapImage();
+                        await bitmap.SetSourceAsync(await file.OpenAsync(FileAccessMode.Read));
+                        img.Source = bitmap;
+                    }
+                }
+                catch (UnauthorizedAccessException)
+                {
                 }
             }
         }
 
         private async void Downloaded_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (e.ClickedItem is DownloadJob job)
-                await Windows.System.Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(job.FilePath));
+            try
+            {
+                if (e.ClickedItem is DownloadJob job)
+                    await Windows.System.Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(job.FilePath));
+            }
+            catch (UnauthorizedAccessException) { }
         }
 
         bool _backflag = false;
