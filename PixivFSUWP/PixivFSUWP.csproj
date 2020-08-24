@@ -201,6 +201,9 @@
     <Compile Include="ReportIssuePage.xaml.cs">
       <DependentUpon>ReportIssuePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SearchDialog.xaml.cs">
+      <DependentUpon>SearchDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
@@ -287,6 +290,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ReportIssuePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SearchDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

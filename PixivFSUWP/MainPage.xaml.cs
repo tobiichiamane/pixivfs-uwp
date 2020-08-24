@@ -201,10 +201,7 @@ namespace PixivFSUWP
         {
             try
             {
-                if (ContentFrame.Content is SearchPage)
-                    await (ContentFrame.Content as SearchPage).ShowSearch();
-                else
-                    ContentFrame.Navigate(typeof(SearchPage), WaterfallPage.ListContent.SearchResult, App.FromRightTransitionInfo);
+                await new SearchDialog(ContentFrame).ShowAsync();
             }
             //吞掉异常，这个异常没有意义
             catch { }

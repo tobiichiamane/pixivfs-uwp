@@ -490,9 +490,6 @@ namespace PixivFSUWP
             Frame.Navigate(typeof(UserDetailPage), id, App.FromRightTransitionInfo);
         }
 
-        private void Search_Tag_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(SearchPage), (sender as Button).Tag);
-        }
+        private void Search_Tag_Click(object sender, RoutedEventArgs e) => new SearchDialog(Frame).Search((sender as Button).Tag as string);
     }
 }

@@ -86,6 +86,7 @@ namespace PixivFSUWP
                     Data.OverAll.RankingList.ResumeLoading();
                     break;
                 case ListContent.SearchResult:
+                    ((Frame.Parent as Grid)?.Parent as MainPage)?.SelectNavPlaceholder(GetResourceString("SearchPagePlain"));
                     ItemsSource = Data.OverAll.SearchResultList;
                     Data.OverAll.SearchResultList.ResumeLoading();
                     WaterfallListView.ItemsSource = ItemsSource;
