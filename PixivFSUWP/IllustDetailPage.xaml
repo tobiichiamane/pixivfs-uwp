@@ -57,7 +57,7 @@
             <StackPanel x:Name="stkAuthor" Margin="15,15,15,0" Height="70" Orientation="Horizontal">
                 <Button Style="{StaticResource ButtonRevealStyle}" 
                         BorderThickness="1.5" Background="{ThemeResource SystemChromeLowColor}" 
-                        VerticalAlignment="Stretch" Click="Button_Click">
+                        VerticalAlignment="Stretch" Click="Author_Button_Click">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="50"/>
@@ -182,23 +182,27 @@
                                     <RowDefinition/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="40"/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Ellipse Grid.RowSpan="2" Width="40" Height="40">
-                                        <Ellipse.Fill>
-                                            <ImageBrush ImageSource="{Binding Avatar}"/>
-                                        </Ellipse.Fill>
-                                    </Ellipse>
-                                    <TextBlock Margin="5,0" Grid.Column="1" FontSize="14" FontWeight="Bold" VerticalAlignment="Bottom" Text="{Binding UserName}" IsTextSelectionEnabled="True"/>
-                                    <TextBlock Margin="5,0" Grid.Row="1" Grid.Column="1" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}" VerticalAlignment="Top" Text="{Binding UserAccount}" IsTextSelectionEnabled="True"/>
-                                </Grid>
+                                <Button Style="{StaticResource ButtonRevealStyle}" 
+                                        BorderThickness="1.5" Background="{ThemeResource SystemChromeLowColor}"
+                                        VerticalAlignment="Stretch" Tag="{Binding}" Click="UserAvatar_Button_Click">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Ellipse Grid.RowSpan="2" Width="40" Height="40">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{Binding Avatar}"/>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock Margin="5,0" Grid.Column="1" FontSize="14" FontWeight="Bold" VerticalAlignment="Bottom" Text="{Binding UserName}" IsTextSelectionEnabled="True"/>
+                                        <TextBlock Margin="5,0" Grid.Row="1" Grid.Column="1" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}" VerticalAlignment="Top" Text="{Binding UserAccount}" IsTextSelectionEnabled="True"/>
+                                    </Grid>
+                                </Button>
                                 <TextBlock Grid.Row="1" Margin="0,5,0,0" Text="{Binding Comment}" TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True"/>
                                 <TextBlock Grid.Row="2" Margin="0,3,0,0" Text="{Binding DateTime}" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}" IsTextSelectionEnabled="True"/>
                                 <ListView Grid.Row="3" Margin="10,5,0,0" Visibility="{Binding ChildrenComments,Converter={StaticResource ChildrenCommentVisibilityConverter}}"
@@ -213,23 +217,27 @@
                                                         <RowDefinition/>
                                                         <RowDefinition/>
                                                     </Grid.RowDefinitions>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="40"/>
-                                                            <ColumnDefinition/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition/>
-                                                            <RowDefinition/>
-                                                        </Grid.RowDefinitions>
-                                                        <Ellipse Grid.RowSpan="2" Width="40" Height="40">
-                                                            <Ellipse.Fill>
-                                                                <ImageBrush ImageSource="{Binding Avatar}"/>
-                                                            </Ellipse.Fill>
-                                                        </Ellipse>
-                                                        <TextBlock Margin="5,0" Grid.Column="1" FontSize="14" FontWeight="Bold" VerticalAlignment="Bottom" Text="{Binding UserName}" IsTextSelectionEnabled="True"/>
-                                                        <TextBlock Margin="5,0" Grid.Row="1" Grid.Column="1" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}" VerticalAlignment="Top" Text="{Binding UserAccount}" IsTextSelectionEnabled="True"/>
-                                                    </Grid>
+                                                    <Button Style="{StaticResource ButtonRevealStyle}" 
+                                                            BorderThickness="1.5" Background="{ThemeResource SystemChromeLowColor}" 
+                                                            VerticalAlignment="Stretch" Tag="{Binding}" Click="UserAvatar_Button_Click">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="40"/>
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                            </Grid.RowDefinitions>
+                                                            <Ellipse Grid.RowSpan="2" Width="40" Height="40">
+                                                                <Ellipse.Fill>
+                                                                    <ImageBrush ImageSource="{Binding Avatar}"/>
+                                                                </Ellipse.Fill>
+                                                            </Ellipse>
+                                                            <TextBlock Margin="5,0" Grid.Column="1" FontSize="14" FontWeight="Bold" VerticalAlignment="Bottom" Text="{Binding UserName}" IsTextSelectionEnabled="True"/>
+                                                            <TextBlock Margin="5,0" Grid.Row="1" Grid.Column="1" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}" VerticalAlignment="Top" Text="{Binding UserAccount}" IsTextSelectionEnabled="True"/>
+                                                        </Grid>
+                                                    </Button>
                                                     <TextBlock Grid.Row="1" Text="{Binding Comment}" TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True"/>
                                                     <TextBlock Grid.Row="2" Margin="0,3,0,0" Text="{Binding DateTime}" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}" IsTextSelectionEnabled="True"/>
                                                 </Grid>

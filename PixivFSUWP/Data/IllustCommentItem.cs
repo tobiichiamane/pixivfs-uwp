@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Windows.Data.Json;
 
 namespace PixivFSUWP.Data
 {
     public class IllustCommentItem
     {
+        public int UserID { get; set; }
         public int ID { get; set; }
         public string Comment { get; set; }
         public string DateTime { get; set; }
@@ -19,13 +21,16 @@ namespace PixivFSUWP.Data
 
         public static IllustCommentItem FromObject(PixivCS.Objects.Comment Source)
         {
-            IllustCommentItem toret = new IllustCommentItem();
-            toret.ID = (int)Source.Id;
-            toret.Comment = Source.CommentComment;
-            toret.DateTime = Source.Date;
-            toret.UserName = Source.User.Name;
-            toret.UserAccount = Source.User.Account;
-            toret.AvatarUrl = Source.User.ProfileImageUrls.Medium?.ToString() ?? "";
+            IllustCommentItem toret = new IllustCommentItem
+            {
+                UserID = (int)Source.User.Id,
+                ID = (int)Source.Id,
+                Comment = Source.CommentComment,
+                DateTime = Source.Date,
+                UserName = Source.User.Name,
+                UserAccount = Source.User.Account,
+                AvatarUrl = Source.User.ProfileImageUrls.Medium?.ToString() ?? ""
+            };
             if (Source.ParentComment.CommentComment != null)
             {
                 //有父级评论

@@ -5,12 +5,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace PixivFSUWP.ViewModels
 {
     public class CommentViewModel : INotifyPropertyChanged
     {
+        public int UserID { get; set; }
         public int ID { get; set; }
         public string Comment { get; set; }
         public string UserName { get; set; }
@@ -39,6 +41,7 @@ namespace PixivFSUWP.ViewModels
             return new CommentViewModel()
             {
                 ID = Item.ID,
+                UserID = Item.UserID,
                 Comment = Item.Comment,
                 UserName = Item.UserName,
                 UserAccount = "@" + Item.UserAccount,

@@ -427,7 +427,7 @@ namespace PixivFSUWP
             btnShareFlyout.Hide();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Author_Button_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(UserDetailPage), new ValueTuple<int, bool>(illust.AuthorID, true), App.FromRightTransitionInfo);
         }
@@ -449,7 +449,7 @@ namespace PixivFSUWP
             _playing = !_playing;
         }
 
-        private async void BtnSaveIllusts_Click(object sender, RoutedEventArgs e) => await Data.DownloadManager.AutoDownload(illust,true);
+        private async void BtnSaveIllusts_Click(object sender, RoutedEventArgs e) => await Data.DownloadManager.AutoDownload(illust, true);
 
         private async void btnPublishComment_Click(object sender, RoutedEventArgs e)
         {
@@ -482,6 +482,12 @@ namespace PixivFSUWP
                 btnNewComment.IsEnabled = true;
                 txtComment.Text = "";
             }
+        }
+
+        private void UserAvatar_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var id = ((ViewModels.CommentViewModel)(sender as Button).Tag).UserID;
+            Frame.Navigate(typeof(UserDetailPage), id, App.FromRightTransitionInfo);
         }
     }
 }
