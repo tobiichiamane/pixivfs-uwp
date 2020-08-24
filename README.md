@@ -54,6 +54,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://www.hokori.cn"><img src="https://avatars1.githubusercontent.com/u/27987136?v=4" width="100px;" alt=""/><br /><sub><b>hokori</b></sub></a><br /><a href="https://github.com/tobiichiamane/pixivfs-uwp/issues?q=author%3Alingxd" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/YukinoShary"><img src="https://avatars0.githubusercontent.com/u/26871617?v=4" width="100px;" alt=""/><br /><sub><b>Shary0x62</b></sub></a><br /><a href="https://github.com/tobiichiamane/pixivfs-uwp/commits?author=YukinoShary" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/ProJend"><img src="https://avatars1.githubusercontent.com/u/55018532?v=4" width="100px;" alt=""/><br /><sub><b>ProJend</b></sub></a><br /><a href="https://github.com/tobiichiamane/pixivfs-uwp/commits?author=ProJend" title="Code">💻</a></td>
+    <td align="center"><a href="http://localhost"><img src="https://avatars1.githubusercontent.com/u/24848528?v=4" width="100px;" alt=""/><br /><sub><b>いんしさくら</b></sub></a><br /><a href="#translation-Incisakura" title="Translation">🌍</a></td>
   </tr>
 </table>
 

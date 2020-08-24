@@ -158,6 +158,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Incisakura",
+      "name": "いんしさくら",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/24848528?v=4",
+      "profile": "http://localhost",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,

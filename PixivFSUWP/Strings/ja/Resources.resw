@@ -25,7 +25,7 @@
     <comment>TextBlock</comment>
   </data>
   <data name="BookmarkDeleteFailedPlain" xml:space="preserve">
-    <value>「{0}」をブックマークから解除できません</value>
+    <value>ブックマークから「{0}」を削除できません</value>
     <comment>PlainText</comment>
   </data>
   <data name="Bookmarked.Content" xml:space="preserve">
@@ -53,7 +53,7 @@
     <comment>PlainText</comment>
   </data>
   <data name="Chair.Text" xml:space="preserve">
-    <value>椅子</value>
+    <value>チェア</value>
     <comment>TextBlock</comment>
   </data>
   <data name="CommentsPlain" xml:space="preserve">
@@ -77,11 +77,11 @@
     <comment>ComboBoxItem</comment>
   </data>
   <data name="DeleteBookmarkPlain" xml:space="preserve">
-    <value>ブックマーク解除</value>
+    <value>ブックマーク削除</value>
     <comment>PlainText</comment>
   </data>
   <data name="DeletedBookmarkPlain" xml:space="preserve">
-    <value>「{0}」をブックマークから解除しました</value>
+    <value>ブックマークから「{0}」を削除しました</value>
     <comment>PlainText</comment>
   </data>
   <data name="Desk.Text" xml:space="preserve">
@@ -173,7 +173,7 @@
     <comment>PlainText</comment>
   </data>
   <data name="LoadingStatusPlain" xml:space="preserve">
-    <value>{0}/{1}を読み込む中</value>
+    <value>{0}/{1} を読み込む中</value>
     <comment>PlainText</comment>
   </data>
   <data name="LoggingIn.Text" xml:space="preserve">
@@ -189,7 +189,7 @@
     <comment>TextBlock</comment>
   </data>
   <data name="LoginFailed.Content" xml:space="preserve">
-    <value>ログインできません。トラブルシューティングを行い、もう一度やり直してください。</value>
+    <value>ログインできません。トラブルシューティングを行うか、もう一度やり直してください。</value>
     <comment>Button</comment>
   </data>
   <data name="Logout.Content" xml:space="preserve">
@@ -197,7 +197,7 @@
     <comment>Button</comment>
   </data>
   <data name="LogoutWarning.Text" xml:space="preserve">
-    <value>*すべでのWindowsデバイスからログイン解除します</value>
+    <value>*すべでのWindowsデバイスからログアウトします</value>
     <comment>TextBlock</comment>
   </data>
   <data name="MalePlain" xml:space="preserve">
@@ -225,7 +225,7 @@
     <comment>PlainText</comment>
   </data>
   <data name="NoInkPlain" xml:space="preserve">
-    <value>保存できるインクがありません</value>
+    <value>保存するインクがありません</value>
     <comment>PlainText</comment>
   </data>
   <data name="NotBookmarked.Text" xml:space="preserve">
@@ -249,7 +249,7 @@
     <comment>PlainText</comment>
   </data>
   <data name="PageInfoPlain" xml:space="preserve">
-    <value>画像数: {0}。 クリックまたはタップして全画像モードに。</value>
+    <value>画像数: {0}</value>
     <comment>PlainText</comment>
   </data>
   <data name="PartiallyMatchTag.Content" xml:space="preserve">
@@ -557,8 +557,40 @@
     <comment>TextBlock</comment>
   </data>
   <data name="ExperimentalWarningPlain" xml:space="preserve">
-    <value>You have experimental features enabled. They may cause stability issues.
-Do you want to disable them?</value>
+    <value>実験的な機能が有効になっています、安定性問題が発生する可能性があります。
+無効にしますか？</value>
+    <comment>PlainText</comment>
+  </data>
+  <data name="ColorTheme.Text" xml:space="preserve">
+    <value>色</value>
+    <comment>TextBlock</comment>
+  </data>
+  <data name="DarkColorTheme.Content" xml:space="preserve">
+    <value>濃色</value>
+    <comment>ComboBoxItem</comment>
+  </data>
+  <data name="DefaultColorTheme.Content" xml:space="preserve">
+    <value>Windows モードを使用</value>
+    <comment>ComboBoxItem</comment>
+  </data>
+  <data name="LightColorTheme.Content" xml:space="preserve">
+    <value>淡色</value>
+    <comment>ComboBoxItem</comment>
+  </data>
+  <data name="RestartApplyColorTheme" xml:space="preserve">
+    <value>アプリを再起動して有効にする</value>
+    <comment>PlainText</comment>
+  </data>
+  <data name="ReleasedID" xml:space="preserve">
+    <value>パッケージ：</value>
+    <comment>PlainText</comment>
+  </data>
+  <data name="ReleasedTime" xml:space="preserve">
+    <value>時刻：</value>
+    <comment>PlainText</comment>
+  </data>
+  <data name="ReleasedVersion" xml:space="preserve">
+    <value>バージョン：</value>
     <comment>PlainText</comment>
   </data>
 </root>
