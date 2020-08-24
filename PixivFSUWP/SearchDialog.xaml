@@ -52,7 +52,7 @@
 
     </ContentDialog.Resources>
     <ContentDialog.Background>
-        <AcrylicBrush x:Name="detailBackground" BackgroundSource="HostBackdrop" Opacity=".8" TintOpacity="0.2" TintColor="{ThemeResource SystemAltHighColor}" FallbackColor="{ThemeResource SystemAltHighColor}"/>
+        <AcrylicBrush x:Name="detailBackground" BackgroundSource="HostBackdrop" TintOpacity="0.2" TintColor="{ThemeResource SystemAltHighColor}" FallbackColor="{ThemeResource SystemAltHighColor}"/>
     </ContentDialog.Background>
 
     <Grid>
