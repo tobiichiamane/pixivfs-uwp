@@ -281,7 +281,7 @@ namespace PixivFSUWP
         private async void QuickSave_Click(object sender, RoutedEventArgs e)
         {
             if (tapped is null) return;
-            await IllustDetail.FromObject(await new PixivAppAPI(GlobalBaseAPI).GetIllustDetailAsync(tapped.ItemId.ToString())).AutoDownload();
+            await IllustDetail.FromObject(await new PixivAppAPI(GlobalBaseAPI).GetIllustDetailAsync(tapped.ItemId.ToString())).DownloadFirstImage();
         }
     }
 }
