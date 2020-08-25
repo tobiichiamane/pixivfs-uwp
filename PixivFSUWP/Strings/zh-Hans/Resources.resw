@@ -661,4 +661,16 @@
     <value>「{0}」 已添加到下载队列</value>
     <comment>PlainText</comment>
   </data>
+  <data name="SetWallpaper.Label" xml:space="preserve">
+    <value>设置为桌面背景</value>
+  </data>
+  <data name="SetWallpaper_Done" xml:space="preserve">
+    <value>桌面背景设置完成</value>
+  </data>
+  <data name="SetWallpaper_Failed" xml:space="preserve">
+    <value>桌面背景设置失败</value>
+  </data>
+  <data name="SetWallpaper_NoSupported" xml:space="preserve">
+    <value>设置桌面背景失败: 您的设备不受支持.</value>
+  </data>
 </root>

@@ -829,6 +829,22 @@ Do you want to disable them?</source>
           <target state="translated">「{0}」 已添加到下载队列</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
+        <trans-unit id="SetWallpaper.Label" translate="yes" xml:space="preserve">
+          <source>Set to Desktop Background</source>
+          <target state="translated">设置为桌面背景</target>
+        </trans-unit>
+        <trans-unit id="SetWallpaper_Done" translate="yes" xml:space="preserve">
+          <source>Finished to set Desktop Background.</source>
+          <target state="translated">桌面背景设置完成</target>
+        </trans-unit>
+        <trans-unit id="SetWallpaper_Failed" translate="yes" xml:space="preserve">
+          <source>Failed to set Desktop Background.</source>
+          <target state="translated">桌面背景设置失败</target>
+        </trans-unit>
+        <trans-unit id="SetWallpaper_NoSupported" translate="yes" xml:space="preserve">
+          <source>Failed to set Desktop Background, Not Supported Device.</source>
+          <target state="translated">设置桌面背景失败: 您的设备不受支持.</target>
+        </trans-unit>
       </group>
     </body>
   </file>

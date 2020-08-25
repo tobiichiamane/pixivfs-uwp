@@ -795,28 +795,44 @@ Do you want to disable them?</source>
         </trans-unit>
         <trans-unit id="DownloadsPlain" translate="yes" xml:space="preserve">
           <source>Downloads</source>
-          <target state="new">Downloads</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">下載</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="DownloadedCaption.Content" translate="yes" xml:space="preserve">
           <source>Downloaded</source>
-          <target state="new">Downloaded</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">已下載</target>
           <note from="MultilingualBuild" annotates="source" priority="2">NavigationViewItem</note>
         </trans-unit>
         <trans-unit id="DownloadingCaption.Content" translate="yes" xml:space="preserve">
           <source>Downloading</source>
-          <target state="new">Downloading</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">正在下載</target>
           <note from="MultilingualBuild" annotates="source" priority="2">NavigationViewItem</note>
         </trans-unit>
         <trans-unit id="DownloadManager.Content" translate="yes" xml:space="preserve">
           <source>Download Manager</source>
-          <target state="new">Download Manager</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">下載管理員</target>
           <note from="MultilingualBuild" annotates="source" priority="2">NavigationViewItemHeader</note>
         </trans-unit>
         <trans-unit id="WorkSavePlainAdd" translate="yes" xml:space="preserve">
           <source>Add 「{0}」 to the Download List.</source>
           <target state="new">Add 「{0}」 to the Download List.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        </trans-unit>
+        <trans-unit id="SetWallpaper.Label" translate="yes" xml:space="preserve">
+          <source>Set to Desktop Background</source>
+          <target state="new">Set to Desktop Background</target>
+        </trans-unit>
+        <trans-unit id="SetWallpaper_Done" translate="yes" xml:space="preserve">
+          <source>Finished to set Desktop Background.</source>
+          <target state="new">Finished to set Desktop Background.</target>
+        </trans-unit>
+        <trans-unit id="SetWallpaper_Failed" translate="yes" xml:space="preserve">
+          <source>Failed to set Desktop Background.</source>
+          <target state="new">Failed to set Desktop Background.</target>
+        </trans-unit>
+        <trans-unit id="SetWallpaper_NoSupported" translate="yes" xml:space="preserve">
+          <source>Failed to set Desktop Background, Not Supported Device.</source>
+          <target state="new">Failed to set Desktop Background, Not Supported Device.</target>
         </trans-unit>
       </group>
     </body>

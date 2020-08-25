@@ -640,4 +640,20 @@
     <value>當然</value>
     <comment>PlainText (❌Unworkable)</comment>
   </data>
+  <data name="DownloadsPlain" xml:space="preserve">
+    <value>下載</value>
+    <comment>PlainText</comment>
+  </data>
+  <data name="DownloadedCaption.Content" xml:space="preserve">
+    <value>已下載</value>
+    <comment>NavigationViewItem</comment>
+  </data>
+  <data name="DownloadingCaption.Content" xml:space="preserve">
+    <value>正在下載</value>
+    <comment>NavigationViewItem</comment>
+  </data>
+  <data name="DownloadManager.Content" xml:space="preserve">
+    <value>下載管理員</value>
+    <comment>NavigationViewItemHeader</comment>
+  </data>
 </root>

@@ -666,6 +666,18 @@ Do you want to disable them?</value>
     <value>Settings</value>
     <comment>PlainText</comment>
   </data>
+  <data name="SetWallpaper.Label" xml:space="preserve">
+    <value>Set to Desktop Background</value>
+  </data>
+  <data name="SetWallpaper_Done" xml:space="preserve">
+    <value>Finished to set Desktop Background.</value>
+  </data>
+  <data name="SetWallpaper_Failed" xml:space="preserve">
+    <value>Failed to set Desktop Background.</value>
+  </data>
+  <data name="SetWallpaper_NoSupported" xml:space="preserve">
+    <value>Failed to set Desktop Background, Not Supported Device.</value>
+  </data>
   <data name="Sex.Text" xml:space="preserve">
     <value>Sex</value>
     <comment>TextBlock</comment>

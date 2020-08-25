@@ -707,22 +707,22 @@ Do you want to disable them?</target>
         </trans-unit>
         <trans-unit id="ColorTheme.Text" translate="yes" xml:space="preserve">
           <source>Color Theme</source>
-          <target state="new">Color Theme</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">配色テーマ</target>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="DarkColorTheme.Content" translate="yes" xml:space="preserve">
           <source>Dark</source>
-          <target state="new">Dark</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">暗い</target>
           <note from="MultilingualBuild" annotates="source" priority="2">ComboBoxItem</note>
         </trans-unit>
         <trans-unit id="DefaultColorTheme.Content" translate="yes" xml:space="preserve">
           <source>Use System Default</source>
-          <target state="new">Use System Default</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">システムの既定値を使用する</target>
           <note from="MultilingualBuild" annotates="source" priority="2">ComboBoxItem</note>
         </trans-unit>
         <trans-unit id="LightColorTheme.Content" translate="yes" xml:space="preserve">
           <source>Light</source>
-          <target state="new">Light</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">簡易</target>
           <note from="MultilingualBuild" annotates="source" priority="2">ComboBoxItem</note>
         </trans-unit>
         <trans-unit id="ContributorsReadingErrorPlain" translate="yes" xml:space="preserve">
@@ -737,7 +737,7 @@ Do you want to disable them?</target>
         </trans-unit>
         <trans-unit id="ReleasedID" translate="yes" xml:space="preserve">
           <source>ID : </source>
-          <target state="new">ID : </target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">ID</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="ReleasedTime" translate="yes" xml:space="preserve">
@@ -747,7 +747,7 @@ Do you want to disable them?</target>
         </trans-unit>
         <trans-unit id="ReleasedVersion" translate="yes" xml:space="preserve">
           <source>Version : </source>
-          <target state="new">Version : </target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">バージョン</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="Info.Text" translate="yes" xml:space="preserve">
@@ -762,12 +762,12 @@ Do you want to disable them?</target>
         </trans-unit>
         <trans-unit id="ReportIssueTitlePlain" translate="yes" xml:space="preserve">
           <source>Report An Issue</source>
-          <target state="new">Report An Issue</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">問題を報告</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText (❌Unworkable)</note>
         </trans-unit>
         <trans-unit id="Copy.Content" translate="yes" xml:space="preserve">
           <source>Copy All</source>
-          <target state="new">Copy All</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">すべてコピー...</target>
           <note from="MultilingualBuild" annotates="source" priority="2">HyperlinkButton (❌Unworkable)</note>
         </trans-unit>
         <trans-unit id="NoButtonPlain" translate="yes" xml:space="preserve">
@@ -777,22 +777,22 @@ Do you want to disable them?</target>
         </trans-unit>
         <trans-unit id="YesButtonPlain" translate="yes" xml:space="preserve">
           <source>Sure</source>
-          <target state="new">Sure</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">はい</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText (❌Unworkable)</note>
         </trans-unit>
         <trans-unit id="CancelButtonPlain" translate="yes" xml:space="preserve">
           <source>Cancel</source>
-          <target state="new">Cancel</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">キャンセル</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText (❌Unworkable)</note>
         </trans-unit>
         <trans-unit id="PrimayButtonPlain" translate="yes" xml:space="preserve">
           <source>GitHub</source>
-          <target state="new">GitHub</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">GitHub</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText (❌Unworkable)</note>
         </trans-unit>
         <trans-unit id="SecondButtonPlain" translate="yes" xml:space="preserve">
           <source>Email</source>
-          <target state="new">Email</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">電子メール</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText (❌Unworkable)</note>
         </trans-unit>
         <trans-unit id="CopiedInfoPlain" translate="yes" xml:space="preserve">
@@ -802,33 +802,49 @@ Do you want to disable them?</target>
         </trans-unit>
         <trans-unit id="CopiedPlain" translate="yes" xml:space="preserve">
           <source>Copied</source>
-          <target state="new">Copied</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">コピー済み</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText (❌Unworkable)</note>
         </trans-unit>
         <trans-unit id="DownloadsPlain" translate="yes" xml:space="preserve">
           <source>Downloads</source>
-          <target state="new">Downloads</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">ダウンロード</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="DownloadedCaption.Content" translate="yes" xml:space="preserve">
           <source>Downloaded</source>
-          <target state="new">Downloaded</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">ダウンロード済み</target>
           <note from="MultilingualBuild" annotates="source" priority="2">NavigationViewItem</note>
         </trans-unit>
         <trans-unit id="DownloadingCaption.Content" translate="yes" xml:space="preserve">
           <source>Downloading</source>
-          <target state="new">Downloading</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">ダウンロード中</target>
           <note from="MultilingualBuild" annotates="source" priority="2">NavigationViewItem</note>
         </trans-unit>
         <trans-unit id="DownloadManager.Content" translate="yes" xml:space="preserve">
           <source>Download Manager</source>
-          <target state="new">Download Manager</target>
+          <target state="needs-review-translation" state-qualifier="tm-suggestion">ダウンロード マネージャー</target>
           <note from="MultilingualBuild" annotates="source" priority="2">NavigationViewItemHeader</note>
         </trans-unit>
         <trans-unit id="WorkSavePlainAdd" translate="yes" xml:space="preserve">
           <source>Add 「{0}」 to the Download List.</source>
           <target state="new">Add 「{0}」 to the Download List.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        </trans-unit>
+        <trans-unit id="SetWallpaper.Label" translate="yes" xml:space="preserve">
+          <source>Set to Desktop Background</source>
+          <target state="new">Set to Desktop Background</target>
+        </trans-unit>
+        <trans-unit id="SetWallpaper_Done" translate="yes" xml:space="preserve">
+          <source>Finished to set Desktop Background.</source>
+          <target state="new">Finished to set Desktop Background.</target>
+        </trans-unit>
+        <trans-unit id="SetWallpaper_Failed" translate="yes" xml:space="preserve">
+          <source>Failed to set Desktop Background.</source>
+          <target state="new">Failed to set Desktop Background.</target>
+        </trans-unit>
+        <trans-unit id="SetWallpaper_NoSupported" translate="yes" xml:space="preserve">
+          <source>Failed to set Desktop Background, Not Supported Device.</source>
+          <target state="new">Failed to set Desktop Background, Not Supported Device.</target>
         </trans-unit>
       </group>
     </body>

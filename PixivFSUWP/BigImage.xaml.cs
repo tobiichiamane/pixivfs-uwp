@@ -1,5 +1,7 @@
 ﻿using Microsoft.Graphics.Canvas;
+
 using PixivFSUWP.Data;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -26,6 +29,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+
 using static PixivFSUWP.Data.OverAll;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
@@ -61,6 +65,7 @@ namespace PixivFSUWP
             txtTitle.Text = view.Title;
             mainImg.Source = await Data.OverAll.BytesToImage(parameter.Image, parameter.Width, parameter.Height);
             parameter.Image = null;
+            if (UserProfilePersonalizationSettings.IsSupported()) btnSetWallpaper.Visibility = Visibility.Visible;
             base.OnNavigatedTo(e);
         }
 
@@ -138,22 +143,29 @@ namespace PixivFSUWP
         {
             if (UserProfilePersonalizationSettings.IsSupported())
             {
-                UserProfilePersonalizationSettings settings = UserProfilePersonalizationSettings.Current;
-                StorageFile cacheFile = await CacheManager.GetCachedFileAsync(parameter.FileName);
-                StorageFile file = await cacheFile.CopyAsync(ApplicationData.Current.LocalFolder, "WallpaperImage", NameCollisionOption.ReplaceExisting);
-                if (!await settings.TrySetWallpaperImageAsync(file))
+                var img = mainImg.Source as WriteableBitmap;
+                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync("wallpaper.png", CreationCollisionOption.ReplaceExisting);
+                if (file is null) return;
+                using (var fs = await file.OpenAsync(FileAccessMode.ReadWrite))
                 {
-                    var messageDialog = new MessageDialog("更换壁纸失败");
-                    await messageDialog.ShowAsync();
+                    var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, fs);
+                    encoder.SetPixelData(BitmapPixelFormat.Bgra8,
+                                         BitmapAlphaMode.Premultiplied,
+                                         (uint)img.PixelWidth,
+                                         (uint)img.PixelHeight,
+                                         96.0,
+                                         96.0,
+                                         await Data.OverAll.ImageToBytes(img));
+                    await encoder.FlushAsync();
+                    await fs.FlushAsync();
                 }
+                if (await UserProfilePersonalizationSettings.Current.TrySetWallpaperImageAsync(file))
+                    await ShowTip(OverAll.GetResourceString("SetWallpaper_Done"));
                 else
-                    await ShowTip("已更换壁纸");
+                    await new MessageDialog(OverAll.GetResourceString("SetWallpaper_Failed")).ShowAsync();
             }
             else
-            {
-                var messageDialog = new MessageDialog("您的设备不支持更换壁纸");
-                await messageDialog.ShowAsync();
-            }
+                await new MessageDialog(OverAll.GetResourceString("SetWallpaper_NoSupported")).ShowAsync();
         }
 
         List<(string, int)> tips = new List<(string, int)>();
