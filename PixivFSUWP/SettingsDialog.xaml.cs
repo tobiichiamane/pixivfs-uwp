@@ -28,7 +28,6 @@ namespace PixivFSUWP
         {
             this.InitializeComponent();
             _ = loadContentsAsync();
-            this.Title = Data.OverAll.GetResourceString("SettingsPagePlain");
         }
 
         private async Task loadContentsAsync()

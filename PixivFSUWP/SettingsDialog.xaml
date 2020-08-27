@@ -5,9 +5,11 @@
     xmlns:local="using:PixivFSUWP"
     xmlns:viewmodels="using:PixivFSUWP.ViewModels"
     xmlns:converters="using:PixivFSUWP.Converters"
+    xmlns:i18n="using:PixivFSUWP.Data"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    Title="{i18n:Lang ID=SettingsPagePlain}"
     Background="{StaticResource PageBackGround}"
     PrimaryButtonText="OK">
 
