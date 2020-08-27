@@ -71,11 +71,11 @@ namespace PixivFSUWP
                         i.Stars--;
                         i.NotifyChange("StarsString");
                         i.NotifyChange("IsBookmarked");
-                        await TheMainPage?.ShowTip(string.Format(GetResourceString("DeletedBookmarkPlain"), title));
+                        await OverAll.TheMainPage?.ShowTip(string.Format(OverAll.GetResourceString("DeletedBookmarkPlain"), title));
                     }
                     else
                     {
-                        await TheMainPage?.ShowTip(string.Format(GetResourceString("BookmarkDeleteFailedPlain"), title));
+                        await OverAll.TheMainPage?.ShowTip(string.Format(OverAll.GetResourceString("BookmarkDeleteFailedPlain"), title));
                     }
                 }
                 else
@@ -98,11 +98,11 @@ namespace PixivFSUWP
                         i.Stars++;
                         i.NotifyChange("StarsString");
                         i.NotifyChange("IsBookmarked");
-                        await TheMainPage?.ShowTip(string.Format(GetResourceString("WorkBookmarkedPlain"), title));
+                        await OverAll.TheMainPage?.ShowTip(string.Format(OverAll.GetResourceString("WorkBookmarkedPlain"), title));
                     }
                     else
                     {
-                        await TheMainPage?.ShowTip(string.Format(GetResourceString("WorkBookmarkFailedPlain"), title));
+                        await OverAll.TheMainPage?.ShowTip(string.Format(OverAll.GetResourceString("WorkBookmarkFailedPlain"), title));
                     }
                 }
             }
@@ -221,7 +221,7 @@ namespace PixivFSUWP
                     Data.OverAll.RankingList.ResumeLoading();
                     break;
                 case ListContent.SearchResult:
-                    ((Frame.Parent as Grid)?.Parent as MainPage)?.SelectNavPlaceholder(GetResourceString("SearchPagePlain"));
+                    ((Frame.Parent as Grid)?.Parent as MainPage)?.SelectNavPlaceholder(OverAll.GetResourceString("SearchPagePlain"));
                     ItemsSource = Data.OverAll.SearchResultList;
                     Data.OverAll.SearchResultList.ResumeLoading();
                     WaterfallListView.ItemsSource = ItemsSource;
