@@ -28,23 +28,31 @@
         <Frame x:Name="ContentFrame"/>
         <NavigationView PaneDisplayMode="Top" x:Name="NavControl"
                         SelectionChanged="NavControl_SelectionChanged"
-                        IsSettingsVisible="False" BackRequested="NavControl_BackRequested">
+                        BackRequested="NavControl_BackRequested">
             <NavigationView.PaneHeader>
-                <Viewbox Height="20" Margin="20 0">
+                <Viewbox Height="20" Margin="10 0">
                     <ctrl:Pixiv_Logo xmlns:ctrl="using:PixivFSUWP.Controls"/>
                 </Viewbox>
                 <!--<Image Source="{ThemeResource PixivHeader}"/>-->
             </NavigationView.PaneHeader>
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Uid="Recommended"/>
+                <NavigationViewItem x:Uid="Bookmarked"/>
+                <NavigationViewItem x:Uid="Following"/>
+                <NavigationViewItem x:Uid="Ranking"/>
+                <NavigationViewItemSeparator x:Name="NavSeparator" Visibility="Collapsed"/>
+                <NavigationViewItem Content="PlaceHolder" x:Name="NavPlaceholder" Visibility="Collapsed" IsEnabled="False"/>
+            </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
                 <StackPanel Orientation="Horizontal">
-                    <AppBarButton Width="48" x:Name="btnReport" Style="{ThemeResource AppBarButtonRevealStyle}" Click="btnReport_Click">
+                    <AppBarButton Width="48" x:Name="btnReport" Click="btnReport_Click">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" 
                                   FontSize="16" Glyph="&#xED15;"/>
                     </AppBarButton>
-                    <AppBarButton Width="48" x:Name="btnDownload" Style="{ThemeResource AppBarButtonRevealStyle}">
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" 
-                                  FontSize="16" Glyph="&#xE896;"/>
-                    </AppBarButton>
+                    <AppBarButton Width="48" x:Name="btnDownload" Icon="Download"
+                                  Style="{ThemeResource AppBarButtonRevealStyle}"
+                                  BorderThickness="0" Background="Transparent"/>
+
                     <AppBarButton Width="48" x:Name="btnMe" Click="BtnMe_Click">
                         <Grid Margin="-7">
                             <ProgressRing x:Name="avatarRing" Height="20" Width="20" IsActive="True"/>
@@ -55,28 +63,16 @@
                             </Ellipse>
                         </Grid>
                     </AppBarButton>
-                    <AppBarButton Width="48" x:Name="btnSearch" Style="{ThemeResource AppBarButtonRevealStyle}" Click="BtnSearch_Click">
+                    <AppBarButton Width="48" x:Name="btnSearch" Click="BtnSearch_Click">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" 
                                   FontSize="16" Glyph="&#xE721;"/>
                     </AppBarButton>
-                    <AppBarButton Width="48" x:Name="btnSetting" Style="{ThemeResource AppBarButtonRevealStyle}" Click="BtnSetting_Click">
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" 
-                                  FontSize="16" Glyph="&#xE713;"/>
-                    </AppBarButton>
-                    <AppBarButton Width="48" x:Name="btnExperimentalWarning" Style="{ThemeResource AppBarButtonRevealStyle}" Click="btnExperimentalWarning_Click" Visibility="Collapsed">
+                    <AppBarButton Width="48" x:Name="btnExperimentalWarning" Click="btnExperimentalWarning_Click" Visibility="Collapsed">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" 
                                   FontSize="16" Glyph="&#xE7BA;"/>
                     </AppBarButton>
                 </StackPanel>
             </NavigationView.PaneFooter>
-            <NavigationView.MenuItems>
-                <NavigationViewItem x:Uid="Recommended"/>
-                <NavigationViewItem x:Uid="Bookmarked"/>
-                <NavigationViewItem x:Uid="Following"/>
-                <NavigationViewItem x:Uid="Ranking"/>
-                <NavigationViewItemSeparator x:Name="NavSeparator" Visibility="Collapsed"/>
-                <NavigationViewItem Content="PlaceHolder" x:Name="NavPlaceholder" Visibility="Collapsed" IsEnabled="False"/>
-            </NavigationView.MenuItems>
         </NavigationView>
         <Grid x:Name="grdTip" HorizontalAlignment="Center"
               VerticalAlignment="Bottom" Margin="20" Visibility="Collapsed" Opacity="0">

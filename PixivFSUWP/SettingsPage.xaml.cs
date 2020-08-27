@@ -37,7 +37,7 @@ namespace PixivFSUWP
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            TheMainPage?.SelectNavPlaceholder(GetResourceString("SettingsPagePlain"));
+            //TheMainPage?.SelectNavPlaceholder(GetResourceString("SettingsPagePlain"));
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

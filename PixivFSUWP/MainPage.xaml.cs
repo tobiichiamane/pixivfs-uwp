@@ -53,6 +53,11 @@ namespace PixivFSUWP
         private async void NavControl_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (OverAll.AppUri != null) return;
+            if (args.IsSettingsSelected)
+            {
+                ContentFrame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
+            }
+
             if (_programmablechange)
             {
                 _programmablechange = false;
