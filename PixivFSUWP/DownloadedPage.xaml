@@ -6,11 +6,14 @@
     xmlns:local="using:PixivFSUWP"
     xmlns:controls="using:PixivFSUWP.Controls"
     xmlns:job="using:PixivFSUWP.Data.DownloadJobs"
+    xmlns:data="using:PixivFSUWP.Data"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid Margin="0 75 0 0">
-        <controls:WaterfallListView x:Name="lstDownloading" SelectionMode="None" ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="3 0" ItemContainerTransitions="{x:Null}" IsItemClickEnabled="True" ItemClick="Downloaded_ItemClick">
+        <controls:WaterfallListView x:Name="lstDownloading" ItemsSource="{x:Bind data:DownloadManager.FinishedJobs}" SelectionMode="None"
+                                    ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="3 0" ItemContainerTransitions="{x:Null}"
+                                    IsItemClickEnabled="True" ItemClick="Downloaded_ItemClick">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="job:DownloadJob">
                     <Grid Height="Auto" Width="Auto" Margin="-12,0" BorderThickness="1.5">

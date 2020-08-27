@@ -45,7 +45,7 @@
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
                 <StackPanel Orientation="Horizontal">
-                    <AppBarButton Width="48" x:Name="btnReport" Click="btnReport_Click">
+                    <AppBarButton Width="48" x:Name="btnReport" Click="BtnReport_Click">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" 
                                   FontSize="16" Glyph="&#xED15;"/>
                     </AppBarButton>

@@ -20,6 +20,18 @@ namespace PixivFSUWP.Data
             private static readonly List<DownloadJob> waitingJobs = new List<DownloadJob>();// 暂停任务列表
 
 
+            /// <summary>
+            /// 同时下载最大进程数 为0不限制
+            /// </summary>
+            public static int MaxJobs { get; set; } = 3;
+
+            /// <summary>
+            /// 下载任务完成
+            /// </summary>
+            public static event Action<DownloadJob> JobFinished;
+
+            static Downloader() => _ = Task.Run(Downloaderd);
+
             // 下载管理线程
             private static void Downloaderd() // Downloader Daemon
             {
@@ -108,16 +120,7 @@ namespace PixivFSUWP.Data
                 downloadJobs.Enqueue(job);// 排队
                 job.DownloadResume -= job_resume;
             }
-            /// <summary>
-            /// 同时下载最大进程数 为0不限制
-            /// </summary>
-            public static int MaxJobs { get; set; } = 3;
-            /// <summary>
-            /// 下载任务完成
-            /// </summary>
-            public static event Action<DownloadJob> JobFinished;
-
-            static Downloader() => _ = Task.Run(Downloaderd);// 用于开始下载线程
+            // 用于开始下载线程
             /// <summary>
             /// 添加任务到队列
             /// </summary>

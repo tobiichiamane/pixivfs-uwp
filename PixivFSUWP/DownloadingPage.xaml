@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PixivFSUWP"
     xmlns:job="using:PixivFSUWP.Data.DownloadJobs"
+    xmlns:data="using:PixivFSUWP.Data"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cvtr="using:PixivFSUWP.Converters"
@@ -21,7 +22,7 @@
         </Grid.RowDefinitions>
         <Button x:Uid="DownloadedCaption" Click="Downloaded_Button_Click" HorizontalAlignment="Stretch" Margin="5 0"/>
 
-        <ListView x:Name="lstDownloading" Grid.Row="1" SelectionMode="None">
+        <ListView x:Name="lstDownloading" ItemsSource="{x:Bind data:DownloadManager.DownloadJobs}" Grid.Row="1" SelectionMode="None">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

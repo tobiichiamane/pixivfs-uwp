@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+
 using Windows.ApplicationModel;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Security.Credentials;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“内容对话框”项模板
 
@@ -27,10 +20,97 @@ namespace PixivFSUWP
         public SettingsDialog()
         {
             this.InitializeComponent();
-            _ = loadContentsAsync();
+            _ = LoadContentsAsync();
         }
 
-        private async Task loadContentsAsync()
+        private void API_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            localSettings.Values["SauceNAOAPI"] = tbSauceNAO.Text;
+            localSettings.Values["ImgurAPI"] = tbImgur.Text;
+        }
+
+        private void AutoSave_CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if ((sender as CheckBox).IsChecked ?? false)
+            {
+                AutoSavePanel.Visibility = Visibility.Visible;
+                ApplicationData.Current.LocalSettings.Values["PictureAutoSave"] = true;
+            }
+            else
+            {
+                AutoSavePanel.Visibility = Visibility.Collapsed;
+                ApplicationData.Current.LocalSettings.Values["PictureAutoSave"] = false;
+            }
+        }
+
+        private async void btnClearCache_Click(object sender, RoutedEventArgs e)
+        {
+            txtCacheSize.Text = Data.OverAll.GetResourceString("Recalculating");
+            await Data.CacheManager.ClearCacheAsync();
+            await CalculateCacheSize();
+        }
+
+        private async void btnDelInvalid_Click(object sender, RoutedEventArgs e)
+        {
+            txtCacheSize.Text = Data.OverAll.GetResourceString("Recalculating");
+            await Data.CacheManager.ClearTempFilesAsync();
+            await CalculateCacheSize();
+        }
+
+        private async void BtnGithub_Click(object sender, RoutedEventArgs e) =>
+            await Launcher.LaunchUriAsync(new Uri(@"https://github.com/tobiichiamane/pixivfs-uwp"));
+
+        private void BtnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            var vault = new PasswordVault();
+            try
+            {
+                vault.Remove(Data.OverAll.GetCredentialFromLocker(Data.OverAll.passwordResource));
+                vault.Remove(Data.OverAll.GetCredentialFromLocker(Data.OverAll.refreshTokenResource));
+            }
+            catch { }
+            finally
+            {
+                Data.OverAll.TheMainPage.Frame.Navigate(typeof(LoginPage), null, App.FromRightTransitionInfo);
+            }
+        }
+        //腾讯的一键加群
+        private async void BtnQQGroup_Click(object sender, RoutedEventArgs e) =>
+            await Launcher.LaunchUriAsync(new Uri(@"https://shang.qq.com/wpa/qunwpa?idkey=d6ba54103ced0e2d7c5bbf6422e4f9f6fa4849c91d4521fe9a1beec72626bbb6"));
+
+        private async Task CalculateCacheSize()
+        {
+            //计算缓存大小
+            var cacheSize = await Data.CacheManager.GetCacheSizeAsync();
+            decimal sizeInMB = new decimal(cacheSize) / new decimal(1048576);
+            txtCacheSize.Text = decimal.Round(sizeInMB, 2).ToString() + "MB";
+        }
+
+        private void ComboBox_DropDownClosed(object sender, object e)
+        {
+            if (sender is ComboBox cb)
+            {
+                // 保存颜色主题信息
+                switch (cb.SelectedIndex)
+                {
+                    case 2:
+                        ApplicationData.Current.LocalSettings.Values["ColorTheme"] = null;
+                        break;
+                    case 0:
+                        ApplicationData.Current.LocalSettings.Values["ColorTheme"] = false;
+                        break;
+                    case 1:
+                        ApplicationData.Current.LocalSettings.Values["ColorTheme"] = true;
+                        break;
+                }
+                _ = Data.OverAll.TheMainPage?.ShowTip(Data.OverAll.GetResourceString("RestartApplyColorTheme"));
+            }
+        }
+
+        private void FileSystemHelp_HyperlinkButton_Click(object sender, RoutedEventArgs e) => FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+
+        private async Task LoadContentsAsync()
         {
             var imgTask = Data.OverAll.LoadImageAsync(Data.OverAll.currentUser.Avatar170);
             txtVersion.Text = Data.OverAll.GetResourceString("ReleasedVersion") + string.Format("{0} version-{1}.{2}.{3} {4}",
@@ -64,7 +144,7 @@ namespace PixivFSUWP
             });
             lstMainDev.ItemsSource = mainDevs;
             //加载贡献者信息
-            _ = loadContributors();
+            _ = LoadContributors();
             //TODO: 考虑设置项不存在的情况
             //ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             //tbSauceNAO.Text = localSettings.Values["SauceNAOAPI"] as string;//读取设置项
@@ -104,12 +184,12 @@ namespace PixivFSUWP
             else
                 PicSaveDir_ASB.Text = KnownFolders.SavedPictures.Path;
             PicSaveDir_ASB.PlaceholderText = PicSaveDir_ASB.Text;
-            _ = calculateCacheSize();
+            _ = CalculateCacheSize();
             //等待头像加载完毕
             imgAvatar.ImageSource = await imgTask;
         }
 
-        private async Task loadContributors()
+        private async Task LoadContributors()
         {
             progressLoadingContributors.Visibility = Visibility.Visible;
             progressLoadingContributors.IsActive = true;
@@ -127,90 +207,16 @@ namespace PixivFSUWP
             progressLoadingContributors.IsActive = false;
             lstContributors.Visibility = Visibility.Visible;
         }
-
-        private async Task calculateCacheSize()
+        private async void LstMainDev_ItemClick(object sender, ItemClickEventArgs e) => await Launcher.LaunchUriAsync(new Uri((e.ClickedItem as ViewModels.ContributorViewModel).ProfileUrl));
+        private void PicName_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            //计算缓存大小
-            var cacheSize = await Data.CacheManager.GetCacheSizeAsync();
-            decimal sizeInMB = new decimal(cacheSize) / new decimal(1048576);
-            txtCacheSize.Text = decimal.Round(sizeInMB, 2).ToString() + "MB";
-        }
-
-        private void BtnLogout_Click(object sender, RoutedEventArgs e)
-        {
-            var vault = new PasswordVault();
-            try
+            if (!string.IsNullOrWhiteSpace(sender.Text))
             {
-                vault.Remove(Data.OverAll.GetCredentialFromLocker(Data.OverAll.passwordResource));
-                vault.Remove(Data.OverAll.GetCredentialFromLocker(Data.OverAll.refreshTokenResource));
-            }
-            catch { }
-            finally
-            {
-                Data.OverAll.TheMainPage.Frame.Navigate(typeof(LoginPage), null, App.FromRightTransitionInfo);
+                ApplicationData.Current.LocalSettings.Values["PictureSaveName"] = sender.Text;
             }
         }
 
-        private async void BtnGithub_Click(object sender, RoutedEventArgs e)
-        {
-            await Launcher.LaunchUriAsync(new
-                Uri(@"https://github.com/tobiichiamane/pixivfs-uwp"));
-        }
-
-        private void API_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            localSettings.Values["SauceNAOAPI"] = tbSauceNAO.Text;
-            localSettings.Values["ImgurAPI"] = tbImgur.Text;
-        }
-
-        private async void btnClearCache_Click(object sender, RoutedEventArgs e)
-        {
-            txtCacheSize.Text = Data.OverAll.GetResourceString("Recalculating");
-            await Data.CacheManager.ClearCacheAsync();
-            await calculateCacheSize();
-        }
-
-        private async void btnDelInvalid_Click(object sender, RoutedEventArgs e)
-        {
-            txtCacheSize.Text = Data.OverAll.GetResourceString("Recalculating");
-            await Data.CacheManager.ClearTempFilesAsync();
-            await calculateCacheSize();
-        }
-
-        private async void lstMainDev_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var item = e.ClickedItem as ViewModels.ContributorViewModel;
-            await Launcher.LaunchUriAsync(new Uri(item.ProfileUrl));
-        }
-
-        private async void btnQQGroup_Click(object sender, RoutedEventArgs e)
-        {
-            //腾讯的一键加群
-            await Launcher.LaunchUriAsync(new
-                Uri(@"https://shang.qq.com/wpa/qunwpa?idkey=d6ba54103ced0e2d7c5bbf6422e4f9f6fa4849c91d4521fe9a1beec72626bbb6"));
-        }
-
-        private void ComboBox_DropDownClosed(object sender, object e)
-        {
-            if (sender is ComboBox cb)
-            {
-                // 保存颜色主题信息
-                switch (cb.SelectedIndex)
-                {
-                    case 2:
-                        ApplicationData.Current.LocalSettings.Values["ColorTheme"] = null;
-                        break;
-                    case 0:
-                        ApplicationData.Current.LocalSettings.Values["ColorTheme"] = false;
-                        break;
-                    case 1:
-                        ApplicationData.Current.LocalSettings.Values["ColorTheme"] = true;
-                        break;
-                }
-                _ = Data.OverAll.TheMainPage?.ShowTip(Data.OverAll.GetResourceString("RestartApplyColorTheme"));
-            }
-        }
+        private void PicNameHelp_QS(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) => FlyoutBase.ShowAttachedFlyout(sender);
 
         private async void PicSaveDir_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
@@ -242,36 +248,6 @@ namespace PixivFSUWP
                 Windows.Storage.AccessCache.StorageApplicationPermissions.
                 FutureAccessList.AddOrReplace("PickedFolderToken", folder);
                 sender.Text = folder.Path;
-            }
-        }
-
-        private void PicName_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-            if (!string.IsNullOrWhiteSpace(sender.Text))
-            {
-                ApplicationData.Current.LocalSettings.Values["PictureSaveName"] = sender.Text;
-            }
-        }
-        private void PicNameHelp_QS(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-            Windows.UI.Xaml.Controls.Primitives.FlyoutBase.ShowAttachedFlyout(sender);
-        }
-
-        private void FileSystemHelp_HyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
-            Windows.UI.Xaml.Controls.Primitives.FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
-        }
-        private void AutoSave_CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            if ((sender as CheckBox).IsChecked ?? false)
-            {
-                AutoSavePanel.Visibility = Visibility.Visible;
-                ApplicationData.Current.LocalSettings.Values["PictureAutoSave"] = true;
-            }
-            else
-            {
-                AutoSavePanel.Visibility = Visibility.Collapsed;
-                ApplicationData.Current.LocalSettings.Values["PictureAutoSave"] = false;
             }
         }
     }

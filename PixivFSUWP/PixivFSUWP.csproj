@@ -160,6 +160,7 @@
     <Compile Include="Data\ContributorsHelper.cs" />
     <Compile Include="Data\CurrentUser.cs" />
     <Compile Include="Data\Collections\FollowingIllustsCollection.cs" />
+    <Compile Include="Data\DownloadJobs\DownloadCompletedEventArgs.cs" />
     <Compile Include="Data\DownloadJobs\DownloadJob.cs" />
     <Compile Include="Data\DownloadJobs\DownloadJobPlus.cs" />
     <Compile Include="Data\DownloadJobs\DownloadJobStatus.cs" />
@@ -185,9 +186,6 @@
     <Compile Include="DownloadingPage.xaml.cs">
       <DependentUpon>DownloadingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DownloadManager.xaml.cs">
-      <DependentUpon>DownloadManager.xaml</DependentUpon>
-    </Compile>
     <Compile Include="IllustDetailPage.xaml.cs">
       <DependentUpon>IllustDetailPage.xaml</DependentUpon>
     </Compile>
@@ -205,14 +203,8 @@
     <Compile Include="SearchDialog.xaml.cs">
       <DependentUpon>SearchDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SearchPage.xaml.cs">
-      <DependentUpon>SearchPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserDetailPage.xaml.cs">
       <DependentUpon>UserDetailPage.xaml</DependentUpon>
@@ -277,10 +269,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DownloadManager.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="IllustDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -301,15 +289,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SearchPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="SettingsDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -184,7 +184,7 @@
                             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0">GitHub Repo</TextBlock>
                         </Grid>
                     </Button>
-                    <Button Margin="5 0" Grid.Column="1" Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" x:Name="btnQQGroup" HorizontalAlignment="Stretch" Click="btnQQGroup_Click">
+                    <Button Margin="5 0" Grid.Column="1" Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" x:Name="btnQQGroup" HorizontalAlignment="Stretch" Click="BtnQQGroup_Click">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="20"/>
@@ -201,12 +201,12 @@
                 <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" x:Uid="Developers"/>
                 <TextBlock Margin="15,10,15,0" x:Uid="MainDeveloper"/>
                 <ListView Margin="15,10,0,0" x:Name="lstMainDev" SelectionMode="None" Width="365" HorizontalAlignment="Left"
-                          IsItemClickEnabled="True" ItemTemplate="{StaticResource contributorTemplate}" ItemClick="lstMainDev_ItemClick"/>
+                          IsItemClickEnabled="True" ItemTemplate="{StaticResource contributorTemplate}" ItemClick="LstMainDev_ItemClick"/>
                 <TextBlock x:Name="txtContributors" Margin="15,10,5,0" x:Uid="Contributors"/>
                 <ProgressRing x:Name="progressLoadingContributors" Margin="15,10,5,0"
                               IsActive="False" Visibility="Collapsed" HorizontalAlignment="Left"/>
                 <ListView Margin="15,10,0,0" x:Name="lstContributors" SelectionMode="None" Width="365" Visibility="Collapsed" HorizontalAlignment="Left"
-                          IsItemClickEnabled="True" ItemTemplate="{StaticResource contributorTemplate}" ItemClick="lstMainDev_ItemClick"/>
+                          IsItemClickEnabled="True" ItemTemplate="{StaticResource contributorTemplate}" ItemClick="LstMainDev_ItemClick"/>
             </StackPanel>
             <StackPanel.ChildrenTransitions>
                 <TransitionCollection>
