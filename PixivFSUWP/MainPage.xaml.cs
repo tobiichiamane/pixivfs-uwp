@@ -55,7 +55,7 @@ namespace PixivFSUWP
             if (OverAll.AppUri != null) return;
             if (args.IsSettingsSelected)
             {
-                ContentFrame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
+                //ContentFrame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
             }
 
             if (_programmablechange)
@@ -110,9 +110,9 @@ namespace PixivFSUWP
             NavSelect(5);
         }
 
-        private void BtnSetting_Click(object sender, RoutedEventArgs e)
+        private async void BtnSetting_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
+            await new SettingsDialog().ShowAsync();
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)

@@ -171,6 +171,7 @@
     <Compile Include="Data\CacheManager.cs" />
     <Compile Include="Data\Collections\RankingIllustsCollection.cs" />
     <Compile Include="Data\Collections\RecommendIllustsCollection.cs" />
+    <Compile Include="Data\LangExtension.cs" />
     <Compile Include="Data\OverAll.cs" />
     <Compile Include="Data\Collections\SearchResultIllustsCollection.cs" />
     <Compile Include="Data\Ugoira.cs" />
@@ -206,6 +207,9 @@
     </Compile>
     <Compile Include="SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsDialog.xaml.cs">
+      <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
@@ -298,6 +302,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

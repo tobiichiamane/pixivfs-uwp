@@ -27,13 +27,13 @@
     <Grid x:Name="LayoutRoot">
         <Frame x:Name="ContentFrame"/>
         <NavigationView PaneDisplayMode="Top" x:Name="NavControl"
+                        IsSettingsVisible="False"
                         SelectionChanged="NavControl_SelectionChanged"
                         BackRequested="NavControl_BackRequested">
             <NavigationView.PaneHeader>
                 <Viewbox Height="20" Margin="10 0">
                     <ctrl:Pixiv_Logo xmlns:ctrl="using:PixivFSUWP.Controls"/>
                 </Viewbox>
-                <!--<Image Source="{ThemeResource PixivHeader}"/>-->
             </NavigationView.PaneHeader>
             <NavigationView.MenuItems>
                 <NavigationViewItem x:Uid="Recommended"/>
@@ -63,6 +63,8 @@
                             </Ellipse>
                         </Grid>
                     </AppBarButton>
+                    <AppBarButton Width="48" x:Name="btnSetting" Icon="Setting" Click="BtnSetting_Click"/>
+
                     <AppBarButton Width="48" x:Name="btnSearch" Click="BtnSearch_Click">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" 
                                   FontSize="16" Glyph="&#xE721;"/>
