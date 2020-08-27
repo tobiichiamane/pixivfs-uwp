@@ -63,7 +63,6 @@
                             </Ellipse>
                         </Grid>
                     </AppBarButton>
-                    <AppBarButton Width="48" x:Name="btnSetting" Icon="Setting" Click="BtnSetting_Click"/>
 
                     <AppBarButton Width="48" x:Name="btnSearch" Click="BtnSearch_Click">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" 
@@ -72,6 +71,10 @@
                     <AppBarButton Width="48" x:Name="btnExperimentalWarning" Click="btnExperimentalWarning_Click" Visibility="Collapsed">
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" 
                                   FontSize="16" Glyph="&#xE7BA;"/>
+                    </AppBarButton>
+                    <AppBarButton Width="48" x:Name="btnSetting" Click="BtnSetting_Click">
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" 
+                                  FontSize="16" Glyph="&#xE713;"/>
                     </AppBarButton>
                 </StackPanel>
             </NavigationView.PaneFooter>
