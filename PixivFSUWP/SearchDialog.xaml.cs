@@ -125,7 +125,7 @@ namespace PixivFSUWP
                         param.Duration = "within_last_month";
                         break;
                 }
-                Data.OverAll.RefreshSearchResultList(param);
+                Data.Collections.IllustsCollectionManager.RefreshSearchResultList(param);
                 Hide();
                 Frame?.Navigate(typeof(WaterfallPage), WaterfallPage.ListContent.SearchResult, App.FromRightTransitionInfo);
             }

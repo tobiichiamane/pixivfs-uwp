@@ -132,22 +132,18 @@ namespace PixivFSUWP
             switch (sender.MenuItems.IndexOf(args.SelectedItem))
             {
                 case 0:
-                    OverAll.RefreshRecommendList();
                     ContentFrame.Navigate(typeof(WaterfallPage), WaterfallPage.ListContent.Recommend, App.FromRightTransitionInfo);
                     await HideNacPlaceHolder();
                     break;
                 case 1:
-                    OverAll.RefreshBookmarkList();
                     ContentFrame.Navigate(typeof(WaterfallPage), WaterfallPage.ListContent.Bookmark, App.FromRightTransitionInfo);
                     await HideNacPlaceHolder();
                     break;
                 case 2:
-                    OverAll.RefreshFollowingList();
                     ContentFrame.Navigate(typeof(WaterfallPage), WaterfallPage.ListContent.Following, App.FromRightTransitionInfo);
                     await HideNacPlaceHolder();
                     break;
                 case 3:
-                    OverAll.RefreshRankingList();
                     ContentFrame.Navigate(typeof(WaterfallPage), WaterfallPage.ListContent.Ranking, App.FromRightTransitionInfo);
                     await HideNacPlaceHolder();
                     break;
@@ -247,5 +243,10 @@ namespace PixivFSUWP
             }
         }
         public void UpdateNavButtonState() => NavControl.IsBackEnabled = Backstack.Default.CanBack;
+
+        private void RecommendedRefresh_MenuFlyoutItem_Click(object sender, RoutedEventArgs e) => Data.Collections.IllustsCollectionManager.RefreshRecommendList();
+        private void BookmarkedRefresh_MenuFlyoutItem_Click(object sender, RoutedEventArgs e) => Data.Collections.IllustsCollectionManager.RefreshBookmarkList();
+        private void FollowingRefresh_MenuFlyoutItem_Click(object sender, RoutedEventArgs e) => Data.Collections.IllustsCollectionManager.RefreshFollowingList();
+        private void RankingRefresh_MenuFlyoutItem_Click(object sender, RoutedEventArgs e) => Data.Collections.IllustsCollectionManager.RefreshRankingList();
     }
 }

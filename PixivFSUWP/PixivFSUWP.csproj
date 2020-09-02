@@ -154,6 +154,7 @@
     <Compile Include="Data\BigImageDetail.cs" />
     <Compile Include="Data\Collections\BookmarkIllustsCollection.cs" />
     <Compile Include="Data\Collections\IllustsCollectionBase.cs" />
+    <Compile Include="Data\Collections\IllustsCollectionManager.cs" />
     <Compile Include="Data\CommentAvatarLoader.cs" />
     <Compile Include="Data\Collections\CommentsCollection.cs" />
     <Compile Include="Data\Contributor.cs" />

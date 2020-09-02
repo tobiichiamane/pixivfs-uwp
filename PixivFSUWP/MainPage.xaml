@@ -36,10 +36,34 @@
                 </Viewbox>
             </NavigationView.PaneHeader>
             <NavigationView.MenuItems>
-                <NavigationViewItem x:Uid="Recommended"/>
-                <NavigationViewItem x:Uid="Bookmarked"/>
-                <NavigationViewItem x:Uid="Following"/>
-                <NavigationViewItem x:Uid="Ranking"/>
+                <NavigationViewItem x:Uid="Recommended">
+                    <NavigationViewItem.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Refresh" Click="RecommendedRefresh_MenuFlyoutItem_Click"/>
+                        </MenuFlyout>
+                    </NavigationViewItem.ContextFlyout>
+                </NavigationViewItem>
+                <NavigationViewItem x:Uid="Bookmarked">
+                    <NavigationViewItem.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Refresh" Click="BookmarkedRefresh_MenuFlyoutItem_Click"/>
+                        </MenuFlyout>
+                    </NavigationViewItem.ContextFlyout>
+                </NavigationViewItem>
+                <NavigationViewItem x:Uid="Following">
+                    <NavigationViewItem.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Refresh" Click="FollowingRefresh_MenuFlyoutItem_Click"/>
+                        </MenuFlyout>
+                    </NavigationViewItem.ContextFlyout>
+                </NavigationViewItem>
+                <NavigationViewItem x:Uid="Ranking">
+                    <NavigationViewItem.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Refresh" Click="RankingRefresh_MenuFlyoutItem_Click"/>
+                        </MenuFlyout>
+                    </NavigationViewItem.ContextFlyout>
+                </NavigationViewItem>
                 <NavigationViewItemSeparator x:Name="NavSeparator" Visibility="Collapsed"/>
                 <NavigationViewItem Content="PlaceHolder" x:Name="NavPlaceholder" Visibility="Collapsed" IsEnabled="False"/>
             </NavigationView.MenuItems>

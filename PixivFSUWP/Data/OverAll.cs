@@ -28,11 +28,6 @@ namespace PixivFSUWP.Data
         public const string passwordResource = "PixivFSUWPPassword";
         public const string refreshTokenResource = "PixivFSUWPRefreshToken";
         public static CurrentUser currentUser = null;
-        public static RecommendIllustsCollection RecommendList { get; private set; }
-        public static BookmarkIllustsCollection BookmarkList { get; private set; }
-        public static FollowingIllustsCollection FollowingList { get; private set; }
-        public static RankingIllustsCollection RankingList { get; private set; }
-        public static SearchResultIllustsCollection SearchResultList { get; private set; }
         public static UserIllustsCollection UserList { get; private set; }
         public static MainPage TheMainPage { get; set; }
 
@@ -44,35 +39,6 @@ namespace PixivFSUWP.Data
             public string Duration;
         }
 
-        public static void RefreshRecommendList()
-        {
-            RecommendList?.StopLoading();
-            RecommendList = new RecommendIllustsCollection();
-        }
-
-        public static void RefreshBookmarkList()
-        {
-            BookmarkList?.StopLoading();
-            BookmarkList = new BookmarkIllustsCollection();
-        }
-
-        public static void RefreshFollowingList()
-        {
-            FollowingList?.StopLoading();
-            FollowingList = new FollowingIllustsCollection();
-        }
-
-        public static void RefreshRankingList()
-        {
-            RankingList?.StopLoading();
-            RankingList = new RankingIllustsCollection();
-        }
-
-        public static void RefreshSearchResultList(SearchParam param)
-        {
-            SearchResultList?.StopLoading();
-            SearchResultList = new SearchResultIllustsCollection(param.Word, param.SearchTarget, param.Sort, param.Duration);
-        }
 
         public static void RefreshUserList(string userId)
         {

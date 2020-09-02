@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 using PixivCS;
 
@@ -25,11 +26,8 @@ namespace PixivFSUWP
 
         ViewModels.WaterfallItemViewModel tapped = null;
 
-        //int? clicked = null;
         private double? verticalOffset;
-
-        public SearchResultIllustsCollection ItemsSource;
-        private bool _backflag { get; set; } = false;
+        private bool _backflag = false;
 
         public WaterfallPage()
         {
@@ -128,8 +126,11 @@ namespace PixivFSUWP
                     {
                         WaterfallListView.ScrollToOffset(verticalOffset);
                     }
-                    catch
-                    { }
+                    catch (Exception ex)
+                    {
+                        Trace.WriteLine($"[{nameof(this.WaterfallContent_Loaded)}]");
+                        Trace.WriteLine(ex);
+                    }
                 });
             }
         }
@@ -167,65 +168,59 @@ namespace PixivFSUWP
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            switch (listContent)
-            {
-                case ListContent.Recommend:
-                    Data.OverAll.RecommendList.PauseLoading();
-                    break;
-                case ListContent.Bookmark:
-                    Data.OverAll.BookmarkList.PauseLoading();
-                    break;
-                case ListContent.Following:
-                    Data.OverAll.FollowingList.PauseLoading();
-                    break;
-                case ListContent.Ranking:
-                    Data.OverAll.RankingList.PauseLoading();
-                    break;
-                case ListContent.SearchResult:
-                    Data.OverAll.SearchResultList.PauseLoading();
-                    break;
-            }
+            (WaterfallListView.ItemsSource as IllustsCollectionBase<ViewModels.WaterfallItemViewModel>)?.PauseLoading();
             base.OnNavigatedFrom(e);
             if (!_backflag)
             {
-                Data.Backstack.Default.Push(typeof(WaterfallPage), (listContent, WaterfallListView.VerticalOffset));
+                Data.Backstack.Default.Push(typeof(WaterfallPage), listContent);
+
+                if (WaterfallListView.ItemsSource is SearchResultIllustsCollection searchResult)
+                    IllustsCollectionManager.SearchResults.Push(searchResult);
+
                 OverAll.TheMainPage?.UpdateNavButtonState();
             }
-            ItemsSource = null;
+            if (WaterfallListView.ItemsSource is IllustsCollectionBase<ViewModels.WaterfallItemViewModel> collection)
+            {
+                Debug.WriteLine(WaterfallListView.ItemsSource + "PauseLoading");
+                collection.VerticalOffset = WaterfallListView.VerticalOffset;
+                collection.PauseLoading();
+            }
+            WaterfallListView.ItemsSource = null;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (e.Parameter is ListContent content) listContent = content;
-            else if (e.Parameter is ValueTuple<ListContent, double> tuple)
-            {
-                (listContent, verticalOffset) = tuple;
-            }
+            if (e.Parameter is ListContent content)
+                listContent = content;
             switch (listContent)
             {
                 case ListContent.Recommend:
-                    WaterfallListView.ItemsSource = Data.OverAll.RecommendList;
-                    Data.OverAll.RecommendList.ResumeLoading();
+                    if (IllustsCollectionManager.RecommendList is null) IllustsCollectionManager.RefreshRecommendList();
+                    WaterfallListView.ItemsSource = IllustsCollectionManager.RecommendList;
                     break;
                 case ListContent.Bookmark:
-                    WaterfallListView.ItemsSource = Data.OverAll.BookmarkList;
-                    Data.OverAll.BookmarkList.ResumeLoading();
+                    if (IllustsCollectionManager.BookmarkList is null) IllustsCollectionManager.RefreshBookmarkList();
+                    WaterfallListView.ItemsSource = IllustsCollectionManager.BookmarkList;
                     break;
                 case ListContent.Following:
-                    WaterfallListView.ItemsSource = Data.OverAll.FollowingList;
-                    Data.OverAll.FollowingList.ResumeLoading();
+                    if (IllustsCollectionManager.FollowingList is null) IllustsCollectionManager.RefreshFollowingList();
+                    WaterfallListView.ItemsSource = IllustsCollectionManager.FollowingList;
                     break;
                 case ListContent.Ranking:
-                    WaterfallListView.ItemsSource = Data.OverAll.RankingList;
-                    Data.OverAll.RankingList.ResumeLoading();
+                    if (IllustsCollectionManager.RankingList is null) IllustsCollectionManager.RefreshRankingList();
+                    WaterfallListView.ItemsSource = IllustsCollectionManager.RankingList;
                     break;
                 case ListContent.SearchResult:
                     ((Frame.Parent as Grid)?.Parent as MainPage)?.SelectNavPlaceholder(OverAll.GetResourceString("SearchPagePlain"));
-                    ItemsSource = Data.OverAll.SearchResultList;
-                    Data.OverAll.SearchResultList.ResumeLoading();
-                    WaterfallListView.ItemsSource = ItemsSource;
+                    WaterfallListView.ItemsSource = IllustsCollectionManager.SearchResults.Pop();
                     break;
+            }
+            if (WaterfallListView.ItemsSource is IllustsCollectionBase<ViewModels.WaterfallItemViewModel> collection)
+            {
+                Debug.WriteLine(WaterfallListView.ItemsSource + "\tResumeLoading");
+                collection.ResumeLoading();
+                verticalOffset = collection.VerticalOffset;
             }
         }
         public void SetBackFlag(bool value) => _backflag = value;

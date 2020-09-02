@@ -19,6 +19,7 @@ namespace PixivFSUWP.Data.Collections
         protected bool _busy = false;
         protected bool _emergencyStop = false;
         protected EventWaitHandle pause = new ManualResetEvent(true);
+        public double VerticalOffset;
 
         public virtual IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
         {
