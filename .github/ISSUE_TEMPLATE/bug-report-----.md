@@ -1,9 +1,9 @@
 ---
 name: Bug report/问题报告
 about: Create a report to help us improve/创建一份可以帮助我们的报告
-title: ''
+title: "[Bug]"
 labels: bug
-assignees: tobiichiamane
+assignees: ''
 
 ---
 
