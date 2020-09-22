@@ -135,9 +135,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Pixiv_Logo.xaml.cs">
-      <DependentUpon>Pixiv_Logo.xaml</DependentUpon>
-    </Compile>
     <Compile Include="BigImage.xaml.cs">
       <DependentUpon>BigImage.xaml</DependentUpon>
     </Compile>
@@ -214,6 +211,8 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="Assets\AppLogo.kra" />
+    <Content Include="Assets\Fonts\iconfont.ttf" />
+    <None Include="Assets\Fonts\UserGuide.md" />
     <None Include="PixivFSUWP_TemporaryKey.pfx" />
     <PRIResource Include="Strings\ja\Resources.resw" />
     <PRIResource Include="Strings\en\Resources.resw" />
@@ -221,17 +220,16 @@
     <PRIResource Include="Strings\zh-Hant\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\GH_64.png" />
     <Content Include="Assets\LoginBG.jpg" />
-    <Content Include="Assets\PixivHeader.png" />
-    <Content Include="Assets\PixivHeader_L.png" />
-    <Content Include="Assets\PixivText.png" />
     <None Include="Package.StoreAssociation.xml" />
-    <Content Include="Assets\PixivText_L.png" />
-    <Content Include="Assets\QQ_64.png" />
     <Content Include="Assets\SauceNAO.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-125.png" />
+    <Content Include="Assets\SplashScreen.scale-150.png" />
+    <Content Include="Assets\SplashScreen.scale-400.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-256_altform-unplated.png" />
     <Content Include="Assets\Square71x71Logo.scale-200.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -244,10 +242,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\Pixiv_Logo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="BigImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -326,6 +320,7 @@
     <XliffResource Include="MultilingualResources\PixivFSUWP.zh-Hans.xlf" />
     <XliffResource Include="MultilingualResources\PixivFSUWP.zh-Hant.xlf" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

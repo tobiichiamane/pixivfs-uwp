@@ -23,9 +23,9 @@ namespace PixivFSUWP
             this.InitializeComponent();
             NavControl.SelectedItem = NavControl.MenuItems[0];
             var view = ApplicationView.GetForCurrentView();
-            view.TitleBar.ButtonForegroundColor = Colors.Black;
-            view.TitleBar.ButtonInactiveForegroundColor = Colors.Gray;
-            view.Title = "";
+            view.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+            view.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            //view.Title = "";
             btnExperimentalWarning.Visibility = GlobalBaseAPI.ExperimentalConnection ? Visibility.Visible : Visibility.Collapsed;
             TheMainPage = this;
         }

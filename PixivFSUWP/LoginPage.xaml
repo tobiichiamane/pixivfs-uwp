@@ -86,12 +86,10 @@
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock HorizontalAlignment="Center" Margin="0,150,0,0" x:Uid="LoginBanner"/>
-
             <Viewbox Margin="80 20 80 0">
-                <ctrl:Pixiv_Logo xmlns:ctrl="using:PixivFSUWP.Controls"/>
+                <TextBlock FontFamily="{StaticResource IconFont}" Text="&#xe601;"/>
             </Viewbox>
-            <!--<Image Source="{ThemeResource PixivText}"/>-->
+            <TextBlock HorizontalAlignment="Center" Margin="0,150,0,0" x:Uid="LoginBanner"/>
             <StackPanel x:Name="stkTxts" Grid.Row="1" Margin="20,20,20,10" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <TextBlock Margin="5" x:Uid="Username"/>
                 <TextBox x:Name="txtUserName" Margin="5"/>

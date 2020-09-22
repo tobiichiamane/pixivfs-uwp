@@ -126,8 +126,9 @@
         </trans-unit>
         <trans-unit id="Email.Text" translate="yes" xml:space="preserve">
           <source>Email：</source>
-          <target state="translated">メール：</target>
+          <target state="needs-review-translation">メール：</target>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="FemalePlain" translate="yes" xml:space="preserve">
           <source>Female</source>
@@ -564,13 +565,15 @@
         </trans-unit>
         <trans-unit id="UserID.Text" translate="yes" xml:space="preserve">
           <source>User ID：</source>
-          <target state="translated">ユーザーID：</target>
+          <target state="needs-review-translation">ユーザーID：</target>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Username.Text" translate="yes" xml:space="preserve">
           <source>Username</source>
-          <target state="translated">ユーザー名</target>
+          <target state="needs-review-translation">ユーザー名</target>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="UserShareTipPlain" translate="yes" xml:space="preserve">
           <source>Sharing artist</source>
@@ -660,8 +663,9 @@
         </trans-unit>
         <trans-unit id="CacheSize.Text" translate="yes" xml:space="preserve">
           <source>Cache size: </source>
-          <target state="translated">キャッシュ　サイズ: </target>
+          <target state="needs-review-translation">キャッシュ　サイズ: </target>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Calculating.Text" translate="yes" xml:space="preserve">
           <source>Calculating...</source>
@@ -670,13 +674,15 @@
         </trans-unit>
         <trans-unit id="ClearCache.Content" translate="yes" xml:space="preserve">
           <source>Clear cache</source>
-          <target state="translated">キャッシュを消去</target>
+          <target state="needs-review-translation">キャッシュを消去</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Button</note>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="DeleteInvalid.Content" translate="yes" xml:space="preserve">
           <source>Delete invalid files</source>
-          <target state="translated">無効なファイルを消去</target>
+          <target state="needs-review-translation">無効なファイルを消去</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Button</note>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Recalculating" translate="yes" xml:space="preserve">
           <source>Recalculating...</source>
@@ -805,10 +811,20 @@ Do you want to disable them?</target>
           <target state="new">Copied</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText (❌Unworkable)</note>
         </trans-unit>
-        <trans-unit id="DownloadsPlain" translate="yes" xml:space="preserve">
-          <source>Downloads</source>
-          <target state="new">Downloads</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        <trans-unit id="GitHubRepo.Text" translate="yes" xml:space="preserve">
+          <source>GitHub Repo</source>
+          <target state="new">GitHub Repo</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
+        </trans-unit>
+        <trans-unit id="QQCommunity.Text" translate="yes" xml:space="preserve">
+          <source>QQ Community</source>
+          <target state="new">QQ Community</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
+        </trans-unit>
+        <trans-unit id="SetWallpaper.Label" translate="yes" xml:space="preserve">
+          <source>Set as Wallpaper</source>
+          <target state="new">Set as Wallpaper</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">AppBarButton</note>
         </trans-unit>
         <trans-unit id="DownloadedCaption.Content" translate="yes" xml:space="preserve">
           <source>Downloaded</source>
@@ -824,6 +840,11 @@ Do you want to disable them?</target>
           <source>Download Manager</source>
           <target state="new">Download Manager</target>
           <note from="MultilingualBuild" annotates="source" priority="2">NavigationViewItemHeader</note>
+        </trans-unit>
+        <trans-unit id="DownloadsPlain" translate="yes" xml:space="preserve">
+          <source>Downloads</source>
+          <target state="new">Downloads</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
       </group>
     </body>

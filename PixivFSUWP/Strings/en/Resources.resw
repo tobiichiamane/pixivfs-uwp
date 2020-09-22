@@ -326,6 +326,10 @@ Do you want to disable them?</value>
     <value>Gif file</value>
     <comment>PlainText</comment>
   </data>
+  <data name="GitHubRepo.Text" xml:space="preserve">
+    <value>GitHub Repo</value>
+    <comment>TextBlock</comment>
+  </data>
   <data name="GoPixivID.PlaceholderText" xml:space="preserve">
     <value>Pixiv ID</value>
     <comment>AutoSuggestBox +</comment>
@@ -530,6 +534,10 @@ Do you want to disable them?</value>
     <value>Private</value>
     <comment>PlainText</comment>
   </data>
+  <data name="QQCommunity.Text" xml:space="preserve">
+    <value>QQ Community</value>
+    <comment>TextBlock</comment>
+  </data>
   <data name="QuickBookmark.Text" xml:space="preserve">
     <value>Bookmark</value>
     <comment>MenuFlyoutItem</comment>
@@ -665,6 +673,10 @@ Do you want to disable them?</value>
   <data name="SettingsPagePlain" xml:space="preserve">
     <value>Settings</value>
     <comment>PlainText</comment>
+  </data>
+  <data name="SetWallpaper.Label" xml:space="preserve">
+    <value>Set as Wallpaper</value>
+    <comment>AppBarButton</comment>
   </data>
   <data name="Sex.Text" xml:space="preserve">
     <value>Sex</value>

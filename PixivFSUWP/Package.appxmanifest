@@ -37,12 +37,13 @@
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="PixivFSUWP"
         BackgroundColor="#33627f">
-        <uap:DefaultTile  ShortName="Pixiv" Square71x71Logo="Assets\Square71x71Logo.png">
+        <uap:DefaultTile  ShortName="Pixiv" Square71x71Logo="Assets\Square71x71Logo.png" Wide310x150Logo="Assets\Wide310x150Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo"/>
+            <uap:ShowOn Tile="wide310x150Logo"/>
           </uap:ShowNameOnTiles>
         </uap:DefaultTile >
-        <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="white"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="#33627f"/>
       </uap:VisualElements>
       <Extensions>
         <uap:Extension Category="windows.protocol">
