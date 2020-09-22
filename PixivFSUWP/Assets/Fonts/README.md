@@ -5,10 +5,10 @@ This article lists the icons provided by the local folder file "iconfont".
 
 | Logo | Code |
 | ---------------- | ------------------ |
-| Pixiv_Wide | &#xe601; |
-| Pvxiv | &#xe66b; |
-| QQ | &#xe746; |
-| GitHub | &#xe600; |
+| Pixiv_Wide | `&#xe601;` |
+| Pvxiv | `&#xe66b;` |
+| QQ | `&#xe746;` |
+| GitHub | `&#xe600;` |
 | SauceNAO | 404NotFound |
 
 ## Support
