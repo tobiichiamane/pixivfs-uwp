@@ -641,4 +641,20 @@
     <value>当然</value>
     <comment>PlainText (❌Unworkable)</comment>
   </data>
+  <data name="WallpaperFailedPlain" xml:space="preserve">
+    <value>更换壁纸失败</value>
+    <comment>PlainText</comment>
+  </data>
+  <data name="WallpaperNotSupportPlain" xml:space="preserve">
+    <value>您的设备不支持更换壁纸</value>
+    <comment>PlainText</comment>
+  </data>
+  <data name="WallpaperSuccessPlain" xml:space="preserve">
+    <value>壁纸已更换</value>
+    <comment>PlainText</comment>
+  </data>
+  <data name="SetWallpaper.Label" xml:space="preserve">
+    <value>设为壁纸</value>
+    <comment>PlainText</comment>
+  </data>
 </root>

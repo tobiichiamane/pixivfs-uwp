@@ -666,6 +666,10 @@ Do you want to disable them?</value>
     <value>Settings</value>
     <comment>PlainText</comment>
   </data>
+  <data name="SetWallpaper.Label" xml:space="preserve">
+    <value>Set as Wallpaper</value>
+    <comment>PlainText</comment>
+  </data>
   <data name="Sex.Text" xml:space="preserve">
     <value>Sex</value>
     <comment>TextBlock</comment>
@@ -733,6 +737,18 @@ Do you want to disable them?</value>
   <data name="VersionInfo.Text" xml:space="preserve">
     <value>Version information</value>
     <comment>TextBlock</comment>
+  </data>
+  <data name="WallpaperFailedPlain" xml:space="preserve">
+    <value>Failed to change wallpaper</value>
+    <comment>PlainText</comment>
+  </data>
+  <data name="WallpaperNotSupportPlain" xml:space="preserve">
+    <value>Your device does not support changing the wallpaper</value>
+    <comment>PlainText</comment>
+  </data>
+  <data name="WallpaperSuccessPlain" xml:space="preserve">
+    <value>Wallpaper changed</value>
+    <comment>PlainText</comment>
   </data>
   <data name="Work.Text" xml:space="preserve">
     <value>Works</value>
