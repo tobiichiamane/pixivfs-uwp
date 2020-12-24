@@ -825,6 +825,26 @@ Do you want to disable them?</target>
           <target state="new">Download Manager</target>
           <note from="MultilingualBuild" annotates="source" priority="2">NavigationViewItemHeader</note>
         </trans-unit>
+        <trans-unit id="WallpaperFailedPlain" translate="yes" xml:space="preserve">
+          <source>Failed to change wallpaper</source>
+          <target state="translated">壁紙が変更できません</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        </trans-unit>
+        <trans-unit id="WallpaperNotSupportPlain" translate="yes" xml:space="preserve">
+          <source>Your device does not support changing the wallpaper</source>
+          <target state="translated">お使いのデバイスは壁紙の変更をサポートしていません</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        </trans-unit>
+        <trans-unit id="WallpaperSuccessPlain" translate="yes" xml:space="preserve">
+          <source>Wallpaper changed</source>
+          <target state="translated">壁紙を変更しました</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        </trans-unit>
+        <trans-unit id="SetWallpaper.Label" translate="yes" xml:space="preserve">
+          <source>Set as Wallpaper</source>
+          <target state="translated">壁紙に設定する</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        </trans-unit>
       </group>
     </body>
   </file>

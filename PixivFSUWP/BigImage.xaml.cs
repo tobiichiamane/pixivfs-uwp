@@ -139,19 +139,29 @@ namespace PixivFSUWP
             if (UserProfilePersonalizationSettings.IsSupported())
             {
                 UserProfilePersonalizationSettings settings = UserProfilePersonalizationSettings.Current;
-                StorageFile cacheFile = await CacheManager.GetCachedFileAsync(parameter.FileName);
-                StorageFile file = await cacheFile.CopyAsync(ApplicationData.Current.LocalFolder, "WallpaperImage", NameCollisionOption.ReplaceExisting);
+                StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("WallpaperImage", CreationCollisionOption.ReplaceExisting);
+                using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                {
+                    var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
+                    var image = mainImg.Source as WriteableBitmap;
+                    var imageStream = image.PixelBuffer.AsStream();
+                    byte[] raw = new byte[imageStream.Length];
+                    await imageStream.ReadAsync(raw, 0, raw.Length);
+                    encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore,
+                        (uint)image.PixelWidth, (uint)image.PixelHeight, 96, 96, raw);
+                    await encoder.FlushAsync();
+                }
                 if (!await settings.TrySetWallpaperImageAsync(file))
                 {
-                    var messageDialog = new MessageDialog("更换壁纸失败");
+                    var messageDialog = new MessageDialog(GetResourceString("WallpaperFailed"));
                     await messageDialog.ShowAsync();
                 }
                 else
-                    await ShowTip("已更换壁纸");
+                    await ShowTip(GetResourceString("WallpaperSuccess"));
             }
             else
             {
-                var messageDialog = new MessageDialog("您的设备不支持更换壁纸");
+                var messageDialog = new MessageDialog("WallpaperNotSupport");
                 await messageDialog.ShowAsync();
             }
         }
@@ -183,7 +193,7 @@ namespace PixivFSUWP
         }
 
         private async Task saveImage()
-        {
+        { 
             FileSavePicker picker = new FileSavePicker();
             picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
             picker.FileTypeChoices.Add(GetResourceString("ImageFilePlain"), new List<string>() { ".png" });

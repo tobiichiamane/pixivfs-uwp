@@ -813,6 +813,26 @@ Do you want to disable them?</source>
           <target state="new">Download Manager</target>
           <note from="MultilingualBuild" annotates="source" priority="2">NavigationViewItemHeader</note>
         </trans-unit>
+        <trans-unit id="WallpaperFailedPlain" translate="yes" xml:space="preserve">
+          <source>Failed to change wallpaper</source>
+          <target state="new">Failed to change wallpaper</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        </trans-unit>
+        <trans-unit id="WallpaperNotSupportPlain" translate="yes" xml:space="preserve">
+          <source>Your device does not support changing the wallpaper</source>
+          <target state="new">Your device does not support changing the wallpaper</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        </trans-unit>
+        <trans-unit id="WallpaperSuccessPlain" translate="yes" xml:space="preserve">
+          <source>Wallpaper changed</source>
+          <target state="new">Wallpaper changed</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        </trans-unit>
+        <trans-unit id="SetWallpaper.Label" translate="yes" xml:space="preserve">
+          <source>Set as Wallpaper</source>
+          <target state="new">Set as Wallpaper</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        </trans-unit>
       </group>
     </body>
   </file>

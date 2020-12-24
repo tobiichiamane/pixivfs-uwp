@@ -37,7 +37,7 @@
                     <InkToolbarStencilButton/>
                 </InkToolbar>
             </CommandBar.Content>
-            <AppBarButton x:Name="btnSetWallpaper" Icon="SetLockScreen" x:Uid="SetWallpaper" Label="设置为壁纸" Click="btnSetWallpaper_Click"/>
+            <AppBarButton x:Name="btnSetWallpaper" Icon="SetLockScreen" x:Uid="SetWallpaper" Click="btnSetWallpaper_Click" />
             <AppBarButton x:Name="btnSaveImage" Icon="Save" x:Uid="SaveImage" Click="BtnSaveImage_Click"/>
             <AppBarToggleButton x:Name="btnDraw" Icon="Edit" x:Uid="Draw" Unchecked="BtnDraw_Unchecked" Checked="BtnDraw_Checked"/>
         </CommandBar>
