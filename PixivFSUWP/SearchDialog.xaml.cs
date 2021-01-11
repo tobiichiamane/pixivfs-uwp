@@ -30,43 +30,18 @@ namespace PixivFSUWP
     /// </summary>
     public sealed partial class SearchDialog
     {
-        string lastWord = null;
-        int lastSearchTarget = -1;
-        int lastSort = -1;
-        int lastDuration = -1;
+        private readonly Frame Frame;
+        SearchParam last = default;
 
         public SearchDialog()
         {
             this.InitializeComponent();
             Title = GetResourceString("SearchPagePlain");
             CloseButtonText = GetResourceString("CancelPlain");
+
+            _ = loadContents();
         }
-
-        //private bool _backflag { get; set; } = false;
-
-        //public void SetBackFlag(bool value)
-        //{
-        //    _backflag = value;
-        //}
-
-        //protected override void OnNavigatedFrom(NavigationEventArgs e)
-        //{
-        //    base.OnNavigatedFrom(e);
-        //    if (!_backflag)
-        //    {
-        //        Data.OverAll.SearchResultList?.PauseLoading();
-        //        if (e.Parameter is ValueTuple<int, int?> tuple)
-        //        {
-        //            Data.Backstack.Default.Push
-        //                (typeof(SearchPage),
-        //                new ValueTuple<WaterfallPage.ListContent, int?>
-        //                (WaterfallPage.ListContent.SearchResult, tuple.Item2));
-        //        }
-        //        else
-        //            Data.Backstack.Default.Push(typeof(SearchPage), WaterfallPage.ListContent.SearchResult);               
-        //    }
-        //    ((Frame.Parent as Grid)?.Parent as MainPage)?.UpdateNavButtonState();
-        //}
+        public SearchDialog(Frame frame) : this() => Frame = frame;
 
         async Task<List<ViewModels.TagViewModel>> getTrendingTags()
         {
@@ -87,136 +62,81 @@ namespace PixivFSUWP
 
         async Task loadContents()
         {
-            stkMain.Visibility = Visibility.Visible;
             var tags = await getTrendingTags();
-            //progressRing.IsActive = false;
             progressRing.Visibility = Visibility.Collapsed;
             panelTags.ItemsSource = tags;
         }
 
-        //protected override void OnNavigatedTo(NavigationEventArgs e)
-        //{
-        //    base.OnNavigatedTo(e);
-        //    if (e.Parameter is WaterfallPage.ListContent)
-        //    {
-        //        _ = loadContents();
-        //        SearchResultList?.StopLoading();
-        //    }
-        //    else if (e.Parameter is ValueTuple<WaterfallPage.ListContent, int?>)
-        //    {
-        //        resultFrame.Navigate(typeof(WaterfallPage), e.Parameter);
-        //        grdSearchPanel.Visibility = Visibility.Collapsed;
-        //        if (txtWord.Text.Trim() != lastWord || cbSearchTarget.SelectedIndex != lastSearchTarget ||
-        //            cbSort.SelectedIndex != lastSort || cbDuration.SelectedIndex != lastDuration)
-        //        {
-        //            lastWord = txtWord.Text.Trim();
-        //            lastSearchTarget = cbSearchTarget.SelectedIndex;
-        //            lastSort = cbSort.SelectedIndex;
-        //            lastDuration = cbDuration.SelectedIndex;
-        //        }
-        //    }
-        //    ((Frame.Parent as Grid)?.Parent as MainPage)?.SelectNavPlaceholder(GetResourceString("SearchPagePlain"));
-        //}
+        private void TxtWord_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) => Search(sender.Text);
 
-        public async Task ShowSearch()
+        public void Search(string word)
         {
-            if (grdSearchPanel.Visibility == Visibility.Collapsed)
+            if (string.IsNullOrWhiteSpace(word))
+                return;
+
+            var param = new SearchParam
             {
-                searchProgressRing.Visibility = Visibility.Collapsed;
-                searchProgressRing.IsActive = false;
-                grdSearchPanel.Visibility = Visibility.Visible;
-                stkMain.Visibility = Visibility.Collapsed;
-                storyShow.Begin();
-                await Task.Delay(200);
+                Word = word.Trim()
+            };
+            switch (cbSearchTarget.SelectedIndex)
+            {
+                case 0:
+                    param.SearchTarget = "partial_match_for_tags";
+                    break;
+                case 1:
+                    param.SearchTarget = "exact_match_for_tags";
+                    break;
+                case 2:
+                    param.SearchTarget = "title_and_caption";
+                    break;
             }
-            else stkMain.Visibility = Visibility.Collapsed;
-            //progressRing.IsActive = true;
-            progressRing.Visibility = Visibility.Visible;
-            (panelTags.ItemsSource as List<ViewModels.TagViewModel>).Clear();
-            panelTags.ItemsSource = null;
-            await loadContents();
+            switch (cbSort.SelectedIndex)
+            {
+                case 0:
+                    param.Sort = "date_desc";
+                    break;
+                case 1:
+                    param.Sort = "date_asc";
+                    break;
+            }
+            switch (cbDuration.SelectedIndex)
+            {
+                case 0:
+                    param.Duration = null;
+                    break;
+                case 1:
+                    param.Duration = "within_last_day";
+                    break;
+                case 2:
+                    param.Duration = "within_last_week";
+                    break;
+                case 3:
+                    param.Duration = "within_last_month";
+                    break;
+            }
+            Search(param);
         }
-
-        private async void TxtWord_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        public void Search(SearchParam param)
         {
-            if (string.IsNullOrWhiteSpace(txtWord.Text)) return;
-            if (txtWord.Text.Trim() != lastWord || cbSearchTarget.SelectedIndex != lastSearchTarget ||
-                cbSort.SelectedIndex != lastSort || cbDuration.SelectedIndex != lastDuration)
+            if (param != last)
             {
-                if (resultFrame.Content != null)
-                    (resultFrame.Content as WaterfallPage).ItemsSource.CollectionChanged -= ItemsSource_CollectionChanged;
-                var param = new OverAll.SearchParam()
-                {
-                    Word = txtWord.Text.Trim()
-                };
-                switch (cbSearchTarget.SelectedIndex)
-                {
-                    case 0:
-                        param.SearchTarget = "partial_match_for_tags";
-                        break;
-                    case 1:
-                        param.SearchTarget = "exact_match_for_tags";
-                        break;
-                    case 2:
-                        param.SearchTarget = "title_and_caption";
-                        break;
-                }
-                switch (cbSort.SelectedIndex)
-                {
-                    case 0:
-                        param.Sort = "date_desc";
-                        break;
-                    case 1:
-                        param.Sort = "date_asc";
-                        break;
-                }
-                switch (cbDuration.SelectedIndex)
-                {
-                    case 0:
-                        param.Duration = null;
-                        break;
-                    case 1:
-                        param.Duration = "within_last_day";
-                        break;
-                    case 2:
-                        param.Duration = "within_last_week";
-                        break;
-                    case 3:
-                        param.Duration = "within_last_month";
-                        break;
-                }
-                OverAll.RefreshSearchResultList(param);
-                resultFrame.Navigate(typeof(WaterfallPage), WaterfallPage.ListContent.SearchResult, App.FromRightTransitionInfo);
-                (resultFrame.Content as WaterfallPage).ItemsSource.CollectionChanged += ItemsSource_CollectionChanged;
+                RefreshSearchResultList(param);
+                Frame?.Navigate(typeof(WaterfallPage), WaterfallPage.ListContent.SearchResult, App.FromRightTransitionInfo);
             }
-            storyFade.Begin();
-            await Task.Delay(200);
-            grdSearchPanel.Visibility = Visibility.Collapsed;
-            if (txtWord.Text.Trim() != lastWord || cbSearchTarget.SelectedIndex != lastSearchTarget ||
-                cbSort.SelectedIndex != lastSort || cbDuration.SelectedIndex != lastDuration)
-            {
-                lastWord = txtWord.Text.Trim();
-                lastSearchTarget = cbSearchTarget.SelectedIndex;
-                lastSort = cbSort.SelectedIndex;
-                lastDuration = cbDuration.SelectedIndex;
-                searchProgressRing.IsActive = true;
-                searchProgressRing.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void ItemsSource_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            searchProgressRing.Visibility = Visibility.Collapsed;
-            searchProgressRing.IsActive = false;
+            Hide();
+            if (param != last)
+                last = param;
         }
 
         private void BtnTag_Click(object sender, RoutedEventArgs e)
         {
-            txtWord.Text = (sender as Button).Tag as string;
-            cbSearchTarget.SelectedIndex = 1;
-            cbSort.SelectedIndex = 0;
-            cbDuration.SelectedIndex = 0;
-            TxtWord_QuerySubmitted(null, null);
+            Search(new SearchParam
+            {
+                Word = (sender as Button).Tag as string,
+                SearchTarget = "exact_match_for_tags",
+                Sort = "date_desc",
+                Duration = null
+            });
         }
 
         private async void btnSauceNAO_Click(object sender, RoutedEventArgs e)
@@ -226,30 +146,30 @@ namespace PixivFSUWP
             string SAUCENAO_API_KEY, IMGUR_API_KEY;
             Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
             //读取设置项
-            //if (localSettings.Values["SauceNAOAPI"] as string == null)
-            //{
-            //    Frame.Navigate(typeof(SettingsPage),null, App.FromRightTransitionInfo);
-            //    SAUCENAO_API_KEY = sauceNAOAPI;
-            //    return;
-            //}
-            //else if ((localSettings.Values["SauceNAOAPI"] as string).Length == 0)
-            //{
-            //    Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
-            //    SAUCENAO_API_KEY = sauceNAOAPI;
-            //    return;
-            //}
-            //if (localSettings.Values["ImgurAPI"] as string == null)
-            //{
-            //    Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
-            //    IMGUR_API_KEY = imgurAPI;
-            //    return;
-            //}
-            //else if ((localSettings.Values["ImgurAPI"] as string).Length == 0)
-            //{
-            //    Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
-            //    IMGUR_API_KEY = imgurAPI;
-            //    return;
-            //}
+            if (localSettings.Values["SauceNAOAPI"] as string == null)
+            {
+                Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
+                SAUCENAO_API_KEY = sauceNAOAPI;
+                return;
+            }
+            else if ((localSettings.Values["SauceNAOAPI"] as string).Length == 0)
+            {
+                Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
+                SAUCENAO_API_KEY = sauceNAOAPI;
+                return;
+            }
+            if (localSettings.Values["ImgurAPI"] as string == null)
+            {
+                Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
+                IMGUR_API_KEY = imgurAPI;
+                return;
+            }
+            else if ((localSettings.Values["ImgurAPI"] as string).Length == 0)
+            {
+                Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
+                IMGUR_API_KEY = imgurAPI;
+                return;
+            }
             SAUCENAO_API_KEY = localSettings.Values["SauceNAOAPI"] as string;
             IMGUR_API_KEY = localSettings.Values["ImgurAPI"] as string;
             // 选择文件
@@ -263,10 +183,10 @@ namespace PixivFSUWP
             // 检测文件
             if (file == null)
             {
-                //Frame.GoBack();
+                Frame.GoBack();
                 return;
             }
-            // 
+            //
             //ImgurNaoAPI imgurNaoApi = new ImgurNaoAPI(SAUCENAO_API_KEY, IMGUR_API_KEY);
             //string image = imgurNaoApi.UpLoad(await StorageFileExt.AsByteArray(file)).GetNamedString("link");
             //int retPid = (int)imgurNaoApi.DownLoad(image).GetNamedNumber("pixiv_id");
@@ -274,13 +194,10 @@ namespace PixivFSUWP
         }
         private void GoPixivID_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            try
+            if (int.TryParse(sender.Text, out var id))
             {
-                //Frame.Navigate(typeof(IllustDetailPage), int.Parse(asbGTPID.Text), App.FromRightTransitionInfo);
-            }
-            catch(OverflowException)
-            {
-                //吞了异常。一般是由于输入的数字过大，超过了Int32的限制导致
+                Frame.Navigate(typeof(IllustDetailPage), id, App.FromRightTransitionInfo);
+                Hide();
             }
         }
 

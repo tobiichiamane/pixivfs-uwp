@@ -61,10 +61,14 @@ namespace PixivFSUWP
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (e.Parameter is ListContent) listContent = (ListContent)e.Parameter;
-            else if(e.Parameter is ValueTuple<ListContent,int?> tuple)
+            switch (e.Parameter)
             {
-                (listContent, clicked) = tuple;
+                case ListContent content:
+                    listContent = content;
+                    break;
+                case ValueTuple<ListContent, int?> tuple:
+                    (listContent, clicked) = tuple;
+                    break;
             }
             switch (listContent)
             {
@@ -85,6 +89,7 @@ namespace PixivFSUWP
                     Data.OverAll.RankingList.ResumeLoading();
                     break;
                 case ListContent.SearchResult:
+                    TheMainPage.SelectNavPlaceholder(GetResourceString("SearchPagePlain"));
                     ItemsSource = Data.OverAll.SearchResultList;
                     Data.OverAll.SearchResultList.ResumeLoading();
                     WaterfallListView.ItemsSource = ItemsSource;

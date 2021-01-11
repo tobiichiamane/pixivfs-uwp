@@ -36,12 +36,28 @@ namespace PixivFSUWP.Data
         public static UserIllustsCollection UserList { get; private set; }
         public static MainPage TheMainPage { get; set; }
 
-        public struct SearchParam
+        public struct SearchParam : IEquatable<SearchParam>
         {
             public string Word;
             public string SearchTarget;
             public string Sort;
             public string Duration;
+
+            public override bool Equals(object obj) => obj is SearchParam param && Equals(param);
+            public bool Equals(SearchParam other) => Word == other.Word && SearchTarget == other.SearchTarget && Sort == other.Sort && Duration == other.Duration;
+
+            public override int GetHashCode()
+            {
+                var hashCode = -582144489;
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Word);
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(SearchTarget);
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Sort);
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Duration);
+                return hashCode;
+            }
+
+            public static bool operator ==(SearchParam left, SearchParam right) => left.Equals(right);
+            public static bool operator !=(SearchParam left, SearchParam right) => !(left == right);
         }
 
         public static void RefreshRecommendList()
