@@ -19,36 +19,36 @@ namespace PixivFSUWP
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class SettingsPage : Page, IGoBackFlag
+    public sealed partial class SettingsDialog
     {
-        public SettingsPage()
+        public SettingsDialog()
         {
             this.InitializeComponent();
             _ = loadContentsAsync();
         }
 
-        private bool _backflag { get; set; } = false;
+        //private bool _backflag { get; set; } = false;
 
-        public void SetBackFlag(bool value)
-        {
-            _backflag = value;
-        }
+        //public void SetBackFlag(bool value)
+        //{
+        //    _backflag = value;
+        //}
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            TheMainPage?.SelectNavPlaceholder(GetResourceString("SettingsPagePlain"));
-        }
+        //protected override void OnNavigatedTo(NavigationEventArgs e)
+        //{
+        //    base.OnNavigatedTo(e);
+        //    TheMainPage?.SelectNavPlaceholder(GetResourceString("SettingsPagePlain"));
+        //}
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-            if (!_backflag)
-            {
-                Data.Backstack.Default.Push(typeof(SettingsPage), null);
-                TheMainPage?.UpdateNavButtonState();
-            }
-        }
+        //protected override void OnNavigatedFrom(NavigationEventArgs e)
+        //{
+        //    base.OnNavigatedFrom(e);
+        //    if (!_backflag)
+        //    {
+        //        Data.Backstack.Default.Push(typeof(SettingsPage), null);
+        //        TheMainPage?.UpdateNavButtonState();
+        //    }
+        //}
 
         async Task loadContentsAsync()
         {

@@ -226,25 +226,25 @@ namespace PixivFSUWP
             //读取设置项
             if (localSettings.Values["SauceNAOAPI"] as string == null)
             {
-                Frame.Navigate(typeof(SettingsPage),null, App.FromRightTransitionInfo);
+                Frame.Navigate(typeof(SettingsDialog),null, App.FromRightTransitionInfo);
                 SAUCENAO_API_KEY = sauceNAOAPI;
                 return;
             }
             else if ((localSettings.Values["SauceNAOAPI"] as string).Length == 0)
             {
-                Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
+                Frame.Navigate(typeof(SettingsDialog), null, App.FromRightTransitionInfo);
                 SAUCENAO_API_KEY = sauceNAOAPI;
                 return;
             }
             if (localSettings.Values["ImgurAPI"] as string == null)
             {
-                Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
+                Frame.Navigate(typeof(SettingsDialog), null, App.FromRightTransitionInfo);
                 IMGUR_API_KEY = imgurAPI;
                 return;
             }
             else if ((localSettings.Values["ImgurAPI"] as string).Length == 0)
             {
-                Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
+                Frame.Navigate(typeof(SettingsDialog), null, App.FromRightTransitionInfo);
                 IMGUR_API_KEY = imgurAPI;
                 return;
             }

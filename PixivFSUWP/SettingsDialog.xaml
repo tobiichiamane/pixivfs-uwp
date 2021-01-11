@@ -1,5 +1,5 @@
-﻿<Page
-    x:Class="PixivFSUWP.SettingsPage"
+﻿<ContentDialog
+    x:Class="PixivFSUWP.SettingsDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PixivFSUWP"
@@ -8,8 +8,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
-    <Page.Resources>
+
+    <FrameworkElement.Resources>
         <converters:ContributionsConverter x:Key="ContributionsConverter"/>
         <DataTemplate x:Key="contributorTemplate" x:DataType="viewmodels:ContributorViewModel">
             <Grid Margin="-3 5 -5 5" Width="350">
@@ -32,7 +32,7 @@
                 <TextBlock Text="{Binding Contributions,Converter={StaticResource ContributionsConverter}}" Grid.RowSpan="2" Grid.Column="2" VerticalAlignment="Center"/>
             </Grid>
         </DataTemplate>
-    </Page.Resources>
+    </FrameworkElement.Resources>
     
     <ScrollViewer Background="{StaticResource PageBackGround}" VerticalScrollBarVisibility="Hidden">
         <StackPanel Margin="0,75,0,0">
@@ -146,4 +146,4 @@
             </StackPanel>
         </StackPanel>
     </ScrollViewer>
-</Page>
+</ContentDialog>
