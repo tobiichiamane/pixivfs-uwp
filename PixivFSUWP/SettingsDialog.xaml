@@ -7,12 +7,17 @@
     xmlns:converters="using:PixivFSUWP.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{StaticResource PageBackGround}"
+    PrimaryButtonStyle="{StaticResource ButtonRevealStyle}"
     mc:Ignorable="d">
 
     <FrameworkElement.Resources>
         <converters:ContributionsConverter x:Key="ContributionsConverter"/>
+        <Style x:Key="contributorStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+        </Style>
         <DataTemplate x:Key="contributorTemplate" x:DataType="viewmodels:ContributorViewModel">
-            <Grid Margin="-3 5 -5 5" Width="350">
+            <Grid Margin="-3 5 -5 5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="45"/>
                     <ColumnDefinition/>
@@ -34,10 +39,10 @@
         </DataTemplate>
     </FrameworkElement.Resources>
     
-    <ScrollViewer Background="{StaticResource PageBackGround}" VerticalScrollBarVisibility="Hidden">
-        <StackPanel Margin="0,75,0,0">
+    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+        <StackPanel>
             <TextBlock Margin="15,20,15,0" FontSize="18" FontWeight="Bold" x:Uid="CurrentUser"/>
-            <Grid Margin="15,15,15,10" Width="Auto" HorizontalAlignment="Left">
+            <Grid Margin="15,15,15,10">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -83,25 +88,32 @@
             <!--颜色主题-->
             <StackPanel Margin="0 10">
                 <TextBlock Margin="15 0" FontSize="18" FontWeight="Bold" x:Uid="ColorTheme"/>
-                <ComboBox Margin="15 10 15 0" Width="300" DropDownClosed="ComboBox_DropDownClosed" x:Name="cboxColorTheme">
+                <ComboBox Margin="15 10 15 0" HorizontalAlignment="Stretch" DropDownClosed="ComboBox_DropDownClosed" x:Name="cboxColorTheme">
                     <ComboBoxItem x:Uid="LightColorTheme"/>
                     <ComboBoxItem x:Uid="DarkColorTheme"/>
                     <ComboBoxItem x:Uid="DefaultColorTheme"/>
                 </ComboBox>
             </StackPanel>
             <!--缓存管理-->
-            <StackPanel Margin="0,10">
-                <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" x:Uid="Cache"/>
-                <StackPanel Margin="15,10,15,0" Orientation="Horizontal">
+            <StackPanel Margin="15,10">
+                <TextBlock FontSize="18" FontWeight="Bold" x:Uid="Cache"/>
+                <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
                     <TextBlock x:Uid="CacheSize"/>
                     <TextBlock x:Name="txtCacheSize" x:Uid="Calculating"/>
                 </StackPanel>
-                <Button Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5"
-                        Margin="15,10,15,0" x:Uid="ClearCache"
-                        Width="170" x:Name="btnClearCache" Click="btnClearCache_Click"/>
-                <Button Style="{StaticResource ButtonRevealStyle}"
-                        BorderThickness="1.5" Margin="15,5,15,0" x:Uid="DeleteInvalid" 
-                        Width="170" x:Name="btnDelInvalid" Click="btnDelInvalid_Click"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5"
+                            HorizontalAlignment="Stretch" x:Uid="ClearCache"
+                            x:Name="btnClearCache" Click="btnClearCache_Click"/>
+                    <Button Grid.Column="2" Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5"
+                            HorizontalAlignment="Stretch" x:Uid="DeleteInvalid"
+                            x:Name="btnDelInvalid" Click="btnDelInvalid_Click"/>
+                </Grid>
             </StackPanel>
             <!--版本信息-->
             <StackPanel Margin="0,10">
@@ -109,9 +121,14 @@
                 <TextBlock Margin="15,10,15,0" x:Name="txtVersion"/>
                 <TextBlock Margin="15,2,15,0" x:Name="txtPkgName"/>
                 <TextBlock Margin="15,2,15,0" x:Name="txtInsDate"/>
-                <StackPanel Orientation="Vertical" Margin="15,10,15,0">
-                    <Button Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" x:Name="btnGithub" Width="170" Height="Auto" Click="BtnGithub_Click">
-                        <Grid Width="130">
+                <Grid Margin="15,10,15,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" x:Name="btnGithub" Click="BtnGithub_Click">
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="20"/>
                                 <ColumnDefinition Width="*"/>
@@ -120,8 +137,8 @@
                             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0">GitHub Repo</TextBlock>
                         </Grid>
                     </Button>
-                    <Button Margin="0 5 0 0" Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" x:Name="btnQQGroup" Width="170" Height="Auto" Click="btnQQGroup_Click">
-                        <Grid Width="130">
+                    <Button Grid.Column="2" HorizontalAlignment="Stretch" Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" x:Name="btnQQGroup" Click="btnQQGroup_Click">
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="20"/>
                                 <ColumnDefinition Width="*"/>
@@ -130,20 +147,27 @@
                             <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0">QQ Community</TextBlock>
                         </Grid>
                     </Button>
-                </StackPanel>
+                </Grid>
             </StackPanel>
             <!--作者和参与者-->
             <StackPanel Margin="0,10">
                 <TextBlock Margin="15,0,15,0" FontSize="18" FontWeight="Bold" x:Uid="Developers"/>
                 <TextBlock Margin="15,10,15,0" x:Uid="MainDeveloper"/>
-                <ListView Margin="15,10,0,0" x:Name="lstMainDev" SelectionMode="None" Width="365" HorizontalAlignment="Left"
+                <ListView Margin="15,10,0,0" x:Name="lstMainDev" SelectionMode="None"
+                          ItemContainerStyle="{StaticResource contributorStyle}"
                           IsItemClickEnabled="True" ItemTemplate="{StaticResource contributorTemplate}" ItemClick="lstMainDev_ItemClick"/>
                 <TextBlock x:Name="txtContributors" Margin="15,10,5,0" x:Uid="Contributors"/>
                 <ProgressRing x:Name="progressLoadingContributors" Margin="15,10,5,0"
                               IsActive="False" Visibility="Collapsed" HorizontalAlignment="Left"/>
-                <ListView Margin="15,10,0,0" x:Name="lstContributors" SelectionMode="None" Width="365" Visibility="Collapsed" HorizontalAlignment="Left"
+                <ListView Margin="15,10,0,0" x:Name="lstContributors" SelectionMode="None" Visibility="Collapsed"
+                          ItemContainerStyle="{StaticResource contributorStyle}"
                           IsItemClickEnabled="True" ItemTemplate="{StaticResource contributorTemplate}" ItemClick="lstMainDev_ItemClick"/>
             </StackPanel>
+            <StackPanel.ChildrenTransitions>
+                <TransitionCollection>
+                    <AddDeleteThemeTransition/>
+                </TransitionCollection>
+            </StackPanel.ChildrenTransitions>
         </StackPanel>
     </ScrollViewer>
 </ContentDialog>

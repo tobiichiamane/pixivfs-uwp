@@ -25,6 +25,8 @@ namespace PixivFSUWP
         {
             this.InitializeComponent();
             _ = loadContentsAsync();
+            Title = GetResourceString("SettingsPagePlain");
+            PrimaryButtonText = GetResourceString("OKPlain");
         }
 
         //private bool _backflag { get; set; } = false;
