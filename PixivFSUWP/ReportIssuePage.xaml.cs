@@ -23,8 +23,8 @@ namespace PixivFSUWP
             this.InitializeComponent();
 
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            var view = ApplicationView.GetForCurrentView();
-            view.Title = "Report an issue/问题反馈";
+            //var view = ApplicationView.GetForCurrentView();
+            //view.Title = "Report an issue/问题反馈";
 
             txtDetails.Text += "General:\n";
             txtDetails.Text += string.Format("OS version: build {0}\n", SystemInformation.OperatingSystemVersion.Build);

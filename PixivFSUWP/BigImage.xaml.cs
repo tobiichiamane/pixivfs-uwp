@@ -2,14 +2,10 @@
 using PixivFSUWP.Data;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -20,10 +16,6 @@ using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using static PixivFSUWP.Data.OverAll;
@@ -52,9 +44,7 @@ namespace PixivFSUWP
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
             var view = ApplicationView.GetForCurrentView();
             view.TitleBar.ButtonBackgroundColor = Colors.Transparent;
-            view.TitleBar.ButtonForegroundColor = Colors.Black;
-            view.TitleBar.ButtonInactiveForegroundColor = Colors.Gray;
-            view.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            view.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;         
             view.Title = string.Format("{0} by {1} - {2}x{3}",
                 parameter.Title, parameter.Author,
                 parameter.Width, parameter.Height);

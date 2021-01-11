@@ -30,10 +30,9 @@
                         SelectionChanged="NavControl_SelectionChanged"
                         IsSettingsVisible="False" BackRequested="NavControl_BackRequested">
             <NavigationView.PaneHeader>
-                <Viewbox Height="20" Margin="20 0">
-                    <ctrl:Pixiv_Logo xmlns:ctrl="using:PixivFSUWP.Controls"/>
+                <Viewbox Margin="10" HorizontalAlignment="Left">
+                    <TextBlock FontFamily="{StaticResource IconFont}" Text="&#xe601;"/>
                 </Viewbox>
-                <!--<Image Source="{ThemeResource PixivHeader}"/>-->
             </NavigationView.PaneHeader>
             <NavigationView.PaneFooter>
                 <StackPanel Orientation="Horizontal">
@@ -48,7 +47,7 @@
                     <AppBarButton Width="48" x:Name="btnMe" Click="BtnMe_Click">
                         <Grid Margin="-7">
                             <ProgressRing x:Name="avatarRing" Height="20" Width="20" IsActive="True"/>
-                            <Ellipse VerticalAlignment="Center" Height="24" Width="24">
+                            <Ellipse VerticalAlignment="Center" Height="22" Width="22" Margin="0 2 0 0">
                                 <Ellipse.Fill>
                                     <ImageBrush x:Name="imgAvatar" Stretch="UniformToFill"/>
                                 </Ellipse.Fill>

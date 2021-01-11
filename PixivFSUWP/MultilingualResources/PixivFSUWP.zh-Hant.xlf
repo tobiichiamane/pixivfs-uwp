@@ -23,7 +23,7 @@
         </trans-unit>
         <trans-unit id="BookmarkDeleteFailedPlain" translate="yes" xml:space="preserve">
           <source>Failed to unbookmark「{0}」</source>
-          <target state="translated">收藏作品「{0}」剔除不成功</target>
+          <target state="translated">收藏作品「{0}」未能剔除成功</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="Bookmarked.Content" translate="yes" xml:space="preserve">
@@ -64,6 +64,7 @@
         <trans-unit id="CacheSize.Text" translate="yes" xml:space="preserve">
           <source>Cache size: </source>
           <target state="translated">暫存檔案共計：</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="Calculating.Text" translate="yes" xml:space="preserve">
@@ -89,6 +90,7 @@
         <trans-unit id="ClearCache.Content" translate="yes" xml:space="preserve">
           <source>Clear cache</source>
           <target state="translated">釋放暫存檔案</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">Button</note>
         </trans-unit>
         <trans-unit id="ColorTheme.Text" translate="yes" xml:space="preserve">
@@ -128,7 +130,7 @@
         </trans-unit>
         <trans-unit id="CreatingTimelinePlain" translate="yes" xml:space="preserve">
           <source>Generating Windows® Timeline™...</source>
-          <target state="needs-review-translation">正在在時間軸上創建新的活動歷程...</target>
+          <target state="translated">正在在時間軸上創建新的活動歷程...</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
@@ -170,6 +172,7 @@
         <trans-unit id="DeleteInvalid.Content" translate="yes" xml:space="preserve">
           <source>Delete invalid files</source>
           <target state="translated">剔除無效檔案</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">Button</note>
         </trans-unit>
         <trans-unit id="Desk.Text" translate="yes" xml:space="preserve">
@@ -205,11 +208,12 @@
         <trans-unit id="Email.Text" translate="yes" xml:space="preserve">
           <source>Email：</source>
           <target state="translated">電子郵箱：</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="ExperimentalConnection.Content" translate="yes" xml:space="preserve">
           <source>Direct Connection (!Experimental!)</source>
-          <target state="translated">直連（實驗性，可避開 GWF 網路封鎖）</target>
+          <target state="translated">直連（實驗性，可避開來自 GWF 網絡封鎖）</target>
           <note from="MultilingualBuild" annotates="source" priority="2">CheckBox</note>
         </trans-unit>
         <trans-unit id="ExperimentalWarningPlain" translate="yes" xml:space="preserve">
@@ -340,12 +344,12 @@ Do you want to disable them?</source>
         </trans-unit>
         <trans-unit id="LoginBanner.Text" translate="yes" xml:space="preserve">
           <source>Spice up your creating process</source>
-          <target state="translated">讓樂趣時刻伴隨創作</target>
+          <target state="translated">時刻創造樂趣</target>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="LoginFailed.Content" translate="yes" xml:space="preserve">
           <source>Login failed. Troubleshoot and try again.</source>
-          <target state="translated">登入不成功，點擊查閲相關錯誤排解並重登賬戶</target>
+          <target state="translated">未能成功登入，點擊查閲相關錯誤並嘗試重登賬戶</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Button</note>
         </trans-unit>
         <trans-unit id="Logout.Content" translate="yes" xml:space="preserve">
@@ -600,7 +604,7 @@ Do you want to disable them?</source>
         </trans-unit>
         <trans-unit id="SaveImageFailedPlain" translate="yes" xml:space="preserve">
           <source>Failed to save image</source>
-          <target state="translated">相片存儲不成功</target>
+          <target state="translated">未能成功存儲相片</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="SaveImagePlain" translate="yes" xml:space="preserve">
@@ -615,7 +619,7 @@ Do you want to disable them?</source>
         </trans-unit>
         <trans-unit id="SaveInkFailedPlain" translate="yes" xml:space="preserve">
           <source>Failed to save ink strokes</source>
-          <target state="translated">墨跡存儲不成功</target>
+          <target state="translated">未能成功存儲墨跡</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="SaveInkPlain" translate="yes" xml:space="preserve">
@@ -630,7 +634,7 @@ Do you want to disable them?</source>
         </trans-unit>
         <trans-unit id="SaveUgoiraFailedPlain" translate="yes" xml:space="preserve">
           <source>Failed to save ugoira</source>
-          <target state="translated">剪影存儲不成功</target>
+          <target state="translated">未能成功存儲剪影</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="SaveUgoiraSucceededPlain" translate="yes" xml:space="preserve">
@@ -740,12 +744,14 @@ Do you want to disable them?</source>
         </trans-unit>
         <trans-unit id="UserID.Text" translate="yes" xml:space="preserve">
           <source>User ID：</source>
-          <target state="translated">用戶唯一標識：</target>
+          <target state="translated">用戶唯一標碼：</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="Username.Text" translate="yes" xml:space="preserve">
           <source>Username</source>
           <target state="translated">用戶名</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="UserShareTipPlain" translate="yes" xml:space="preserve">
@@ -785,7 +791,7 @@ Do you want to disable them?</source>
         </trans-unit>
         <trans-unit id="WorkSaveFailedPlain" translate="yes" xml:space="preserve">
           <source>Failed to save「{0}」</source>
-          <target state="translated">作品「{0}」存儲不成功</target>
+          <target state="translated">作品「{0}」未能成功存儲</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="YesButtonPlain" translate="yes" xml:space="preserve">
@@ -793,10 +799,22 @@ Do you want to disable them?</source>
           <target state="translated">當然</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText (❌Unworkable)</note>
         </trans-unit>
-        <trans-unit id="DownloadsPlain" translate="yes" xml:space="preserve">
-          <source>Downloads</source>
-          <target state="new">Downloads</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        <trans-unit id="GitHubRepo.Text" translate="yes" xml:space="preserve">
+          <source>GitHub Repo</source>
+          <target state="translated">GitHub 回應</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
+        </trans-unit>
+        <trans-unit id="QQCommunity.Text" translate="yes" xml:space="preserve">
+          <source>QQ Community</source>
+          <target state="translated">QQ 社群</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
+        </trans-unit>
+        <trans-unit id="SetWallpaper.Label" translate="yes" xml:space="preserve">
+          <source>Set as Wallpaper</source>
+          <target state="translated">設定至桌布</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">AppBarButton</note>
         </trans-unit>
         <trans-unit id="DownloadedCaption.Content" translate="yes" xml:space="preserve">
           <source>Downloaded</source>
@@ -812,6 +830,11 @@ Do you want to disable them?</source>
           <source>Download Manager</source>
           <target state="new">Download Manager</target>
           <note from="MultilingualBuild" annotates="source" priority="2">NavigationViewItemHeader</note>
+        </trans-unit>
+        <trans-unit id="DownloadsPlain" translate="yes" xml:space="preserve">
+          <source>Downloads</source>
+          <target state="new">Downloads</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
       </group>
     </body>

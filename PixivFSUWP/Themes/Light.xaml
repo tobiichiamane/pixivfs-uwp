@@ -2,7 +2,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PixivFSUWP.Themes">
-    <x:String x:Key="PixivHeader">/Assets/PixivHeader.png</x:String>
-    <x:String x:Key="PixivText">/Assets/PixivText.png</x:String>
+
     <x:Double x:Key="PageBackGroundTintOpacity">0.5</x:Double>
 </ResourceDictionary>

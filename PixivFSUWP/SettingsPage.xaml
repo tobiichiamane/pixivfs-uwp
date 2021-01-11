@@ -83,7 +83,8 @@
             <!--颜色主题-->
             <StackPanel Margin="0 10">
                 <TextBlock Margin="15 0" FontSize="18" FontWeight="Bold" x:Uid="ColorTheme"/>
-                <ComboBox Margin="15 10 15 0" Width="300" DropDownClosed="ComboBox_DropDownClosed" x:Name="cboxColorTheme">
+                <ComboBox Margin="15 10 15 0" Width="300" DropDownClosed="ComboBox_DropDownClosed" 
+                          x:Name="cboxColorTheme" BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}">
                     <ComboBoxItem x:Uid="LightColorTheme"/>
                     <ComboBoxItem x:Uid="DarkColorTheme"/>
                     <ComboBoxItem x:Uid="DefaultColorTheme"/>
@@ -111,24 +112,18 @@
                 <TextBlock Margin="15,2,15,0" x:Name="txtInsDate"/>
                 <StackPanel Orientation="Vertical" Margin="15,10,15,0">
                     <Button Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" x:Name="btnGithub" Width="170" Height="Auto" Click="BtnGithub_Click">
-                        <Grid Width="130">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="Assets/GH_64.png" Stretch="Uniform" Width="20" Height="20"/>
-                            <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0">GitHub Repo</TextBlock>
-                        </Grid>
+                        <TextBlock>
+                            <Run FontFamily="{ThemeResource IconFont}" FontSize="16">&#xe600;</Run>
+                            <Run Text="  "/>
+                            <Run x:Uid="GitHubRepo"/>
+                        </TextBlock>
                     </Button>
                     <Button Margin="0 5 0 0" Style="{StaticResource ButtonRevealStyle}" BorderThickness="1.5" x:Name="btnQQGroup" Width="170" Height="Auto" Click="btnQQGroup_Click">
-                        <Grid Width="130">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="Assets/QQ_64.png" Stretch="Uniform" Width="20" Height="20"/>
-                            <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0">QQ Community</TextBlock>
-                        </Grid>
+                        <TextBlock>
+                            <Run FontFamily="{ThemeResource IconFont}" FontSize="16">&#xe746;</Run>
+                            <Run Text="  "/>
+                            <Run x:Uid="QQCommunity"/>
+                        </TextBlock>
                     </Button>
                 </StackPanel>
             </StackPanel>

@@ -25,7 +25,7 @@
     <comment>TextBlock</comment>
   </data>
   <data name="BookmarkDeleteFailedPlain" xml:space="preserve">
-    <value>收藏作品「{0}」剔除不成功</value>
+    <value>收藏作品「{0}」未能剔除成功</value>
     <comment>PlainText</comment>
   </data>
   <data name="Bookmarked.Content" xml:space="preserve">
@@ -173,7 +173,7 @@
     <comment>TextBlock</comment>
   </data>
   <data name="ExperimentalConnection.Content" xml:space="preserve">
-    <value>直連（實驗性，可避開 GWF 網路封鎖）</value>
+    <value>直連（實驗性，可避開來自 GWF 網絡封鎖）</value>
     <comment>CheckBox</comment>
   </data>
   <data name="ExperimentalWarningPlain" xml:space="preserve">
@@ -277,11 +277,11 @@
     <comment>Button</comment>
   </data>
   <data name="LoginBanner.Text" xml:space="preserve">
-    <value>讓樂趣時刻伴隨創作</value>
+    <value>時刻創造樂趣</value>
     <comment>TextBlock</comment>
   </data>
   <data name="LoginFailed.Content" xml:space="preserve">
-    <value>登入不成功，點擊查閲相關錯誤排解並重登賬戶</value>
+    <value>未能成功登入，點擊查閲相關錯誤並嘗試重登賬戶</value>
     <comment>Button</comment>
   </data>
   <data name="Logout.Content" xml:space="preserve">
@@ -485,7 +485,7 @@
     <comment>AppBarButton</comment>
   </data>
   <data name="SaveImageFailedPlain" xml:space="preserve">
-    <value>相片存儲不成功</value>
+    <value>未能成功存儲相片</value>
     <comment>PlainText</comment>
   </data>
   <data name="SaveImagePlain" xml:space="preserve">
@@ -497,7 +497,7 @@
     <comment>PlainText</comment>
   </data>
   <data name="SaveInkFailedPlain" xml:space="preserve">
-    <value>墨跡存儲不成功</value>
+    <value>未能成功存儲墨跡</value>
     <comment>PlainText</comment>
   </data>
   <data name="SaveInkPlain" xml:space="preserve">
@@ -509,7 +509,7 @@
     <comment>PlainText</comment>
   </data>
   <data name="SaveUgoiraFailedPlain" xml:space="preserve">
-    <value>剪影存儲不成功</value>
+    <value>未能成功存儲剪影</value>
     <comment>PlainText</comment>
   </data>
   <data name="SaveUgoiraSucceededPlain" xml:space="preserve">
@@ -597,7 +597,7 @@
     <comment>PlainText</comment>
   </data>
   <data name="UserID.Text" xml:space="preserve">
-    <value>用戶唯一標識：</value>
+    <value>用戶唯一標碼：</value>
     <comment>TextBlock</comment>
   </data>
   <data name="Username.Text" xml:space="preserve">
@@ -633,11 +633,23 @@
     <comment>PlainText</comment>
   </data>
   <data name="WorkSaveFailedPlain" xml:space="preserve">
-    <value>作品「{0}」存儲不成功</value>
+    <value>作品「{0}」未能成功存儲</value>
     <comment>PlainText</comment>
   </data>
   <data name="YesButtonPlain" xml:space="preserve">
     <value>當然</value>
     <comment>PlainText (❌Unworkable)</comment>
+  </data>
+  <data name="GitHubRepo.Text" xml:space="preserve">
+    <value>GitHub 回應</value>
+    <comment>TextBlock</comment>
+  </data>
+  <data name="QQCommunity.Text" xml:space="preserve">
+    <value>QQ 社群</value>
+    <comment>TextBlock</comment>
+  </data>
+  <data name="SetWallpaper.Label" xml:space="preserve">
+    <value>設定至桌布</value>
+    <comment>AppBarButton</comment>
   </data>
 </root>

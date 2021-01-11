@@ -641,4 +641,16 @@
     <value>当然</value>
     <comment>PlainText (❌Unworkable)</comment>
   </data>
+  <data name="GitHubRepo.Text" xml:space="preserve">
+    <value>GitHub 反馈</value>
+    <comment>TextBlock</comment>
+  </data>
+  <data name="QQCommunity.Text" xml:space="preserve">
+    <value>QQ 社群</value>
+    <comment>TextBlock</comment>
+  </data>
+  <data name="SetWallpaper.Label" xml:space="preserve">
+    <value>设置为壁纸</value>
+    <comment>AppBarButton</comment>
+  </data>
 </root>

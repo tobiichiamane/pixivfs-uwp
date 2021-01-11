@@ -28,13 +28,13 @@
         </trans-unit>
         <trans-unit id="Bookmarked.Content" translate="yes" xml:space="preserve">
           <source>Mark</source>
-          <target state="needs-review-translation">收藏</target>
+          <target state="translated">收藏</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">NavigationViewItem</note>
         </trans-unit>
         <trans-unit id="BookmarkedPlain" translate="yes" xml:space="preserve">
           <source>Mark</source>
-          <target state="needs-review-translation">已收藏</target>
+          <target state="translated">已收藏</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
@@ -70,7 +70,7 @@
         </trans-unit>
         <trans-unit id="CreatingTimelinePlain" translate="yes" xml:space="preserve">
           <source>Generating Windows® Timeline™...</source>
-          <target state="needs-review-translation">正在创建时间线...</target>
+          <target state="translated">正在创建时间线...</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
@@ -127,6 +127,7 @@
         <trans-unit id="Email.Text" translate="yes" xml:space="preserve">
           <source>Email：</source>
           <target state="translated">邮箱：</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="FemalePlain" translate="yes" xml:space="preserve">
@@ -136,13 +137,13 @@
         </trans-unit>
         <trans-unit id="Following.Content" translate="yes" xml:space="preserve">
           <source>Follow</source>
-          <target state="needs-review-translation">关注</target>
+          <target state="translated">关注</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">NavigationViewItem</note>
         </trans-unit>
         <trans-unit id="FollowingPlain" translate="yes" xml:space="preserve">
           <source>Follow</source>
-          <target state="needs-review-translation">已关注</target>
+          <target state="translated">已关注</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
@@ -283,25 +284,25 @@
         </trans-unit>
         <trans-unit id="NotBookmarked.Text" translate="yes" xml:space="preserve">
           <source>Mark</source>
-          <target state="needs-review-translation">未收藏</target>
+          <target state="translated">未收藏</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="NotBookmarkedPlain" translate="yes" xml:space="preserve">
           <source>Mark</source>
-          <target state="needs-review-translation">未收藏</target>
+          <target state="translated">未收藏</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
         <trans-unit id="NotFollowing.Text" translate="yes" xml:space="preserve">
           <source>Follow</source>
-          <target state="needs-review-translation">未关注</target>
+          <target state="translated">未关注</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="NotFollowingPlain" translate="yes" xml:space="preserve">
           <source>Follow</source>
-          <target state="needs-review-translation">未关注</target>
+          <target state="translated">未关注</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
@@ -342,7 +343,7 @@
         </trans-unit>
         <trans-unit id="PinnedPlain" translate="yes" xml:space="preserve">
           <source>Pin</source>
-          <target state="needs-review-translation">已固定</target>
+          <target state="translated">已固定</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
@@ -553,7 +554,7 @@
         </trans-unit>
         <trans-unit id="Unpinned.Text" translate="yes" xml:space="preserve">
           <source>Pin</source>
-          <target state="needs-review-translation">未固定</target>
+          <target state="translated">未固定</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
@@ -565,11 +566,13 @@
         <trans-unit id="UserID.Text" translate="yes" xml:space="preserve">
           <source>User ID：</source>
           <target state="translated">用户标识：</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="Username.Text" translate="yes" xml:space="preserve">
           <source>Username</source>
           <target state="translated">用户名</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="UserShareTipPlain" translate="yes" xml:space="preserve">
@@ -584,7 +587,7 @@
         </trans-unit>
         <trans-unit id="Work.Text" translate="yes" xml:space="preserve">
           <source>Works</source>
-          <target state="needs-review-translation">作品</target>
+          <target state="translated">作品</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
@@ -661,6 +664,7 @@
         <trans-unit id="CacheSize.Text" translate="yes" xml:space="preserve">
           <source>Cache size: </source>
           <target state="translated">缓存大小：</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
         </trans-unit>
         <trans-unit id="Calculating.Text" translate="yes" xml:space="preserve">
@@ -671,11 +675,13 @@
         <trans-unit id="ClearCache.Content" translate="yes" xml:space="preserve">
           <source>Clear cache</source>
           <target state="translated">清除缓存</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">Button</note>
         </trans-unit>
         <trans-unit id="DeleteInvalid.Content" translate="yes" xml:space="preserve">
           <source>Delete invalid files</source>
           <target state="translated">删除无效文件</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           <note from="MultilingualBuild" annotates="source" priority="2">Button</note>
         </trans-unit>
         <trans-unit id="Recalculating" translate="yes" xml:space="preserve">
@@ -805,10 +811,22 @@ Do you want to disable them?</source>
           <target state="translated">当然</target>
           <note from="MultilingualBuild" annotates="source" priority="2">PlainText (❌Unworkable)</note>
         </trans-unit>
-        <trans-unit id="DownloadsPlain" translate="yes" xml:space="preserve">
-          <source>Downloads</source>
-          <target state="new">Downloads</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
+        <trans-unit id="GitHubRepo.Text" translate="yes" xml:space="preserve">
+          <source>GitHub Repo</source>
+          <target state="translated">GitHub 反馈</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+        </trans-unit>
+        <trans-unit id="QQCommunity.Text" translate="yes" xml:space="preserve">
+          <source>QQ Community</source>
+          <target state="translated">QQ 社群</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">TextBlock</note>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+        </trans-unit>
+        <trans-unit id="SetWallpaper.Label" translate="yes" xml:space="preserve">
+          <source>Set as Wallpaper</source>
+          <target state="translated">设置为壁纸</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">AppBarButton</note>
         </trans-unit>
         <trans-unit id="DownloadedCaption.Content" translate="yes" xml:space="preserve">
           <source>Downloaded</source>
@@ -824,6 +842,11 @@ Do you want to disable them?</source>
           <source>Download Manager</source>
           <target state="new">Download Manager</target>
           <note from="MultilingualBuild" annotates="source" priority="2">NavigationViewItemHeader</note>
+        </trans-unit>
+        <trans-unit id="DownloadsPlain" translate="yes" xml:space="preserve">
+          <source>Downloads</source>
+          <target state="new">Downloads</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">PlainText</note>
         </trans-unit>
       </group>
     </body>
