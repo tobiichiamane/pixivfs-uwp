@@ -1,5 +1,5 @@
-﻿<Page
-    x:Class="PixivFSUWP.SearchPage"
+﻿<ContentDialog
+    x:Class="PixivFSUWP.SearchDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PixivFSUWP"
@@ -8,7 +8,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Page.Resources>
+    <ContentDialog.Background>
+        <AcrylicBrush x:Name="detailBackground" BackgroundSource="Backdrop" TintOpacity="0.2" TintColor="{ThemeResource SystemAltHighColor}" FallbackColor="{ThemeResource SystemAltHighColor}"/>
+    </ContentDialog.Background>
+    <FrameworkElement.Resources>
         <Storyboard x:Name="storyFade">
             <DoubleAnimation Storyboard.TargetName="detailBackground"
                              Storyboard.TargetProperty="TintOpacity"
@@ -63,15 +66,13 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    </Page.Resources>
+    </FrameworkElement.Resources>
     <Grid>
         <Frame x:Name="resultFrame"/>
         <Grid x:Name="grdSearchPanel"
               VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <Grid.Background>
-                <AcrylicBrush x:Name="detailBackground" BackgroundSource="Backdrop" TintOpacity="0.2" TintColor="{ThemeResource SystemAltHighColor}" FallbackColor="{ThemeResource SystemAltHighColor}"/>
-            </Grid.Background>
-            <StackPanel Margin="0 75 0 0" Orientation="Vertical" Width="500" x:Name="stkMain"
+
+            <StackPanel Orientation="Vertical" x:Name="stkMain"
                         HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock HorizontalAlignment="Left" FontSize="14" FontWeight="Bold" x:Uid="Keyword"/>
                 <AutoSuggestBox Margin="0 5 0 0" x:Name="txtWord" x:Uid="Search" QuerySubmitted="TxtWord_QuerySubmitted"
@@ -168,4 +169,4 @@
                       HorizontalAlignment="Center" Width="75" Height="75" IsActive="False" 
                       Visibility="Collapsed"/>
     </Grid>
-</Page>
+</ContentDialog>

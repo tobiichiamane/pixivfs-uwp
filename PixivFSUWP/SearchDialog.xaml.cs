@@ -28,43 +28,45 @@ namespace PixivFSUWP
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class SearchPage : Page, IGoBackFlag
+    public sealed partial class SearchDialog
     {
         string lastWord = null;
         int lastSearchTarget = -1;
         int lastSort = -1;
         int lastDuration = -1;
 
-        public SearchPage()
+        public SearchDialog()
         {
             this.InitializeComponent();
+            Title = GetResourceString("SearchPagePlain");
+            CloseButtonText = GetResourceString("CancelPlain");
         }
 
-        private bool _backflag { get; set; } = false;
+        //private bool _backflag { get; set; } = false;
 
-        public void SetBackFlag(bool value)
-        {
-            _backflag = value;
-        }
+        //public void SetBackFlag(bool value)
+        //{
+        //    _backflag = value;
+        //}
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-            if (!_backflag)
-            {
-                Data.OverAll.SearchResultList?.PauseLoading();
-                if (e.Parameter is ValueTuple<int, int?> tuple)
-                {
-                    Data.Backstack.Default.Push
-                        (typeof(SearchPage),
-                        new ValueTuple<WaterfallPage.ListContent, int?>
-                        (WaterfallPage.ListContent.SearchResult, tuple.Item2));
-                }
-                else
-                    Data.Backstack.Default.Push(typeof(SearchPage), WaterfallPage.ListContent.SearchResult);               
-            }
-            ((Frame.Parent as Grid)?.Parent as MainPage)?.UpdateNavButtonState();
-        }
+        //protected override void OnNavigatedFrom(NavigationEventArgs e)
+        //{
+        //    base.OnNavigatedFrom(e);
+        //    if (!_backflag)
+        //    {
+        //        Data.OverAll.SearchResultList?.PauseLoading();
+        //        if (e.Parameter is ValueTuple<int, int?> tuple)
+        //        {
+        //            Data.Backstack.Default.Push
+        //                (typeof(SearchPage),
+        //                new ValueTuple<WaterfallPage.ListContent, int?>
+        //                (WaterfallPage.ListContent.SearchResult, tuple.Item2));
+        //        }
+        //        else
+        //            Data.Backstack.Default.Push(typeof(SearchPage), WaterfallPage.ListContent.SearchResult);               
+        //    }
+        //    ((Frame.Parent as Grid)?.Parent as MainPage)?.UpdateNavButtonState();
+        //}
 
         async Task<List<ViewModels.TagViewModel>> getTrendingTags()
         {
@@ -92,29 +94,29 @@ namespace PixivFSUWP
             panelTags.ItemsSource = tags;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            if (e.Parameter is WaterfallPage.ListContent)
-            {
-                _ = loadContents();
-                SearchResultList?.StopLoading();
-            }
-            else if (e.Parameter is ValueTuple<WaterfallPage.ListContent, int?>)
-            {
-                resultFrame.Navigate(typeof(WaterfallPage), e.Parameter);
-                grdSearchPanel.Visibility = Visibility.Collapsed;
-                if (txtWord.Text.Trim() != lastWord || cbSearchTarget.SelectedIndex != lastSearchTarget ||
-                    cbSort.SelectedIndex != lastSort || cbDuration.SelectedIndex != lastDuration)
-                {
-                    lastWord = txtWord.Text.Trim();
-                    lastSearchTarget = cbSearchTarget.SelectedIndex;
-                    lastSort = cbSort.SelectedIndex;
-                    lastDuration = cbDuration.SelectedIndex;
-                }
-            }
-            ((Frame.Parent as Grid)?.Parent as MainPage)?.SelectNavPlaceholder(GetResourceString("SearchPagePlain"));
-        }
+        //protected override void OnNavigatedTo(NavigationEventArgs e)
+        //{
+        //    base.OnNavigatedTo(e);
+        //    if (e.Parameter is WaterfallPage.ListContent)
+        //    {
+        //        _ = loadContents();
+        //        SearchResultList?.StopLoading();
+        //    }
+        //    else if (e.Parameter is ValueTuple<WaterfallPage.ListContent, int?>)
+        //    {
+        //        resultFrame.Navigate(typeof(WaterfallPage), e.Parameter);
+        //        grdSearchPanel.Visibility = Visibility.Collapsed;
+        //        if (txtWord.Text.Trim() != lastWord || cbSearchTarget.SelectedIndex != lastSearchTarget ||
+        //            cbSort.SelectedIndex != lastSort || cbDuration.SelectedIndex != lastDuration)
+        //        {
+        //            lastWord = txtWord.Text.Trim();
+        //            lastSearchTarget = cbSearchTarget.SelectedIndex;
+        //            lastSort = cbSort.SelectedIndex;
+        //            lastDuration = cbDuration.SelectedIndex;
+        //        }
+        //    }
+        //    ((Frame.Parent as Grid)?.Parent as MainPage)?.SelectNavPlaceholder(GetResourceString("SearchPagePlain"));
+        //}
 
         public async Task ShowSearch()
         {
@@ -224,30 +226,30 @@ namespace PixivFSUWP
             string SAUCENAO_API_KEY, IMGUR_API_KEY;
             Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
             //读取设置项
-            if (localSettings.Values["SauceNAOAPI"] as string == null)
-            {
-                Frame.Navigate(typeof(SettingsPage),null, App.FromRightTransitionInfo);
-                SAUCENAO_API_KEY = sauceNAOAPI;
-                return;
-            }
-            else if ((localSettings.Values["SauceNAOAPI"] as string).Length == 0)
-            {
-                Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
-                SAUCENAO_API_KEY = sauceNAOAPI;
-                return;
-            }
-            if (localSettings.Values["ImgurAPI"] as string == null)
-            {
-                Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
-                IMGUR_API_KEY = imgurAPI;
-                return;
-            }
-            else if ((localSettings.Values["ImgurAPI"] as string).Length == 0)
-            {
-                Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
-                IMGUR_API_KEY = imgurAPI;
-                return;
-            }
+            //if (localSettings.Values["SauceNAOAPI"] as string == null)
+            //{
+            //    Frame.Navigate(typeof(SettingsPage),null, App.FromRightTransitionInfo);
+            //    SAUCENAO_API_KEY = sauceNAOAPI;
+            //    return;
+            //}
+            //else if ((localSettings.Values["SauceNAOAPI"] as string).Length == 0)
+            //{
+            //    Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
+            //    SAUCENAO_API_KEY = sauceNAOAPI;
+            //    return;
+            //}
+            //if (localSettings.Values["ImgurAPI"] as string == null)
+            //{
+            //    Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
+            //    IMGUR_API_KEY = imgurAPI;
+            //    return;
+            //}
+            //else if ((localSettings.Values["ImgurAPI"] as string).Length == 0)
+            //{
+            //    Frame.Navigate(typeof(SettingsPage), null, App.FromRightTransitionInfo);
+            //    IMGUR_API_KEY = imgurAPI;
+            //    return;
+            //}
             SAUCENAO_API_KEY = localSettings.Values["SauceNAOAPI"] as string;
             IMGUR_API_KEY = localSettings.Values["ImgurAPI"] as string;
             // 选择文件
@@ -261,7 +263,7 @@ namespace PixivFSUWP
             // 检测文件
             if (file == null)
             {
-                Frame.GoBack();
+                //Frame.GoBack();
                 return;
             }
             // 
@@ -274,7 +276,7 @@ namespace PixivFSUWP
         {
             try
             {
-                Frame.Navigate(typeof(IllustDetailPage), int.Parse(asbGTPID.Text), App.FromRightTransitionInfo);
+                //Frame.Navigate(typeof(IllustDetailPage), int.Parse(asbGTPID.Text), App.FromRightTransitionInfo);
             }
             catch(OverflowException)
             {
