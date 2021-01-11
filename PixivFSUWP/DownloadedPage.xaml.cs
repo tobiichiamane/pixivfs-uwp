@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -21,30 +20,18 @@ namespace PixivFSUWP
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class DownloadingPage : Page
+    public sealed partial class DownloadedPage : Page
     {
-        public DownloadingPage()
+        public DownloadedPage()
         {
             this.InitializeComponent();
             //直接进行数据绑定
-            lstDownloading.ItemsSource = Data.DownloadManager.DownloadJobs;
+            lstDownloaded.ItemsSource = Data.DownloadManager.FinishedJobs;
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            Data.DownloadManager.RemoveJob((sender as Button).DataContext as Data.DownloadJob);
-        }
-
-        private void PauseButton_Click(object sender, RoutedEventArgs e)
-        {
-            (sender as ToggleButton).Content = "\xEDB5";
-            ((sender as ToggleButton).DataContext as Data.DownloadJob).Pause();
-        }
-
-        private void ResumeButton_Click(object sender, RoutedEventArgs e)
-        {
-            (sender as ToggleButton).Content = "\xEDB4";
-            ((sender as ToggleButton).DataContext as Data.DownloadJob).Resume();
+            Data.DownloadManager.FinishedJobs.Remove((sender as Button).DataContext as Data.DownloadJob);
         }
     }
 }

@@ -41,10 +41,10 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" 
                                   FontSize="16" Glyph="&#xED15;"/>
                     </AppBarButton>
-                    <AppBarButton Width="48" x:Name="btnDownload" Click="btnDownload_Click">
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" 
-                                  FontSize="16" Glyph="&#xE896;"/>
-                    </AppBarButton>
+                    <AppBarButton Width="48" x:Name="btnDownload" Icon="Download"
+                                  Style="{ThemeResource AppBarButtonRevealStyle}"
+                                  BorderThickness="0" Background="Transparent"/>
+                    
                     <AppBarButton Width="48" x:Name="btnMe" Click="BtnMe_Click">
                         <Grid Margin="-7">
                             <ProgressRing x:Name="avatarRing" Height="20" Width="20" IsActive="True"/>

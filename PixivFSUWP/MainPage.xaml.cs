@@ -1,12 +1,15 @@
 ﻿using PixivFSUWP.Data;
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+
 using static PixivFSUWP.Data.OverAll;
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
@@ -28,13 +31,20 @@ namespace PixivFSUWP
             view.Title = "";
             btnExperimentalWarning.Visibility = GlobalBaseAPI.ExperimentalConnection ? Visibility.Visible : Visibility.Collapsed;
             TheMainPage = this;
+
+            Data.DownloadManager.DownloadCompleted += async (o, e) => 
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, async () =>
+                await ShowTip(string.Format(GetResourceString(e ? "WorkSaveFailedPlain" : "WorkSavedPlain"), o)));
+
+            btnDownload.Flyout = new Flyout { Content = new DownloadManager() };
         }
 
         bool _programmablechange = false;
 
         private async void NavControl_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            if (OverAll.AppUri != null) return;
+            if (OverAll.AppUri != null)
+                return;
             if (_programmablechange)
             {
                 _programmablechange = false;

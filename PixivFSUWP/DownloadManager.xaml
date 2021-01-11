@@ -10,8 +10,8 @@
         <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="Transparent"/>
         <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="Transparent"/>
     </Page.Resources>
-    <Grid Margin="0 75 0 0">
-        <NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed"
+    <Grid MinWidth="300" MinHeight="200">
+        <NavigationView PaneDisplayMode="Top" IsBackButtonVisible="Collapsed"
                         IsSettingsVisible="False" IsPaneToggleButtonVisible="False"
                         x:Name="NavControl" SelectionChanged="NavControl_SelectionChanged">
             <NavigationView.MenuItems>
@@ -23,5 +23,10 @@
                 <Frame x:Name="ContentFrame"/>
             </ScrollViewer>
         </NavigationView>
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <AddDeleteThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
     </Grid>
 </Page>
