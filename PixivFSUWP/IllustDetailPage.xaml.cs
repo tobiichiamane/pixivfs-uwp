@@ -523,5 +523,14 @@ namespace PixivFSUWP
                 txtComment.Text = "";
             }
         }
+
+        private void BtnTag_Click(object sender, RoutedEventArgs e)
+            => new SearchDialog(Frame).Search(new SearchParam
+            {
+                Word = (sender as Button).Tag as string,
+                SearchTarget = "exact_match_for_tags",
+                Sort = "date_desc",
+                Duration = null
+            });
     }
 }
