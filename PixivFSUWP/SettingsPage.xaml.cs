@@ -69,10 +69,10 @@ namespace PixivFSUWP
             List<ViewModels.ContributorViewModel> mainDevs = new List<ViewModels.ContributorViewModel>();
             mainDevs.Add(new ViewModels.ContributorViewModel()
             {
-                Account = "@tobiichiamane",
+                Account = "@sovetskyfish",
                 DisplayName = "Communist Fish",
-                AvatarUrl = "https://avatars2.githubusercontent.com/u/14824064?v=4&s=45",
-                ProfileUrl = "https://github.com/tobiichiamane",
+                AvatarUrl = "https://avatars1.githubusercontent.com/u/76583116",
+                ProfileUrl = "https://github.com/sovetskyfish",
                 Contributions = new List<Data.Contribution>()
                 {
                     Data.Contribution.bug,
