@@ -182,17 +182,7 @@ namespace PixivFSUWP
         }
 
         private async void BtnSearch_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (ContentFrame.Content is SearchPage)
-                    await (ContentFrame.Content as SearchPage).ShowSearch();
-                else
-                    ContentFrame.Navigate(typeof(SearchPage), WaterfallPage.ListContent.SearchResult, App.FromRightTransitionInfo);
-            }
-            //吞掉异常，这个异常没有意义
-            catch { }
-        }
+            => await new SearchDialog(ContentFrame).ShowAsync();
 
         public void UpdateNavButtonState()
         {

@@ -77,7 +77,7 @@ namespace PixivFSUWP.Controls
                 else
                     widths[rowCount - 1] = tmpWidth;
             }
-            return new Size(widths.Max(), rowCount * ItemHeight + (rowCount - 1) * ItemVerticalMargin);
+            return new Size(0, rowCount * ItemHeight + (rowCount - 1) * ItemVerticalMargin);
         }
 
         protected override Size ArrangeOverride(Size finalSize)

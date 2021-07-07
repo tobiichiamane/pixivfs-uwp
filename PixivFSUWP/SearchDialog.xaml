@@ -1,0 +1,143 @@
+﻿<ContentDialog
+    x:Class="PixivFSUWP.SearchDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PixivFSUWP"
+    xmlns:viewmodels="using:PixivFSUWP.ViewModels"
+    xmlns:controls="using:PixivFSUWP.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <ContentDialog.Background>
+        <AcrylicBrush x:Name="detailBackground" BackgroundSource="Backdrop" TintOpacity="0.2" TintColor="{ThemeResource SystemAltHighColor}" FallbackColor="{ThemeResource SystemAltHighColor}"/>
+    </ContentDialog.Background>
+    <FrameworkElement.Resources>
+        <Style x:Key="DigitOnlyAutoSuggestBox" TargetType="AutoSuggestBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="AutoSuggestBox">
+                        <Grid x:Name="LayoutRoot">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="Orientation">
+                                    <VisualState x:Name="Landscape"/>
+                                    <VisualState x:Name="Portrait"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <TextBox x:Name="TextBox" ScrollViewer.BringIntoViewOnFocusChange="False" Description="{TemplateBinding Description}" 
+                                     DesiredCandidateWindowAlignment="BottomEdge" Header="{TemplateBinding Header}" Margin="0" 
+                                     PlaceholderText="{TemplateBinding PlaceholderText}" Style="{TemplateBinding TextBoxStyle}" InputScope="Digits"
+                                     UseSystemFocusVisuals="{TemplateBinding UseSystemFocusVisuals}" Width="{TemplateBinding Width}" Canvas.ZIndex="0"
+                                     TextChanging="style_TextBox_TextChanging" BeforeTextChanging="style_TextBox_BeforeTextChanging"/>
+                            <Popup x:Name="SuggestionsPopup">
+                                <Border x:Name="SuggestionsContainer">
+                                    <ListView x:Name="SuggestionsList" Background="{ThemeResource AutoSuggestBoxSuggestionsListBackground}" 
+                                              BorderThickness="{ThemeResource AutoSuggestListBorderThemeThickness}" 
+                                              BorderBrush="{ThemeResource AutoSuggestBoxSuggestionsListBorderBrush}" 
+                                              DisplayMemberPath="{TemplateBinding DisplayMemberPath}" ItemContainerStyle="{TemplateBinding ItemContainerStyle}" 
+                                              ItemTemplate="{TemplateBinding ItemTemplate}" IsItemClickEnabled="True" 
+                                              ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}" MaxHeight="{ThemeResource AutoSuggestListMaxHeight}" 
+                                              Margin="{ThemeResource AutoSuggestListMargin}" Padding="{ThemeResource AutoSuggestListPadding}"/>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </FrameworkElement.Resources>
+    <StackPanel Orientation="Vertical">
+        <TextBlock HorizontalAlignment="Left" FontSize="14" FontWeight="Bold" x:Uid="Keyword"/>
+        <AutoSuggestBox Margin="0 5 0 0" x:Name="txtWord" x:Uid="Search" QuerySubmitted="TxtWord_QuerySubmitted"
+                                HorizontalAlignment="Stretch" QueryIcon="Find"/>
+        <TextBlock Margin="0 10 0 0" HorizontalAlignment="Left" FontSize="14" FontWeight="Bold" x:Uid="SearchOptions"/>
+        <Grid Margin="0 5 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ComboBox x:Name="cbSearchTarget" IsEditable="False" BorderThickness="1"
+                              HorizontalAlignment="Stretch" SelectedIndex="0">
+                <ComboBox.Items>
+                    <ComboBoxItem x:Uid="PartiallyMatchTag"/>
+                    <ComboBoxItem x:Uid="FullyMatchTag"/>
+                    <ComboBoxItem x:Uid="PartiallyMatchTitleAndCap"/>
+                </ComboBox.Items>
+            </ComboBox>
+            <ComboBox x:Name="cbSort" Grid.Column="2" IsEditable="False" BorderThickness="1"
+                              HorizontalAlignment="Stretch" SelectedIndex="0">
+                <ComboBox.Items>
+                    <ComboBoxItem x:Uid="DateDesc"/>
+                    <ComboBoxItem x:Uid="DateAsc"/>
+                </ComboBox.Items>
+            </ComboBox>
+            <ComboBox x:Name="cbDuration" Grid.Column="4" IsEditable="False" BorderThickness="1"
+                              HorizontalAlignment="Stretch" SelectedIndex="0">
+                <ComboBox.Items>
+                    <ComboBoxItem x:Uid="AllTime"/>
+                    <ComboBoxItem x:Uid="LastDay"/>
+                    <ComboBoxItem x:Uid="LastWeek"/>
+                    <ComboBoxItem x:Uid="LastMonth"/>
+                </ComboBox.Items>
+            </ComboBox>
+        </Grid>
+        <TextBlock Margin="0,10,0,0" HorizontalAlignment="Left" FontSize="14" FontWeight="Bold" x:Uid="SearchMore"/>
+        <Grid Grid.Row="1" Margin="0,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" HorizontalAlignment="Stretch">
+                <TextBlock x:Uid="GoToPixivID"/>
+                <AutoSuggestBox Style="{StaticResource DigitOnlyAutoSuggestBox}" x:Name="asbGTPID" Margin="0 5 0 0" x:Uid="GoPixivID" QuerySubmitted="GoPixivID_QuerySubmitted"
+                                HorizontalAlignment="Stretch" QueryIcon="Forward"/>
+            </StackPanel>
+            <Button Grid.Row="1" Margin="0,5,0,0" x:Name="btnSauceNAO" x:Uid="BtnSauceNAO" HorizontalAlignment="Stretch" Click="btnSauceNAO_Click" Visibility="Collapsed"/>
+        </Grid>
+        <StackPanel Margin="0 10 0 0" HorizontalAlignment="Left" Orientation="Horizontal">
+            <TextBlock FontSize="14" FontWeight="Bold" x:Uid="TrendingTags"/>
+            <TextBlock Margin="5 0 0 0" FontSize="12" Foreground="{ThemeResource SystemBaseMediumColor}" VerticalAlignment="Bottom" x:Uid="TagWarning"/>
+        </StackPanel>
+        <ProgressBar IsIndeterminate="True" x:Name="progressRing"/>
+        <ItemsControl x:Name="panelTags" Margin="0 5 0 0">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="viewmodels:TagViewModel">
+                    <Grid Width="Auto" VerticalAlignment="Stretch">
+                        <Button x:Name="btnTag" Tag="{Binding Tag}" HorizontalAlignment="Stretch" 
+                                        Style="{StaticResource ButtonRevealStyle}" Height="25"
+                                        Click="BtnTag_Click">
+                            <Grid Background="Transparent" Margin="0 -5">
+                                <TextBlock Text="{Binding Tag}" FontSize="12"/>
+                            </Grid>
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <controls:TagsPanel ItemHorizontalMargin="5" ItemHeight="25" ItemVerticalMargin="5">
+                        <controls:TagsPanel.ChildrenTransitions>
+                            <TransitionCollection>
+                                <PopupThemeTransition FromVerticalOffset="150"/>
+                            </TransitionCollection>
+                        </controls:TagsPanel.ChildrenTransitions>
+                    </controls:TagsPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <StackPanel.ChildrenTransitions>
+            <TransitionCollection>
+                <AddDeleteThemeTransition/>
+                <PaneThemeTransition/>
+            </TransitionCollection>
+        </StackPanel.ChildrenTransitions>
+    </StackPanel>
+</ContentDialog>
